@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="ItemWidth" format="dimension"/>
+    <attr name="ItemHeight" format="dimension"/>
+    <attr name="ColumnCount" format="integer"/>
+    <attr name="RowCount" format="integer"/>
+    <attr name="YItemWidth" format="dimension"/>
+    <declare-styleable name="TableView">
+        <attr name="ItemWidth"/>
+        <attr name="ItemHeight"/>
+        <attr name="ColumnCount"/>
+        <attr name="RowCount"/>
+        <attr name="YItemWidth"/>
+    </declare-styleable>
+
+
+</resources>
