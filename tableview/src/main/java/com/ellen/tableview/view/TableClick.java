@@ -10,8 +10,8 @@ public class TableClick {
     private int position;
     private int cloumn;
     private int row;
-    private List<TableItemView> cloumnTextViewList;
-    private  List<TableItemView> rowTextViewList;
+    private List<TableItemView> cloumnViewList;
+    private  List<TableItemView> rowViewList;
     private boolean isPartHide = false;
     private YItemView yItemView;
 
@@ -63,20 +63,19 @@ public class TableClick {
         this.row = row;
     }
 
-    public List<TableItemView> getCloumnTextViewList() {
-        return cloumnTextViewList;
+    public List<TableItemView> getCloumnViewList() {
+        return cloumnViewList;
     }
 
-    public void setCloumnTextViewList(List<TableItemView> cloumnTextViewList) {
-        this.cloumnTextViewList = cloumnTextViewList;
+    public void setCloumnViewList(List<TableItemView> cloumnViewList) {
+        this.cloumnViewList = cloumnViewList;
     }
 
-    public List<TableItemView> getRowTextViewList() {
-        return rowTextViewList;
+    public List<TableItemView> getRowViewList() {
+        return rowViewList;
     }
 
-    public void setRowTextViewList(List<TableItemView> rowTextViewList) {
-        this.rowTextViewList = rowTextViewList;
+    public void setRowViewList(List<TableItemView> rowViewList) {
+        this.rowViewList = rowViewList;
     }
-
 }

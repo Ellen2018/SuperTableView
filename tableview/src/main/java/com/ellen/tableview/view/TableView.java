@@ -42,6 +42,8 @@ public class TableView extends RelativeLayout {
     private Map<Integer,YItemView> mapYItem;
     //适配器
     private TableViewAdapter tableViewAdapter;
+    //
+    private Map<Integer,View> mapItemViews;
 
     //列数
     private int columnNumber = 10;
@@ -132,12 +134,51 @@ public class TableView extends RelativeLayout {
         return onItemClickListener;
     }
 
+    public Map<Integer, List<TableItemView>> getMapRow() {
+        return mapRow;
+    }
+
+    public Map<Integer, List<TableItemView>> getMapColumn() {
+        return mapColumn;
+    }
+
+    public void setMapColumn(Map<Integer, List<TableItemView>> mapColumn) {
+        this.mapColumn = mapColumn;
+    }
+
+    public Map<Integer, YItemView> getMapYItem() {
+        return mapYItem;
+    }
+
+    public TableViewAdapter getTableViewAdapter() {
+        return tableViewAdapter;
+    }
+
+    public Map<Integer, View> getMapItemViews() {
+        return mapItemViews;
+    }
+
+    private void clear(){
+        mapYItem.clear();
+        mapColumn.clear();
+        mapItemViews.clear();
+        mapRow.clear();
+        itemCount = 0;
+        gridLayoutTable.removeAllViews();
+        gridLayoutY.removeAllViews();
+    }
+
     public void setTableViewAdapter(TableViewAdapter tableViewAdapter){
+        clear();
         this.tableViewAdapter = tableViewAdapter;
+        this.tableViewAdapter.setCloumn(columnNumber);
+        this.tableViewAdapter.setGridLayout(gridLayoutTable);
+        this.tableViewAdapter.setTableView(this);
+        Log.e("更新适配器不","ok");
         for(int i=0;i<tableViewAdapter.getItemCount();i++){
             itemCount++;
-            final int row = getRow();
-            final int column = getColumn();
+            final int row = getRow(itemCount-1,columnNumber);
+            final int column = getColumn(itemCount-1,getRow(itemCount-1,columnNumber),columnNumber);
             View view = tableViewAdapter.createItemView(i,row,column);
             addItem(view);
         }
@@ -156,6 +197,7 @@ public class TableView extends RelativeLayout {
         mapColumn = new HashMap<>();
         mapRow = new HashMap<>();
         mapYItem = new HashMap<>();
+        mapItemViews = new HashMap<>();
     }
 
     public void addTextViewItem(String itemString) {
@@ -165,45 +207,17 @@ public class TableView extends RelativeLayout {
         addItem(textView);
     }
 
-    public void setTableTitleY(List<String> stringList){
-        for(String title:stringList){
-            setTableTitleY(title);
-        }
+    public int getRow(int position,int cloumn){
+        return  (position) / cloumn;
     }
 
-    private void setTableTitleY(String str) {
-        rowY++;
-        TextView textView = new TextView(getContext());
-        textView.setText(str);
-        textView.setWidth(yWidth);
-        textView.setGravity(Gravity.CENTER);
-        final YItemView yItemView = new YItemView(textView,rowY);
-        mapYItem.put(rowY,yItemView);
-        textView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              if(onItemClickListener != null){
-                  TableClick tableClick = new TableClick();
-                  tableClick.setyItemView(yItemView);
-                  tableClick.setRowTextViewList(mapRow.get(yItemView.getRow()));
-                  onItemClickListener.onClickYItem(v,tableClick);
-              }
-            }
-        });
-        gridLayoutY.addView(textView,itemWidth,itemHeight);
-    }
-
-    private int getRow(){
-        return  (itemCount - 1) / columnNumber;
-    }
-
-    private int getColumn(){
-        return (((itemCount - 1) - getRow() * columnNumber) % columnNumber);
+    public int getColumn(int position,int row,int cloumn){
+        return (((position) - row * cloumn) % cloumn);
     }
 
     public void addItem(final View view) {
-        final int row = getRow();
-        final int column = getColumn();
+        final int row = getRow(itemCount-1,columnNumber);
+        final int column = getColumn(itemCount-1,getRow(itemCount-1,columnNumber),columnNumber);
         Log.e("行数", row + "");
         Log.e("列数", column + "");
 
@@ -237,22 +251,24 @@ public class TableView extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-                    List<TableItemView> cloumnTextViewList = mapColumn.get(column);
-                    List<TableItemView> rowTextViewList = mapRow.get(row);
+                    List<TableItemView> cloumnViewList = mapColumn.get(column);
+                    List<TableItemView> rowViewList = mapRow.get(row);
                     TableClick tableClick = new TableClick();
                     tableClick.setView(view);
                     tableClick.setPosition(itemCount - 1);
                     tableClick.setRow(row);
                     tableClick.setCloumn(column);
-                    tableClick.setCloumnTextViewList(cloumnTextViewList);
-                    tableClick.setRowTextViewList(rowTextViewList);
+                    tableClick.setCloumnViewList(cloumnViewList);
+                    tableClick.setRowViewList(rowViewList);
                     tableClick.setyItemView(mapYItem.get(row));
                     onItemClickListener.onClickItem(v, tableClick);
                 }
             }
         });
-        tableViewAdapter.bindView(view,itemCount - 1,row,column);
-        gridLayoutTable.addView(tableItemView.getView(), itemWidth, itemHeight);
+        int finalIndex = tableViewAdapter.getFinalIndex(itemCount - 1,row,column);
+        tableViewAdapter.bindView(view,finalIndex,row,column);
+        gridLayoutTable.addView(view,itemWidth,itemHeight);
+        mapItemViews.put(finalIndex,view);
     }
 
     public void hideYAxis(){
@@ -263,7 +279,7 @@ public class TableView extends RelativeLayout {
      * 列：左边定位到position位置
      */
     public void setLeftCloumnPosition(int position) {
-        horizontalScrollView.scrollTo(position * itemWidth, 0);
+        horizontalScrollView.scrollTo((position-1) * itemWidth, 0);
     }
 
     /**

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,9 +10,40 @@
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:ColumnCount="20"
-        app:ItemHeight="50dp"
-        app:ItemWidth="300dp"
+        app:ColumnCount="50"
+        app:ItemHeight="30dp"
+        app:ItemWidth="60dp"
         app:YItemWidth="66dp" />
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="动态修改列" />
+
+    <Button
+        android:id="@+id/bt_dinwei_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/bt"
+        android:text="左边屏幕定位到10" />
+
+    <Button
+        android:id="@+id/bt_dinwei_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/bt_dinwei_left"
+        android:text="右边屏幕定位到10" />
+
+    <Button
+        android:id="@+id/bt_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/bt_dinwei_right"
+        android:text="更新数据" />
+
+</RelativeLayout>
