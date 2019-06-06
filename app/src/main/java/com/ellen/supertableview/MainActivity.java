@@ -10,13 +10,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ellen.tableview.view.SuperTableViewAdapter;
 import com.ellen.tableview.view.TableClick;
 import com.ellen.tableview.view.TableItemView;
 import com.ellen.tableview.view.TableView;
 import com.ellen.tableview.view.TableViewAdapter;
+import com.ellen.tableview.view.YItemView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,87 +36,71 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClickItem(View view, TableClick tableClick) {
                 if(agoTableClick != null){
-                    for(TableItemView tableItemView:agoTableClick.getRowViewList()){
-                        tableItemView.getView().setBackgroundColor(Color.WHITE);
-                    }
-                    if(agoTableClick.getCloumnViewList() != null) {
-                        for (TableItemView tableItemView : agoTableClick.getCloumnViewList()) {
+                    for(TableItemView tableItemView:agoTableClick.getCloumnViewList()){
+
                             tableItemView.getView().setBackgroundColor(Color.WHITE);
-                        }
+
                     }
-                    agoTableClick.getView().setBackgroundColor(Color.WHITE);
-                    agoTableClick.getyItemView().getView().setBackgroundColor(Color.WHITE);
                 }
-                for(TableItemView tableItemView:tableClick.getRowViewList()){
-                    tableItemView.getView().setBackgroundColor(Color.RED);
-                }
-                for(TableItemView tableItemView:tableClick.getCloumnViewList()){
-                    tableItemView.getView().setBackgroundColor(Color.BLUE);
-                }
-                tableClick.getyItemView().getView().setBackgroundColor(Color.YELLOW);
-                view.setBackgroundColor(Color.GREEN);
-                agoTableClick = tableClick;
+               int column = tableClick.getCloumn();
+               int color = 0;
+               switch (column){
+                   case 0:
+                       color = Color.RED;
+                       break;
+                   case 1:
+                       color = Color.BLUE;
+                       break;
+                   case 2:
+                       color = Color.YELLOW;
+                       break;
+                   case 3:
+                       color = Color.GREEN;
+                       break;
+               }
+
+               for(TableItemView tableItemView:tableClick.getCloumnViewList()){
+                   tableItemView.getView().setBackgroundColor(color);
+               }
+               agoTableClick = tableClick;
             }
 
             @Override
             public void onClickYItem(View view, TableClick tableClick) {
-                if(agoTableClick != null){
-                    for(TableItemView tableItemView:agoTableClick.getRowViewList()){
-                        tableItemView.getView().setBackgroundColor(Color.WHITE);
-                    }
-                    if(agoTableClick.getCloumnViewList() != null) {
-                        for (TableItemView tableItemView : agoTableClick.getCloumnViewList()) {
-                            tableItemView.getView().setBackgroundColor(Color.WHITE);
-                        }
-                    }
-                    agoTableClick.getView().setBackgroundColor(Color.WHITE);
-                    agoTableClick.getyItemView().getView().setBackgroundColor(Color.WHITE);
-                }
-                tableClick.getyItemView().getView().setBackgroundColor(Color.YELLOW);
-                for(TableItemView tableItemView:tableClick.getRowViewList()){
-                    tableItemView.getView().setBackgroundColor(Color.RED);
-                }
-                agoTableClick = tableClick;
+
             }
         });
-        final TableAdapter tableAdapter = new TableAdapter(MainActivity.this);
+        final TableAdapter tableAdapter = new TableAdapter(MainActivity.this,R.layout.item_type_y,R.layout.item_table);
         //设置索引排序为：垂直方向
         tableAdapter.setOrientationV(true);
         tableView.setTableViewAdapter(tableAdapter);
 
-        findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bt_add_h).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tableAdapter.updateCloumn(30);
+               tableAdapter.addSingleDataColumn(new SuperTableViewAdapter.AddItemCallback() {
+                   @Override
+                   public void addItemSuccess(int poition, View view) {
+
+                   }
+               });
             }
         });
 
-        //左边定位到第10个
-        findViewById(R.id.bt_dinwei_left).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bt_add_v).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tableView.setLeftCloumnPosition(33);
-            }
-        });
+                tableAdapter.addSingleDataRow(new SuperTableViewAdapter.AddYItemCallback() {
+                    @Override
+                    public void addItemSuccess(int poition, View view) {
 
-        //右边定位到第10个
-        findViewById(R.id.bt_dinwei_right).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tableView.setRightCloumnPosition(20);
-            }
-        });
+                    }
 
-        findViewById(R.id.bt_update).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              List<View> views = new ArrayList<>();
-              for(int i=0;i<tableView.getColumnNumber();i++){
-                 View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.item_table,null);
-                 views.add(view);
-              }
-              View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.item_type_y,null);
-              tableAdapter.addDataRow(views,view);
+                    @Override
+                    public void addYItemSuccess(int row, View yItemView) {
+
+                    }
+                });
             }
         });
     }

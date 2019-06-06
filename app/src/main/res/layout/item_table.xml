@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/table_text"
-        android:text="测试"
-        android:gravity="center"
-        android:layout_width="60dp"
-        android:layout_height="40dp" />
+    <RelativeLayout
+        android:layout_width="120dp"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/table_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0.8dp"
+            android:background="@drawable/item_bg"
+            android:gravity="center"
+            android:text="测试"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -4,39 +4,61 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <View
+        android:id="@+id/view_top"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="#CFCFCF" />
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/view_top"
         android:scrollbars="none">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <GridLayout
-                android:id="@+id/grid_layout_y"
-                android:layout_width="?actionBarSize"
-                android:layout_height="match_parent" />
-
-            <View
-                android:layout_width="0.3dp"
-                android:background="#CFCFCF"
-                android:layout_height="match_parent"/>
-
-            <HorizontalScrollView
-                android:id="@+id/horizontalScrollView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="none">
+                android:orientation="horizontal">
 
                 <GridLayout
-                    android:id="@+id/grid_layout"
-                    android:layout_width="match_parent"
+                    android:id="@+id/grid_layout_y"
+                    android:layout_width="?actionBarSize"
                     android:layout_height="match_parent" />
 
-            </HorizontalScrollView>
+                <View
+                    android:layout_width="0.3dp"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:background="#CFCFCF" />
+
+                <HorizontalScrollView
+                    android:id="@+id/horizontalScrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none">
+
+                    <GridLayout
+                        android:id="@+id/grid_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:background="#CFCFCF" />
 
         </LinearLayout>
 

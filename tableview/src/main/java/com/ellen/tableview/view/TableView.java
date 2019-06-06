@@ -43,7 +43,7 @@ public class TableView extends RelativeLayout {
     //适配器
     private TableViewAdapter tableViewAdapter;
     //
-    private Map<Integer,View> mapItemViews;
+    private Map<Integer,TableItemView> mapItemViews;
 
     //列数
     private int columnNumber = 10;
@@ -178,7 +178,7 @@ public class TableView extends RelativeLayout {
         return tableViewAdapter;
     }
 
-    public Map<Integer, View> getMapItemViews() {
+    public Map<Integer, TableItemView> getMapItemViews() {
         return mapItemViews;
     }
 
@@ -273,7 +273,7 @@ public class TableView extends RelativeLayout {
         int finalIndex = tableViewAdapter.getFinalIndex(itemCount - 1,row,column);
         tableViewAdapter.bindView(view,finalIndex,row,column);
         gridLayoutTable.addView(view);
-        mapItemViews.put(finalIndex,view);
+        mapItemViews.put(finalIndex,tableItemView);
     }
 
     public void hideYAxis(){

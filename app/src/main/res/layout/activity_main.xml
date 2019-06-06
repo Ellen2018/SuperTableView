@@ -11,41 +11,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp"
-        app:ColumnCount="2"
-        app:ItemHeight="40dp"
-        app:ItemWidth="60dp"
-        app:RowCount="3"
-        app:YItemWidth="88dp" />
+        app:ColumnCount="4"
+        app:ItemHeight="50dp"
+        app:ItemWidth="120dp"
+        app:RowCount="10"
+        app:YItemWidth="60dp" />
 
     <Button
-        android:id="@+id/bt"
+        android:id="@+id/bt_add_v"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="动态修改列" />
+        android:text="纵向添加数据" />
 
     <Button
-        android:id="@+id/bt_dinwei_left"
+        android:id="@+id/bt_add_h"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/bt"
-        android:text="左边屏幕定位到10" />
-
-    <Button
-        android:id="@+id/bt_dinwei_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/bt_dinwei_left"
-        android:text="右边屏幕定位到10" />
-
-    <Button
-        android:id="@+id/bt_update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/bt_dinwei_right"
-        android:text="更新数据" />
+        android:layout_toRightOf="@id/bt_add_v"
+        android:text="横向添加数据" />
 
 </RelativeLayout>

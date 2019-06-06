@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class TableViewAdapter {
 
@@ -49,13 +50,13 @@ public abstract class TableViewAdapter {
         this.tableView = tableView;
     }
 
-    public abstract View createItemView(int position, int row, int cloumn);
+    public abstract View createItemView(int position, int row, int column);
 
     public int getItemCount() {
         return tableView.getColumnNumber() * tableView.getRowNumber();
     }
 
-    public abstract void bindView(View view, int finalIndex, int row, int cloumn);
+    public abstract void bindView(View view, int finalIndex, int row, int column);
 
     public abstract View createYItemView(int row);
 
@@ -74,34 +75,13 @@ public abstract class TableViewAdapter {
     }
 
     public void updateCloumn(int newColumn) {
-        this.cloumn = newColumn;
-        tableView.setColumnNumber(newColumn);
-        gridLayout.setColumnCount(newColumn);
-        if (isOrientationV) {
-            //调整
-            gridLayout.removeAllViews();
-            tableView.getMapRow().clear();
-            tableView.getMapColumn().clear();
-            tableView.getMapYItem().clear();
-            for (int i = 0; i < getItemCount(); i++) {
-                //重新计算行和列
-//                int indexRow = tableView.getRow(i, cloumn);
-//                Log.e("行号", indexRow + "");
-//                int indexCloumn = tableView.getColumn(i, indexRow, cloumn);
-//                Log.e("列号", indexCloumn + "");
-//                Log.e("位置", i + "");
-//                int finalIndex = getFinalIndex(i+1, indexRow, indexCloumn);
-//                Log.e("填塞数据", finalIndex + "");
-                gridLayout.addView(tableView.getMapItemViews().get(i));
-            }
-        }
     }
 
     public void notifyChange() {
         tableView.setTableViewAdapter(this);
     }
 
-    public void addDataCloumn(List<View> viewList) {
+    public void addDataColumn(List<View> viewList) {
         gridLayout.removeAllViews();
         tableView.getMapItemViews().clear();
         for (int i = 0; i < viewList.size(); i++) {
@@ -131,7 +111,7 @@ public abstract class TableViewAdapter {
                         } else {
                             index = i * tableView.getRowNumber() + j;
                         }
-                        tableView.getMapItemViews().put(index, tableItemView.getView());
+                        tableView.getMapItemViews().put(index, tableItemView);
                         tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
                         gridLayout.addView(tableItemView.getView());
                         tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
@@ -162,8 +142,6 @@ public abstract class TableViewAdapter {
             List<TableItemView> tableItemViewListColumn = tableView.getMapColumn().get(i);
             tableItemViewListColumn.add(tableItemView);
         }
-        Log.e("列数",tableView.getMapColumn().size()+"");
-        Log.e("行数",tableView.getMapRow().size()+"");
         tableView.setRowNumber(tableView.getRowNumber() + 1);
         for (int i = 0; i < tableView.getRowNumber(); i++) {
             for (int j = 0; j < tableView.getMapColumn().size(); j++) {
@@ -176,8 +154,7 @@ public abstract class TableViewAdapter {
                         } else {
                             index = i * tableView.getRowNumber() + j;
                         }
-                        Log.e("添加(行，列)","("+i+","+j+")");
-                        tableView.getMapItemViews().put(index, tableItemView.getView());
+                        tableView.getMapItemViews().put(index, tableItemView);
                         tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
                         gridLayout.addView(tableItemView.getView());
                         tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
@@ -196,6 +173,11 @@ public abstract class TableViewAdapter {
         tableView.setItemOnClick(yItemView,tableView.getRowNumber()-1,-1);
     }
 
+    public void addDataColumn(List<View> viewList,AddDataCallback addDataCallback){
+        addDataColumn(viewList);
+        addDataCallback.addViewSuccess(tableView.getMapItemViews(),tableView.getMapYItem());
+    }
+
     public void updateCloumnData(int column, UpdateDataCallback updateDataCallback) {
         List<TableItemView> tableItemViewList = tableView.getMapColumn().get(column);
         updateDataCallback.update(tableItemViewList);
@@ -209,4 +191,9 @@ public abstract class TableViewAdapter {
     public interface UpdateDataCallback {
         void update(List<TableItemView> tableItemViewList);
     }
+
+    public interface AddDataCallback{
+        void addViewSuccess(Map<Integer,TableItemView> tableViewMap,Map<Integer,YItemView> yItemViewMap);
+    }
+
 }
