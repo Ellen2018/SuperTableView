@@ -17,4 +17,24 @@ public class TableItemView {
     public View getView() {
         return view;
     }
+
+    public void setView(View view) {
+        this.view = view;
+    }
+
+    public int getCloumn() {
+        return cloumn;
+    }
+
+    public void setCloumn(int cloumn) {
+        this.cloumn = cloumn;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
 }

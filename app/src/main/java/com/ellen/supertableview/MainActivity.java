@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +14,9 @@ import com.ellen.tableview.view.TableClick;
 import com.ellen.tableview.view.TableItemView;
 import com.ellen.tableview.view.TableView;
 import com.ellen.tableview.view.TableViewAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tableView = findViewById(R.id.tableView);
-        tableView.hideYAxis();
         tableView.setOnItemClickListener(new TableView.OnItemClickListener() {
             @Override
             public void onClickItem(View view, TableClick tableClick) {
@@ -31,10 +35,13 @@ public class MainActivity extends AppCompatActivity {
                     for(TableItemView tableItemView:agoTableClick.getRowViewList()){
                         tableItemView.getView().setBackgroundColor(Color.WHITE);
                     }
-                    for(TableItemView tableItemView:agoTableClick.getCloumnViewList()){
-                        tableItemView.getView().setBackgroundColor(Color.WHITE);
+                    if(agoTableClick.getCloumnViewList() != null) {
+                        for (TableItemView tableItemView : agoTableClick.getCloumnViewList()) {
+                            tableItemView.getView().setBackgroundColor(Color.WHITE);
+                        }
                     }
                     agoTableClick.getView().setBackgroundColor(Color.WHITE);
+                    agoTableClick.getyItemView().getView().setBackgroundColor(Color.WHITE);
                 }
                 for(TableItemView tableItemView:tableClick.getRowViewList()){
                     tableItemView.getView().setBackgroundColor(Color.RED);
@@ -42,18 +49,35 @@ public class MainActivity extends AppCompatActivity {
                 for(TableItemView tableItemView:tableClick.getCloumnViewList()){
                     tableItemView.getView().setBackgroundColor(Color.BLUE);
                 }
+                tableClick.getyItemView().getView().setBackgroundColor(Color.YELLOW);
                 view.setBackgroundColor(Color.GREEN);
                 agoTableClick = tableClick;
             }
 
             @Override
             public void onClickYItem(View view, TableClick tableClick) {
-
+                if(agoTableClick != null){
+                    for(TableItemView tableItemView:agoTableClick.getRowViewList()){
+                        tableItemView.getView().setBackgroundColor(Color.WHITE);
+                    }
+                    if(agoTableClick.getCloumnViewList() != null) {
+                        for (TableItemView tableItemView : agoTableClick.getCloumnViewList()) {
+                            tableItemView.getView().setBackgroundColor(Color.WHITE);
+                        }
+                    }
+                    agoTableClick.getView().setBackgroundColor(Color.WHITE);
+                    agoTableClick.getyItemView().getView().setBackgroundColor(Color.WHITE);
+                }
+                tableClick.getyItemView().getView().setBackgroundColor(Color.YELLOW);
+                for(TableItemView tableItemView:tableClick.getRowViewList()){
+                    tableItemView.getView().setBackgroundColor(Color.RED);
+                }
+                agoTableClick = tableClick;
             }
         });
         final TableAdapter tableAdapter = new TableAdapter(MainActivity.this);
         //设置索引排序为：垂直方向
-        //tableAdapter.setOrientationV(true);
+        tableAdapter.setOrientationV(true);
         tableView.setTableViewAdapter(tableAdapter);
 
         findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
@@ -82,8 +106,13 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.bt_update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tableAdapter.count = 10000;
-                tableAdapter.notifyChange();
+              List<View> views = new ArrayList<>();
+              for(int i=0;i<tableView.getColumnNumber();i++){
+                 View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.item_table,null);
+                 views.add(view);
+              }
+              View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.item_type_y,null);
+              tableAdapter.addDataRow(views,view);
             }
         });
     }

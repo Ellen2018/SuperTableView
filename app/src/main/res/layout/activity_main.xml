@@ -10,10 +10,12 @@
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:ColumnCount="50"
-        app:ItemHeight="30dp"
+        android:layout_marginBottom="60dp"
+        app:ColumnCount="2"
+        app:ItemHeight="40dp"
         app:ItemWidth="60dp"
-        app:YItemWidth="66dp" />
+        app:RowCount="3"
+        app:YItemWidth="88dp" />
 
     <Button
         android:id="@+id/bt"

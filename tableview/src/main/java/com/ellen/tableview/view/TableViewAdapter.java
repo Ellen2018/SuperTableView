@@ -1,7 +1,13 @@
 package com.ellen.tableview.view;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class TableViewAdapter {
 
@@ -45,7 +51,9 @@ public abstract class TableViewAdapter {
 
     public abstract View createItemView(int position, int row, int cloumn);
 
-    public abstract int getItemCount();
+    public int getItemCount() {
+        return tableView.getColumnNumber() * tableView.getRowNumber();
+    }
 
     public abstract void bindView(View view, int finalIndex, int row, int cloumn);
 
@@ -54,7 +62,7 @@ public abstract class TableViewAdapter {
     public abstract void bindYItemView(View view, int row);
 
     public int getAllRow() {
-        return getItemCount() / getCloumn() ;
+        return getItemCount() / getCloumn();
     }
 
     public int getFinalIndex(int position, int row, int cloumn) {
@@ -90,7 +98,115 @@ public abstract class TableViewAdapter {
     }
 
     public void notifyChange() {
-       tableView.setTableViewAdapter(this);
+        tableView.setTableViewAdapter(this);
     }
 
+    public void addDataCloumn(List<View> viewList) {
+        gridLayout.removeAllViews();
+        tableView.getMapItemViews().clear();
+        for (int i = 0; i < viewList.size(); i++) {
+            //处理行
+            TableItemView tableItemView = new TableItemView(i, tableView.getColumnNumber(), viewList.get(i));
+            List<TableItemView> tableItemViewListRow = tableView.getMapRow().get(i);
+            tableItemViewListRow.add(tableItemView);
+            //处理列
+            if (tableView.getMapColumn().get(tableView.getColumnNumber()) == null) {
+                List<TableItemView> tableItemViewListColumn = new ArrayList<>();
+                tableItemViewListColumn.add(tableItemView);
+                tableView.getMapColumn().put(tableView.getColumnNumber(), tableItemViewListColumn);
+            } else {
+                List<TableItemView> tableItemViewListColumn = tableView.getMapColumn().get(tableView.getColumnNumber());
+                tableItemViewListColumn.add(tableItemView);
+            }
+        }
+        tableView.setColumnNumber(tableView.getColumnNumber() + 1);
+        for (int i = 0; i < tableView.getMapRow().size(); i++) {
+            for (int j = 0; j < tableView.getColumnNumber(); j++) {
+                List<TableItemView> tableItemViewList = tableView.getMapColumn().get(j);
+                for (TableItemView tableItemView : tableItemViewList) {
+                    if (tableItemView.getRow() == i && tableItemView.getCloumn() == j) {
+                        int index;
+                        if (isOrientationV) {
+                            index = j * tableView.getColumnNumber() + i;
+                        } else {
+                            index = i * tableView.getRowNumber() + j;
+                        }
+                        tableView.getMapItemViews().put(index, tableItemView.getView());
+                        tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
+                        gridLayout.addView(tableItemView.getView());
+                        tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
+                        tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public void addDataRow(List<View> viewList,View yItemView) {
+        gridLayout.removeAllViews();
+        tableView.getMapItemViews().clear();
+        for (int i = 0; i < viewList.size(); i++) {
+            //处理行
+            TableItemView tableItemView = new TableItemView(tableView.getRowNumber(), i, viewList.get(i));
+            if (tableView.getMapRow().get(tableView.getRowNumber()) == null) {
+                List<TableItemView> tableItemViewListRow = new ArrayList<>();
+                tableItemViewListRow.add(tableItemView);
+                tableView.getMapRow().put(tableView.getRowNumber(), tableItemViewListRow);
+            } else {
+                List<TableItemView> tableItemViewListRow = tableView.getMapRow().get(tableView.getRowNumber());
+                tableItemViewListRow.add(tableItemView);
+            }
+
+            //处理列
+            List<TableItemView> tableItemViewListColumn = tableView.getMapColumn().get(i);
+            tableItemViewListColumn.add(tableItemView);
+        }
+        Log.e("列数",tableView.getMapColumn().size()+"");
+        Log.e("行数",tableView.getMapRow().size()+"");
+        tableView.setRowNumber(tableView.getRowNumber() + 1);
+        for (int i = 0; i < tableView.getRowNumber(); i++) {
+            for (int j = 0; j < tableView.getMapColumn().size(); j++) {
+                List<TableItemView> tableItemViewList = tableView.getMapColumn().get(j);
+                for (TableItemView tableItemView : tableItemViewList) {
+                    if (tableItemView.getRow() == i && tableItemView.getCloumn() == j) {
+                        int index;
+                        if (isOrientationV) {
+                            index = j * tableView.getColumnNumber() + i;
+                        } else {
+                            index = i * tableView.getRowNumber() + j;
+                        }
+                        Log.e("添加(行，列)","("+i+","+j+")");
+                        tableView.getMapItemViews().put(index, tableItemView.getView());
+                        tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
+                        gridLayout.addView(tableItemView.getView());
+                        tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
+                        tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
+                        break;
+                    }
+                }
+            }
+        }
+        //添加Y轴View
+        tableView.getGridLayoutY().addView(yItemView);
+        YItemView yItemView1 = new YItemView(yItemView,tableView.getRowNumber()-1);
+        yItemView.setMinimumWidth(tableView.getyWidth());
+        yItemView.setMinimumHeight(tableView.getItemHeight());
+        tableView.getMapYItem().put(tableView.getRowNumber()-1,yItemView1);
+        tableView.setItemOnClick(yItemView,tableView.getRowNumber()-1,-1);
+    }
+
+    public void updateCloumnData(int column, UpdateDataCallback updateDataCallback) {
+        List<TableItemView> tableItemViewList = tableView.getMapColumn().get(column);
+        updateDataCallback.update(tableItemViewList);
+    }
+
+    public void updateRowData(int row, UpdateDataCallback updateDataCallback) {
+        List<TableItemView> tableItemViewList = tableView.getMapRow().get(row);
+        updateDataCallback.update(tableItemViewList);
+    }
+
+    public interface UpdateDataCallback {
+        void update(List<TableItemView> tableItemViewList);
+    }
 }

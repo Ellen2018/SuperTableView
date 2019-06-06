@@ -48,7 +48,7 @@ public class TableView extends RelativeLayout {
     //列数
     private int columnNumber = 10;
     //行数
-    private int rowNumber = 10;
+    private int rowNumber = -1;
     //item宽度
     private int itemWidth = 100;
     //item高度
@@ -100,6 +100,30 @@ public class TableView extends RelativeLayout {
         return columnNumber;
     }
 
+    public GridLayout getGridLayoutY() {
+        return gridLayoutY;
+    }
+
+    public void setGridLayoutY(GridLayout gridLayoutY) {
+        this.gridLayoutY = gridLayoutY;
+    }
+
+    public int getyWidth() {
+        return yWidth;
+    }
+
+    public int getItemCount() {
+        return itemCount;
+    }
+
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
+    }
+
+    public void setyWidth(int yWidth) {
+        this.yWidth = yWidth;
+    }
+
     public void setColumnNumber(int columnNumber) {
         this.columnNumber = columnNumber;
         gridLayoutTable.setColumnCount(columnNumber);
@@ -111,7 +135,7 @@ public class TableView extends RelativeLayout {
 
     public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
-        gridLayoutTable.setRowCount(columnNumber);
+        gridLayoutTable.setRowCount(rowNumber);
     }
 
     public int getItemWidth() {
@@ -174,13 +198,14 @@ public class TableView extends RelativeLayout {
         this.tableViewAdapter.setCloumn(columnNumber);
         this.tableViewAdapter.setGridLayout(gridLayoutTable);
         this.tableViewAdapter.setTableView(this);
-        Log.e("更新适配器不","ok");
         for(int i=0;i<tableViewAdapter.getItemCount();i++){
             itemCount++;
             final int row = getRow(itemCount-1,columnNumber);
             final int column = getColumn(itemCount-1,getRow(itemCount-1,columnNumber),columnNumber);
             View view = tableViewAdapter.createItemView(i,row,column);
             addItem(view);
+            view.setMinimumWidth(getItemWidth());
+            view.setMinimumHeight(getItemHeight());
         }
     }
 
@@ -198,13 +223,6 @@ public class TableView extends RelativeLayout {
         mapRow = new HashMap<>();
         mapYItem = new HashMap<>();
         mapItemViews = new HashMap<>();
-    }
-
-    public void addTextViewItem(String itemString) {
-        TextView textView = new TextView(getContext());
-        textView.setText(itemString);
-        textView.setGravity(Gravity.CENTER);
-        addItem(textView);
     }
 
     public int getRow(int position,int cloumn){
@@ -238,7 +256,11 @@ public class TableView extends RelativeLayout {
             View viewYTitle = tableViewAdapter.createYItemView(row);
             if(viewYTitle != null) {
                 YItemView yItemView = new YItemView(viewYTitle, row);
+                setItemOnClick(yItemView.getView(),row,-1);
                 gridLayoutY.addView(yItemView.getView(), yWidth, itemHeight);
+                GridLayout.LayoutParams layoutParams =(GridLayout.LayoutParams)yItemView.getView().getLayoutParams();
+                layoutParams.height = itemHeight;// 控件的高强制设成20
+                yItemView.getView().setLayoutParams(layoutParams);
                 mapYItem.put(row, yItemView);
                 tableViewAdapter.bindYItemView(viewYTitle, row);
             }
@@ -247,27 +269,10 @@ public class TableView extends RelativeLayout {
             cloumnTextViewList.add(tableItemView);
         }
 
-        tableItemView.getView().setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    List<TableItemView> cloumnViewList = mapColumn.get(column);
-                    List<TableItemView> rowViewList = mapRow.get(row);
-                    TableClick tableClick = new TableClick();
-                    tableClick.setView(view);
-                    tableClick.setPosition(itemCount - 1);
-                    tableClick.setRow(row);
-                    tableClick.setCloumn(column);
-                    tableClick.setCloumnViewList(cloumnViewList);
-                    tableClick.setRowViewList(rowViewList);
-                    tableClick.setyItemView(mapYItem.get(row));
-                    onItemClickListener.onClickItem(v, tableClick);
-                }
-            }
-        });
+        setItemOnClick(tableItemView.getView(),row,column);
         int finalIndex = tableViewAdapter.getFinalIndex(itemCount - 1,row,column);
         tableViewAdapter.bindView(view,finalIndex,row,column);
-        gridLayoutTable.addView(view,itemWidth,itemHeight);
+        gridLayoutTable.addView(view);
         mapItemViews.put(finalIndex,view);
     }
 
@@ -297,6 +302,32 @@ public class TableView extends RelativeLayout {
     public interface OnItemClickListener {
         void onClickItem(View view, TableClick tableClick);
         void onClickYItem(View view,TableClick tableClick);
+    }
+
+    public void setItemOnClick(final View view, final int row, final int column){
+        view.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    List<TableItemView> cloumnViewList = mapColumn.get(column);
+                    List<TableItemView> rowViewList = mapRow.get(row);
+                    TableClick tableClick = new TableClick();
+                    tableClick.setView(view);
+                    tableClick.setPosition(itemCount - 1);
+                    tableClick.setRow(row);
+                    tableClick.setCloumn(column);
+                    tableClick.setCloumnViewList(cloumnViewList);
+                    tableClick.setRowViewList(rowViewList);
+                    tableClick.setyItemView(mapYItem.get(row));
+                    if(column != -1) {
+                        onItemClickListener.onClickItem(v, tableClick);
+                    }else {
+                        onItemClickListener.onClickYItem(v,tableClick);
+                    }
+                }
+            }
+        });
+
     }
 
 }
