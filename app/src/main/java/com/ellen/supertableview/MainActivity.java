@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tableView = findViewById(R.id.tableView);
+        //tableView.hideYAxis();
         tableView.setOnItemClickListener(new TableView.OnItemClickListener() {
             @Override
             public void onClickItem(View view, TableClick tableClick) {
@@ -90,17 +91,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.bt_add_v).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tableAdapter.addSingleDataRow(new SuperTableViewAdapter.AddYItemCallback() {
-                    @Override
-                    public void addItemSuccess(int poition, View view) {
-
-                    }
-
-                    @Override
-                    public void addYItemSuccess(int row, View yItemView) {
-
-                    }
-                });
+                tableView.setRightCloumnPosition(3);
             }
         });
     }

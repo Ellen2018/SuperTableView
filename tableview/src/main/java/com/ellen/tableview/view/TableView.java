@@ -39,11 +39,11 @@ public class TableView extends RelativeLayout {
     //行集合
     private Map<Integer, List<TableItemView>> mapRow;
     //Y轴Item集合
-    private Map<Integer,YItemView> mapYItem;
+    private Map<Integer, YItemView> mapYItem;
     //适配器
     private TableViewAdapter tableViewAdapter;
     //
-    private Map<Integer,TableItemView> mapItemViews;
+    private Map<Integer, TableItemView> mapItemViews;
 
     //列数
     private int columnNumber = 10;
@@ -86,9 +86,9 @@ public class TableView extends RelativeLayout {
                 this.rowNumber = typedArray.getInteger(attr, this.rowNumber);
                 gridLayoutTable.setRowCount(rowNumber);
                 gridLayoutY.setRowCount(rowNumber);
-            }else if(attr == R.styleable.TableView_YItemWidth){
+            } else if (attr == R.styleable.TableView_YItemWidth) {
                 yWidth = (int) typedArray.getDimension(attr, 100);// 控件的宽强制设成30;
-                LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams)gridLayoutY.getLayoutParams();
+                LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) gridLayoutY.getLayoutParams();
                 linearParams.height = LayoutParams.MATCH_PARENT;// 控件的高强制设成20
                 linearParams.width = yWidth;
                 gridLayoutY.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
@@ -182,7 +182,7 @@ public class TableView extends RelativeLayout {
         return mapItemViews;
     }
 
-    private void clear(){
+    private void clear() {
         mapYItem.clear();
         mapColumn.clear();
         mapItemViews.clear();
@@ -192,17 +192,17 @@ public class TableView extends RelativeLayout {
         gridLayoutY.removeAllViews();
     }
 
-    public void setTableViewAdapter(TableViewAdapter tableViewAdapter){
+    public void setTableViewAdapter(TableViewAdapter tableViewAdapter) {
         clear();
         this.tableViewAdapter = tableViewAdapter;
         this.tableViewAdapter.setCloumn(columnNumber);
         this.tableViewAdapter.setGridLayout(gridLayoutTable);
         this.tableViewAdapter.setTableView(this);
-        for(int i=0;i<tableViewAdapter.getItemCount();i++){
+        for (int i = 0; i < tableViewAdapter.getItemCount(); i++) {
             itemCount++;
-            final int row = getRow(itemCount-1,columnNumber);
-            final int column = getColumn(itemCount-1,getRow(itemCount-1,columnNumber),columnNumber);
-            View view = tableViewAdapter.createItemView(i,row,column);
+            final int row = getRow(itemCount - 1, columnNumber);
+            final int column = getColumn(itemCount - 1, getRow(itemCount - 1, columnNumber), columnNumber);
+            View view = tableViewAdapter.createItemView(i, row, column);
             addItem(view);
             view.setMinimumWidth(getItemWidth());
             view.setMinimumHeight(getItemHeight());
@@ -225,17 +225,17 @@ public class TableView extends RelativeLayout {
         mapItemViews = new HashMap<>();
     }
 
-    public int getRow(int position,int cloumn){
-        return  (position) / cloumn;
+    public int getRow(int position, int cloumn) {
+        return (position) / cloumn;
     }
 
-    public int getColumn(int position,int row,int cloumn){
+    public int getColumn(int position, int row, int cloumn) {
         return (((position) - row * cloumn) % cloumn);
     }
 
     public void addItem(final View view) {
-        final int row = getRow(itemCount-1,columnNumber);
-        final int column = getColumn(itemCount-1,getRow(itemCount-1,columnNumber),columnNumber);
+        final int row = getRow(itemCount - 1, columnNumber);
+        final int column = getColumn(itemCount - 1, getRow(itemCount - 1, columnNumber), columnNumber);
         Log.e("行数", row + "");
         Log.e("列数", column + "");
 
@@ -254,11 +254,11 @@ public class TableView extends RelativeLayout {
             cloumnTextViewList.add(tableItemView);
             mapRow.put(row, cloumnTextViewList);
             View viewYTitle = tableViewAdapter.createYItemView(row);
-            if(viewYTitle != null) {
+            if (viewYTitle != null) {
                 YItemView yItemView = new YItemView(viewYTitle, row);
-                setItemOnClick(yItemView.getView(),row,-1);
+                setItemOnClick(yItemView.getView(), row, -1);
                 gridLayoutY.addView(yItemView.getView(), yWidth, itemHeight);
-                GridLayout.LayoutParams layoutParams =(GridLayout.LayoutParams)yItemView.getView().getLayoutParams();
+                GridLayout.LayoutParams layoutParams = (GridLayout.LayoutParams) yItemView.getView().getLayoutParams();
                 layoutParams.height = itemHeight;// 控件的高强制设成20
                 yItemView.getView().setLayoutParams(layoutParams);
                 mapYItem.put(row, yItemView);
@@ -269,14 +269,14 @@ public class TableView extends RelativeLayout {
             cloumnTextViewList.add(tableItemView);
         }
 
-        setItemOnClick(tableItemView.getView(),row,column);
-        int finalIndex = tableViewAdapter.getFinalIndex(itemCount - 1,row,column);
-        tableViewAdapter.bindView(view,finalIndex,row,column);
+        setItemOnClick(tableItemView.getView(), row, column);
+        int finalIndex = tableViewAdapter.getFinalIndex(itemCount - 1, row, column);
+        tableViewAdapter.bindView(view, finalIndex, row, column);
         gridLayoutTable.addView(view);
-        mapItemViews.put(finalIndex,tableItemView);
+        mapItemViews.put(finalIndex, tableItemView);
     }
 
-    public void hideYAxis(){
+    public void hideYAxis() {
         gridLayoutY.setVisibility(GONE);
     }
 
@@ -284,27 +284,30 @@ public class TableView extends RelativeLayout {
      * 列：左边定位到position位置
      */
     public void setLeftCloumnPosition(int position) {
-        horizontalScrollView.scrollTo((position-1) * itemWidth, 0);
+        int scrollWidth = position  * itemWidth;
+        horizontalScrollView.scrollTo(scrollWidth, 0);
     }
 
     /**
      * 列：右边定位到position位置
      */
     public void setRightCloumnPosition(int position) {
+        int yItemWidth = gridLayoutY.getVisibility() == VISIBLE ? yWidth : 0;
         //获取当前控件的宽度
         int width = this.getWidth();
         //总长度
-        int allWidth = position * itemWidth;
-        int scrollWidth = allWidth - width;
+        int allWidth = (position + 1) * itemWidth;
+        int scrollWidth = allWidth - width + yItemWidth;
         horizontalScrollView.scrollTo(scrollWidth, 0);
     }
 
     public interface OnItemClickListener {
         void onClickItem(View view, TableClick tableClick);
-        void onClickYItem(View view,TableClick tableClick);
+
+        void onClickYItem(View view, TableClick tableClick);
     }
 
-    public void setItemOnClick(final View view, final int row, final int column){
+    public void setItemOnClick(final View view, final int row, final int column) {
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -319,10 +322,10 @@ public class TableView extends RelativeLayout {
                     tableClick.setCloumnViewList(cloumnViewList);
                     tableClick.setRowViewList(rowViewList);
                     tableClick.setyItemView(mapYItem.get(row));
-                    if(column != -1) {
+                    if (column != -1) {
                         onItemClickListener.onClickItem(v, tableClick);
-                    }else {
-                        onItemClickListener.onClickYItem(v,tableClick);
+                    } else {
+                        onItemClickListener.onClickYItem(v, tableClick);
                     }
                 }
             }
