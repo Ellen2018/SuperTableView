@@ -10,6 +10,7 @@
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="60dp"
         app:ColumnCount="4"
         app:ItemHeight="50dp"
@@ -31,5 +32,28 @@
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/bt_add_v"
         android:text="横向添加数据" />
+
+    <Button
+        android:id="@+id/bt_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/bt_add_h"
+        android:text="修改数据" />
+
+    <Button
+        android:id="@+id/bt_left_dinwei"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bt_add_v"
+        android:text="左边定位到测量中" />
+
+    <Button
+        android:id="@+id/bt_right_dinwei"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/bt_left_dinwei"
+        android:layout_above="@id/bt_add_h"
+        android:text="右边定位到已上传" />
 
 </RelativeLayout>

@@ -192,6 +192,9 @@ public class TableView extends RelativeLayout {
     }
 
     public void setTableViewAdapter(TableViewAdapter tableViewAdapter) {
+        if(tableViewAdapter.equals(this.tableViewAdapter)){
+            return;
+        }
         clear();
         this.tableViewAdapter = tableViewAdapter;
         this.tableViewAdapter.setCloumn(columnNumber);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.ellen.tableview.supertableview.TableItemView;
 import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
 
 import java.util.ArrayList;
@@ -86,5 +87,23 @@ public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends Y
     public interface AddYItemCallback{
         void addItemSuccess(int poition,View view);
         void addYItemSuccess(int row,View yItemView);
+    }
+
+    public void superUpdateCloumnData(final int column, final SuperUpdateDataCallback superUpdateDataCallback) {
+        final List<T> tList = new ArrayList<>();
+        super.updateCloumnData(column, new UpdateDataCallback() {
+            @Override
+            public void update(List<TableItemView> tableItemViewList) {
+                for(TableItemView tableItemView:tableItemViewList){
+                    T t = onCreateItemViewHolder(tableItemView.getView(),0,tableItemView.getRow(),column);
+                    tList.add(t);
+                }
+                superUpdateDataCallback.update(tList);
+            }
+        });
+    }
+
+    public interface SuperUpdateDataCallback<T extends ItemViewHolder>{
+        void update(List<T> tList);
     }
 }

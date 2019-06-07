@@ -4,11 +4,15 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
+import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
 import com.ellen.tableview.supertableview.adapter.superadapter.SuperTableViewAdapter;
 import com.ellen.tableview.supertableview.TableClick;
 import com.ellen.tableview.supertableview.TableItemView;
 import com.ellen.tableview.supertableview.TableView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,21 +80,55 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.bt_update).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableAdapter.updateCloumnData(0, new TableViewAdapter.UpdateDataCallback() {
+                    @Override
+                    public void update(List<TableItemView> tableItemViewList){
+                        for(int i=0;i<tableItemViewList.size();i++){
+                            if(i == 0) continue;
+                            TextView textView = tableItemViewList.get(i).getView().findViewById(R.id.table_text);
+                            textView.setText(i+"");
+                        }
+                    }
+                });
+            }
+        });
+
         findViewById(R.id.bt_add_v).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               tableAdapter.addSingleDataRow(new SuperTableViewAdapter.AddYItemCallback() {
-                   @Override
-                   public void addItemSuccess(int poition, View view) {
+                tableAdapter.addSingleDataRow(new SuperTableViewAdapter.AddYItemCallback() {
+                    @Override
+                    public void addItemSuccess(int poition, View view) {
 
-                   }
+                    }
 
-                   @Override
-                   public void addYItemSuccess(int row, View yItemView) {
+                    @Override
+                    public void addYItemSuccess(int row, View yItemView) {
 
-                   }
-               });
+                    }
+                });
             }
         });
+
+        findViewById(R.id.bt_left_dinwei).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableView.setLeftCloumnPosition(1);
+            }
+        });
+
+        findViewById(R.id.bt_right_dinwei).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableView.setRightCloumnPosition(3);
+            }
+        });
+
+
+
+
     }
 }
