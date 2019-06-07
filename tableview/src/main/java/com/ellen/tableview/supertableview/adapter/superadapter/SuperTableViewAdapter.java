@@ -1,22 +1,20 @@
-package com.ellen.tableview.view;
+package com.ellen.tableview.supertableview.adapter.superadapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends YItemViewHolder> extends TableViewAdapter {
 
-    private int yItemLayoutId;
-    private int itemLayoutId;
     private Context context;
 
-    public SuperTableViewAdapter(Context context,int yItemLayoutId, int itemLayoutId){
+    public SuperTableViewAdapter(Context context){
         this.context = context;
-        this.itemLayoutId = itemLayoutId;
-        this.yItemLayoutId = yItemLayoutId;
     }
 
     private View getView(int layoutId){
@@ -26,7 +24,7 @@ public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends Y
 
     @Override
     public View createItemView(int position, int row, int cloumn) {
-        View itemView = getView(itemLayoutId);
+        View itemView = getView(getItemLayoutId());
         T t = onCreateItemViewHolder(itemView,position,row,cloumn);
         onBindItemViewHolder(t,position,row,position);
         return itemView;
@@ -39,7 +37,7 @@ public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends Y
 
     @Override
     public View createYItemView(int row) {
-        View yItemView = getView(yItemLayoutId);
+        View yItemView = getView(getyItemLayoutId());
         E e= onCreateYItemViewHolder(yItemView,row);
         onBindYItemViewHolder(e,row);
         return yItemView;
@@ -50,6 +48,9 @@ public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends Y
 
     }
 
+    protected abstract int getyItemLayoutId();
+    protected abstract int getItemLayoutId();
+
     public abstract T onCreateItemViewHolder(View itemView,int position,int row,int column);
     public abstract void onBindItemViewHolder(T t,int position,int row,int column);
 
@@ -59,7 +60,7 @@ public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends Y
     public void addSingleDataColumn(AddItemCallback addItemCallback){
         List<View> views = new ArrayList<>();
         for(int i=0;i<getTableView().getRowNumber();i++){
-            View addItemView = getView(itemLayoutId);
+            View addItemView = getView(getItemLayoutId());
             views.add(addItemView);
             addItemCallback.addItemSuccess(i,addItemView);
         }
@@ -69,11 +70,11 @@ public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends Y
     public void addSingleDataRow(AddYItemCallback addYItemCallback){
         List<View> views = new ArrayList<>();
         for(int i=0;i<getTableView().getColumnNumber();i++){
-            View addItemView = getView(itemLayoutId);
+            View addItemView = getView(getItemLayoutId());
             views.add(addItemView);
             addYItemCallback.addItemSuccess(i,addItemView);
         }
-        View yItemView = getView(yItemLayoutId);
+        View yItemView = getView(getyItemLayoutId());
         addDataRow(views,yItemView);
         addYItemCallback.addYItemSuccess(getTableView().getRowNumber()-1,yItemView);
     }

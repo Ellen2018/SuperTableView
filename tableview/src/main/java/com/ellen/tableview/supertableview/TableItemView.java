@@ -1,4 +1,4 @@
-package com.ellen.tableview.view;
+package com.ellen.tableview.supertableview;
 
 import android.view.View;
 

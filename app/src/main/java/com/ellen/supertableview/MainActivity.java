@@ -3,24 +3,12 @@ package com.ellen.supertableview;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.ellen.tableview.view.SuperTableViewAdapter;
-import com.ellen.tableview.view.TableClick;
-import com.ellen.tableview.view.TableItemView;
-import com.ellen.tableview.view.TableView;
-import com.ellen.tableview.view.TableViewAdapter;
-import com.ellen.tableview.view.YItemView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.ellen.tableview.supertableview.adapter.superadapter.SuperTableViewAdapter;
+import com.ellen.tableview.supertableview.TableClick;
+import com.ellen.tableview.supertableview.TableItemView;
+import com.ellen.tableview.supertableview.TableView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        final TableAdapter tableAdapter = new TableAdapter(MainActivity.this,R.layout.item_type_y,R.layout.item_table);
+        final TableAdapter tableAdapter = new TableAdapter(MainActivity.this);
         //设置索引排序为：垂直方向
         tableAdapter.setOrientationV(true);
         tableView.setTableViewAdapter(tableAdapter);
@@ -91,7 +79,17 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.bt_add_v).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tableView.setRightCloumnPosition(3);
+               tableAdapter.addSingleDataRow(new SuperTableViewAdapter.AddYItemCallback() {
+                   @Override
+                   public void addItemSuccess(int poition, View view) {
+
+                   }
+
+                   @Override
+                   public void addYItemSuccess(int row, View yItemView) {
+
+                   }
+               });
             }
         });
     }

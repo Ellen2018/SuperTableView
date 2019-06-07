@@ -2,16 +2,12 @@ package com.ellen.supertableview;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ellen.tableview.view.ItemViewHolder;
-import com.ellen.tableview.view.SuperTableViewAdapter;
-import com.ellen.tableview.view.YItemViewHolder;
-
-import java.util.List;
+import com.ellen.tableview.supertableview.adapter.superadapter.ItemViewHolder;
+import com.ellen.tableview.supertableview.adapter.superadapter.SuperTableViewAdapter;
+import com.ellen.tableview.supertableview.adapter.superadapter.YItemViewHolder;
 
 public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewHolder, TableAdapter.MyYItemViewHolder> {
 
@@ -28,8 +24,18 @@ public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewH
             "病害"
     };
 
-    public TableAdapter(Context context, int yItemLayoutId, int itemLayoutId) {
-        super(context, yItemLayoutId, itemLayoutId);
+    public TableAdapter(Context context) {
+        super(context);
+    }
+
+    @Override
+    protected int getyItemLayoutId() {
+        return R.layout.item_type_y;
+    }
+
+    @Override
+    protected int getItemLayoutId() {
+        return R.layout.item_table;
     }
 
     @Override

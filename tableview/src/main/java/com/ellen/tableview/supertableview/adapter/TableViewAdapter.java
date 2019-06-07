@@ -1,10 +1,11 @@
-package com.ellen.tableview.view;
+package com.ellen.tableview.supertableview.adapter;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
-import android.widget.TextView;
+
+import com.ellen.tableview.supertableview.TableItemView;
+import com.ellen.tableview.supertableview.TableView;
+import com.ellen.tableview.supertableview.YItemView;
 
 import java.util.ArrayList;
 import java.util.List;
