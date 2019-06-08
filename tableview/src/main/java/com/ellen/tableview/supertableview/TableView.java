@@ -294,7 +294,7 @@ public class TableView extends RelativeLayout {
      * 列：右边定位到position位置
      */
     public void setRightCloumnPosition(int position) {
-        int yItemWidth = gridLayoutY.getVisibility() == VISIBLE ? yWidth : 0;
+        int yItemWidth = (int) horizontalScrollView.getX()+this.getPaddingLeft();
         //获取当前控件的宽度
         int width = this.getWidth();
         //总长度

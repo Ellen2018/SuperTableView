@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
     <!-- 实心 -->
-    <solid android:color="#CFCFCF" />
+    <solid android:color="#DEDEDE" />
     <!-- 边框 -->
     <stroke
         android:width="0.1dp"
-        android:color="@android:color/holo_green_light" />
+        android:color="	#CFCFCF" />
     <!-- 圆角 -->
     <corners android:radius="0dp" />
     <!-- 边距 -->

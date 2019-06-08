@@ -28,34 +28,40 @@ public class MainActivity extends AppCompatActivity {
         tableView.setOnItemClickListener(new TableView.OnItemClickListener() {
             @Override
             public void onClickItem(View view, TableClick tableClick) {
-                if(agoTableClick != null){
-                    for(TableItemView tableItemView:agoTableClick.getCloumnViewList()){
-
-                            tableItemView.getView().setBackgroundColor(Color.WHITE);
-
+                if (agoTableClick != null) {
+                    for (TableItemView tableItemView : agoTableClick.getCloumnViewList()) {
+                        if (tableItemView.getRow() == 0) continue;
+                        TextView textView = tableItemView.getView().findViewById(R.id.table_text);
+                        textView.setBackgroundResource(R.drawable.item_bg_white);
+                        textView.setTextColor(Color.BLACK);
                     }
                 }
-               int column = tableClick.getCloumn();
-               int color = 0;
-               switch (column){
-                   case 0:
-                       color = Color.RED;
-                       break;
-                   case 1:
-                       color = Color.BLUE;
-                       break;
-                   case 2:
-                       color = Color.YELLOW;
-                       break;
-                   case 3:
-                       color = Color.GREEN;
-                       break;
-               }
 
-               for(TableItemView tableItemView:tableClick.getCloumnViewList()){
-                   tableItemView.getView().setBackgroundColor(color);
-               }
-               agoTableClick = tableClick;
+                int cloumn = tableClick.getCloumn();
+                int resorce = R.drawable.item_bg_red;
+                switch (cloumn){
+                    case 0:
+                        resorce = R.drawable.item_bg_red;
+                        break;
+                    case 1:
+                        resorce = R.drawable.item_bg_blue;
+                        break;
+                    case 2:
+                        resorce = R.drawable.item_bg_yellow;
+                        break;
+                    case 3:
+                        resorce = R.drawable.item_bg_green;
+                        break;
+
+                }
+
+                for (TableItemView tableItemView : tableClick.getCloumnViewList()) {
+                    if (tableItemView.getRow() == 0) continue;
+                    TextView textView = tableItemView.getView().findViewById(R.id.table_text);
+                    textView.setTextColor(Color.WHITE);
+                    textView.setBackgroundResource(resorce);
+                }
+                agoTableClick = tableClick;
             }
 
             @Override
@@ -71,12 +77,12 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.bt_add_h).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               tableAdapter.addSingleDataColumn(new SuperTableViewAdapter.AddItemCallback() {
-                   @Override
-                   public void addItemSuccess(int poition, View view) {
+                tableAdapter.addSingleDataColumn(new SuperTableViewAdapter.AddItemCallback() {
+                    @Override
+                    public void addItemSuccess(int poition, View view) {
 
-                   }
-               });
+                    }
+                });
             }
         });
 
@@ -85,11 +91,40 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 tableAdapter.updateCloumnData(0, new TableViewAdapter.UpdateDataCallback() {
                     @Override
-                    public void update(List<TableItemView> tableItemViewList){
-                        for(int i=0;i<tableItemViewList.size();i++){
-                            if(i == 0) continue;
+                    public void update(List<TableItemView> tableItemViewList) {
+                        for (int i = 0; i < tableItemViewList.size(); i++) {
+                            if (i == 0) continue;
                             TextView textView = tableItemViewList.get(i).getView().findViewById(R.id.table_text);
-                            textView.setText(i+"");
+                            textView.setText(i + "");
+                            switch (i){
+                                case 1:
+                                    textView.setText("前顺坡终点");
+                                    break;
+                                case 2:
+                                    textView.setText("转撤");
+                                    break;
+                                case 3:
+                                    textView.setText("3");
+                                    break;
+                                case 4:
+                                    textView.setText("2");
+                                    break;
+                                case 5:
+                                    textView.setText("x");
+                                    break;
+                                case 6:
+                                    textView.setText("x");
+                                    break;
+                                case 7:
+                                    textView.setText("x");
+                                    break;
+                                case 8:
+                                    textView.setText("");
+                                    break;
+                                case 9:
+                                    textView.setText("");
+                                    break;
+                            }
                         }
                     }
                 });
@@ -126,8 +161,6 @@ public class MainActivity extends AppCompatActivity {
                 tableView.setRightCloumnPosition(3);
             }
         });
-
-
 
 
     }

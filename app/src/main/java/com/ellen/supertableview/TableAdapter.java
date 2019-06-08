@@ -48,20 +48,24 @@ public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewH
         if(row == 0){
             switch (column){
                 case 0:
-                    myItemViewHolder.textView.setBackgroundColor(Color.RED);
+                    myItemViewHolder.textView.setBackgroundResource(R.drawable.item_bg_red);
                     myItemViewHolder.textView.setText("已测量");
+                    myItemViewHolder.textView.setTextColor(Color.WHITE);
                     break;
                 case 1:
-                    myItemViewHolder.textView.setBackgroundColor(Color.BLUE);
+                    myItemViewHolder.textView.setBackgroundResource(R.drawable.item_bg_blue);
                     myItemViewHolder.textView.setText("测量中");
+                    myItemViewHolder.textView.setTextColor(Color.WHITE);
                     break;
                 case 2:
-                    myItemViewHolder.textView.setBackgroundColor(Color.YELLOW);
+                    myItemViewHolder.textView.setBackgroundResource(R.drawable.item_bg_yellow);
                     myItemViewHolder.textView.setText("已跳过");
+                    myItemViewHolder.textView.setTextColor(Color.WHITE);
                     break;
                 case 3:
-                    myItemViewHolder.textView.setBackgroundColor(Color.GREEN);
+                    myItemViewHolder.textView.setBackgroundResource(R.drawable.item_bg_green);
                     myItemViewHolder.textView.setText("已上传");
+                    myItemViewHolder.textView.setTextColor(Color.WHITE);
                     break;
             }
         }
