@@ -110,10 +110,6 @@ public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewH
             return textView;
         }
 
-        public void setTextView(TextView textView) {
-            this.textView = textView;
-        }
-
         public MyItemViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.table_text);

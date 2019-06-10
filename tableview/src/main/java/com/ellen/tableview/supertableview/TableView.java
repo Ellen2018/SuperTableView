@@ -192,7 +192,7 @@ public class TableView extends RelativeLayout {
     }
 
     public void setTableViewAdapter(TableViewAdapter tableViewAdapter) {
-        if(tableViewAdapter.equals(this.tableViewAdapter)){
+        if (tableViewAdapter.equals(this.tableViewAdapter)) {
             return;
         }
         clear();
@@ -283,7 +283,7 @@ public class TableView extends RelativeLayout {
      * 列：左边定位到position位置
      */
     public void setLeftCloumnPosition(int position) {
-        int scrollWidth = position  * itemWidth;
+        int scrollWidth = position * itemWidth;
         horizontalScrollView.scrollTo(scrollWidth, 0);
     }
 
@@ -291,7 +291,7 @@ public class TableView extends RelativeLayout {
      * 列：右边定位到position位置
      */
     public void setRightCloumnPosition(int position) {
-        int yItemWidth = (int) horizontalScrollView.getX()+this.getPaddingLeft();
+        int yItemWidth = (int) horizontalScrollView.getX() + this.getPaddingLeft();
         //获取当前控件的宽度
         int width = this.getWidth();
         //总长度
@@ -321,6 +321,10 @@ public class TableView extends RelativeLayout {
                     tableClick.setCloumnViewList(cloumnViewList);
                     tableClick.setRowViewList(rowViewList);
                     tableClick.setyItemView(mapYItem.get(row));
+                    //获取点击的位置的长度
+                    int length1 = (column + 1) * itemWidth;
+                    int length2 = horizontalScrollView.getScrollX() + horizontalScrollView.getWidth();
+                    tableClick.setPartHide(length1 > length2);
                     if (column != -1) {
                         onItemClickListener.onClickItem(v, tableClick);
                     } else {

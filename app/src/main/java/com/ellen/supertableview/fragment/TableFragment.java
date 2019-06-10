@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,6 @@ import com.ellen.tableview.supertableview.TableClick;
 import com.ellen.tableview.supertableview.TableItemView;
 import com.ellen.tableview.supertableview.TableView;
 import com.ellen.tableview.supertableview.adapter.superadapter.SuperTableViewAdapter;
-
-import java.util.List;
 
 @SuppressLint("ValidFragment")
 public class TableFragment extends Fragment {
@@ -43,6 +42,10 @@ public class TableFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClickItem(View view, TableClick tableClick) {
+                //检测是否需要滑动
+                if(tableClick.isPartHide()){
+                    tableView.setRightCloumnPosition(tableClick.getCloumn());
+                }
                 if(chooseColumn == tableClick.getCloumn()){
                     if(!(tableClick.getRow()>=2 && tableClick.getRow() <= 6)){
                         if(chooseUpDataCallback != null){
