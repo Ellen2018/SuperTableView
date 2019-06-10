@@ -238,9 +238,6 @@ public class TableView extends RelativeLayout {
     public void addItem(final View view) {
         final int row = getRow(itemCount - 1, columnNumber);
         final int column = getColumn(itemCount - 1, getRow(itemCount - 1, columnNumber), columnNumber);
-        Log.e("行数", row + "");
-        Log.e("列数", column + "");
-
         TableItemView tableItemView = new TableItemView(row, column, view);
         if (mapColumn.get(column) == null) {
             List<TableItemView> cloumnTextViewList = new ArrayList<>();

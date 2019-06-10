@@ -85,6 +85,7 @@ public abstract class TableViewAdapter {
     public void addDataColumn(List<View> viewList) {
         gridLayout.removeAllViews();
         tableView.getMapItemViews().clear();
+        tableView.setItemCount(0);
         for (int i = 0; i < viewList.size(); i++) {
             //处理行
             TableItemView tableItemView = new TableItemView(i, tableView.getColumnNumber(), viewList.get(i));
@@ -117,6 +118,7 @@ public abstract class TableViewAdapter {
                         gridLayout.addView(tableItemView.getView());
                         tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
                         tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
+                        tableView.setItemCount(tableView.getItemCount()+1);
                         break;
                     }
                 }
@@ -127,6 +129,7 @@ public abstract class TableViewAdapter {
     public void addDataRow(List<View> viewList,View yItemView) {
         gridLayout.removeAllViews();
         tableView.getMapItemViews().clear();
+        tableView.setItemCount(0);
         for (int i = 0; i < viewList.size(); i++) {
             //处理行
             TableItemView tableItemView = new TableItemView(tableView.getRowNumber(), i, viewList.get(i));
@@ -160,6 +163,7 @@ public abstract class TableViewAdapter {
                         gridLayout.addView(tableItemView.getView());
                         tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
                         tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
+                        tableView.setItemCount(tableView.getItemCount() + 1);
                         break;
                     }
                 }

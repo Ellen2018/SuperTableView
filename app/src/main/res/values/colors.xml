@@ -3,4 +3,15 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="white">#ffffff</color>
+    <!--TableView-->
+    <color name="table_column_color_1">#A6D63E</color>
+    <color name="table_column_color_2">#2982E4</color>
+    <color name="table_column_color_3">#D42F2F</color>
+    <color name="table_column_color_4">#43CF7C</color>
+    <color name="table_y_item_color_gray">#DEDEDE</color>
+    <color name="table_item_text_color_black">#474747</color>
+    <color name="table_item_text_color_gray">#565656</color>
+    
 </resources>

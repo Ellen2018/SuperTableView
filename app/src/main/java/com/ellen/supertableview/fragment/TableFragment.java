@@ -2,11 +2,12 @@ package com.ellen.supertableview.fragment;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,21 +31,16 @@ public class TableFragment extends Fragment {
     private int chooseColumn = -1;
     private ChooseUpDataCallback chooseUpDataCallback;
 
-    public ChooseUpDataCallback getChooseUpDataCallback() {
-        return chooseUpDataCallback;
-    }
-
-    public void setChooseUpDataCallback(ChooseUpDataCallback chooseUpDataCallback) {
-        this.chooseUpDataCallback = chooseUpDataCallback;
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.from(getActivity()).inflate(R.layout.fragment_table, container, false);
         tableView = view.findViewById(R.id.tableView);
-        tableView.setTableViewAdapter(superTableViewAdapter = new TableAdapter(getActivity()));
+        superTableViewAdapter = new TableAdapter(getActivity());
+        superTableViewAdapter.setOrientationV(true);
+        tableView.setTableViewAdapter(superTableViewAdapter);
         tableView.setOnItemClickListener(new TableView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClickItem(View view, TableClick tableClick) {
                 if(chooseColumn == tableClick.getCloumn()){
@@ -65,7 +61,11 @@ public class TableFragment extends Fragment {
                         } else {
                             textView.setBackgroundResource(R.drawable.table_item_bg_white);
                         }
-                        textView.setTextColor(Color.BLACK);
+                        if(tableItemView.getRow()>=2 && tableItemView.getRow()<=6){
+                            textView.setTextColor(Color.parseColor("#565656"));
+                        }else {
+                            textView.setTextColor(Color.parseColor("#474747"));
+                        }
                     }
                 }
 
@@ -104,13 +104,20 @@ public class TableFragment extends Fragment {
         return view;
     }
 
-    public void updateCloumnData(int column, SuperTableViewAdapter.SuperUpdateDataCallback<TableAdapter.MyItemViewHolder> superUpdateDataCallback) {
-        superTableViewAdapter.superUpdateCloumnData(column, new SuperTableViewAdapter.SuperUpdateDataCallback<TableAdapter.MyItemViewHolder>() {
-            @Override
-            public void update(List<TableAdapter.MyItemViewHolder> list) {
+    public ChooseUpDataCallback getChooseUpDataCallback() {
+        return chooseUpDataCallback;
+    }
 
-            }
-        });
+    public void setChooseUpDataCallback(ChooseUpDataCallback chooseUpDataCallback) {
+        this.chooseUpDataCallback = chooseUpDataCallback;
+    }
+
+    public void updateCloumnData(int column, SuperTableViewAdapter.SuperUpdateDataCallback<TableAdapter.MyItemViewHolder> superUpdateDataCallback) {
+        superTableViewAdapter.superUpdateCloumnData(column,superUpdateDataCallback);
+    }
+
+    public TableView getTableView() {
+        return tableView;
     }
 
     public interface ChooseUpDataCallback{

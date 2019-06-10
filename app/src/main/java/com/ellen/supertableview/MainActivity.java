@@ -26,15 +26,48 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tableView = findViewById(R.id.tableView);
+
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.framelayout, tableFragment = new TableFragment(), "f1")
                 .commit();
         tableFragment.setChooseUpDataCallback(new TableFragment.ChooseUpDataCallback() {
+
+            //选中后在点击item就会回调该方法
             @Override
             public void upData(int row, int column) {
-                Log.e("修改(列，行)","("+column+","+row+")");
+                Log.e("修改(列，行)", "(" + column + "," + row + ")");
             }
         });
+
+        //左边定位到0的位置
+        findViewById(R.id.bt_left_dw).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableFragment.getTableView().setLeftCloumnPosition(0);
+            }
+        });
+
+        //右边定位到3的位置
+        findViewById(R.id.bt_right_dw).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableFragment.getTableView().setRightCloumnPosition(3);
+            }
+        });
+
+        findViewById(R.id.bt_update).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableFragment.updateCloumnData(1, new SuperTableViewAdapter.SuperUpdateDataCallback<TableAdapter.MyItemViewHolder>() {
+                    @Override
+                    public void update(List<TableAdapter.MyItemViewHolder> myItemViewHolders) {
+                        //修改列2，行为2的数据为：修改的数据
+                        myItemViewHolders.get(1).getTextView().setText("修改的数据");
+                    }
+                });
+            }
+        });
+
+
     }
 }

@@ -2,6 +2,8 @@ package com.ellen.supertableview;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.TextView;
 
@@ -43,6 +45,7 @@ public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewH
         return new MyItemViewHolder(itemView);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindItemViewHolder(MyItemViewHolder myItemViewHolder, int position, int row, int column) {
         if(row == 0){
@@ -71,6 +74,10 @@ public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewH
         }
         if(row>=2 && row<=6){
             myItemViewHolder.textView.setBackgroundResource(R.drawable.table_item_bg_gray);
+            myItemViewHolder.textView.setTextColor(Color.parseColor("#474747"));
+        }else {
+            if(row > 0)
+            myItemViewHolder.textView.setTextColor(Color.parseColor("#565656"));
         }
     }
 
@@ -82,6 +89,7 @@ public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewH
     @Override
     public void onBindYItemViewHolder(MyYItemViewHolder myYItemViewHolder, int row) {
        myYItemViewHolder.textView.setText(yTitles[row]);
+       myYItemViewHolder.textView.setTextColor(Color.BLACK);
     }
 
     public static class MyYItemViewHolder extends YItemViewHolder{

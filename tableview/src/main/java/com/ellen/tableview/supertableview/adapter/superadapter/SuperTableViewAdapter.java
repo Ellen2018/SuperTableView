@@ -89,6 +89,10 @@ public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends Y
         void addYItemSuccess(int row,View yItemView);
     }
 
+    public Context getContext(){
+        return context;
+    }
+
     public void superUpdateCloumnData(final int column, final SuperUpdateDataCallback superUpdateDataCallback) {
         final List<T> tList = new ArrayList<>();
         super.updateCloumnData(column, new UpdateDataCallback() {
