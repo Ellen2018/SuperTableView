@@ -111,7 +111,7 @@ public class TableFragment extends Fragment {
         });
 
     }
-    
+
     public void setChooseUpDataCallback(ChooseUpDataCallback chooseUpDataCallback) {
         this.chooseUpDataCallback = chooseUpDataCallback;
     }
