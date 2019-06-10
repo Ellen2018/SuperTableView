@@ -26,15 +26,27 @@ public class TableFragment extends Fragment {
     private TableView tableView;
     private TableClick agoTableClick;
     private SuperTableViewAdapter superTableViewAdapter;
-    private int chooseColumn = -1;
     private ChooseUpDataCallback chooseUpDataCallback;
+
+    private String[] yTitles = {
+            "状态",
+            "检查位置",
+            "部位",
+            "轨距",
+            "水平",
+            "查照",
+            "护背",
+            "轨向",
+            "高低",
+            "病害"
+    };
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.from(getActivity()).inflate(R.layout.fragment_table, container, false);
         tableView = view.findViewById(R.id.tableView);
-        superTableViewAdapter = new TableAdapter(getActivity());
+        superTableViewAdapter = new TableAdapter(getActivity(),yTitles);
         superTableViewAdapter.setOrientationV(true);
         tableView.setTableViewAdapter(superTableViewAdapter);
         initView();
@@ -51,57 +63,54 @@ public class TableFragment extends Fragment {
                 if(tableClick.isPartHide()){
                     tableView.setRightCloumnPosition(tableClick.getCloumn());
                 }
-                if(chooseColumn == tableClick.getCloumn()){
-                    if(!(tableClick.getRow()>=2 && tableClick.getRow() <= 6)){
-                        if(chooseUpDataCallback != null){
-                            chooseUpDataCallback.upData(tableClick.getRow(),tableClick.getCloumn());
+
+                if(tableClick.getRow() == 0) {
+                    if (agoTableClick != null) {
+                        for (TableItemView tableItemView : agoTableClick.getCloumnViewList()) {
+                            if (tableItemView.getRow() == 0) continue;
+                            TextView textView = tableItemView.getView().findViewById(R.id.table_text);
+                            if (tableItemView.getRow() >= 2 && tableItemView.getRow() <= 6) {
+                                textView.setBackgroundResource(R.drawable.table_item_bg_gray);
+                            } else {
+                                textView.setBackgroundResource(R.drawable.table_item_bg_white);
+                            }
+                            if(tableItemView.getRow()>=2 && tableItemView.getRow()<=6){
+                                textView.setTextColor(Color.parseColor("#474747"));
+                            }else {
+                                textView.setTextColor(Color.BLACK);
+                            }
                         }
                     }
-                    return;
-                }
-                chooseColumn = tableClick.getCloumn();
-                if (agoTableClick != null) {
-                    for (TableItemView tableItemView : agoTableClick.getCloumnViewList()) {
+                    int cloumn = tableClick.getCloumn();
+                    int resorce = 0;
+                    switch (cloumn) {
+                        case 0:
+                            resorce = R.drawable.table_item_bg_column_1;
+                            break;
+                        case 1:
+                            resorce = R.drawable.table_item_bg_column_2;
+                            break;
+                        case 2:
+                            resorce = R.drawable.table_item_bg_column_3;
+                            break;
+                        case 3:
+                            resorce = R.drawable.table_item_bg_column_4;
+                            break;
+
+                    }
+
+                    for (TableItemView tableItemView : tableClick.getCloumnViewList()) {
                         if (tableItemView.getRow() == 0) continue;
                         TextView textView = tableItemView.getView().findViewById(R.id.table_text);
-                        if (tableItemView.getRow() >= 2 && tableItemView.getRow() <= 6) {
-                            textView.setBackgroundResource(R.drawable.table_item_bg_gray);
-                        } else {
-                            textView.setBackgroundResource(R.drawable.table_item_bg_white);
-                        }
-                        if(tableItemView.getRow()>=2 && tableItemView.getRow()<=6){
-                            textView.setTextColor(Color.parseColor("#474747"));
-                        }else {
-                            textView.setTextColor(Color.BLACK);
-                        }
+                        textView.setTextColor(Color.WHITE);
+                        textView.setBackgroundResource(resorce);
+                    }
+                    agoTableClick = tableClick;
+                }else {
+                    if(!(tableClick.getRow() >=2 && tableClick.getRow()<=6)){
+                        chooseUpDataCallback.upData(tableClick.getRow(),tableClick.getCloumn());
                     }
                 }
-
-                int cloumn = tableClick.getCloumn();
-                int resorce = 0;
-                switch (cloumn) {
-                    case 0:
-                        resorce = R.drawable.table_item_bg_column_1;
-                        break;
-                    case 1:
-                        resorce = R.drawable.table_item_bg_column_2;
-                        break;
-                    case 2:
-                        resorce = R.drawable.table_item_bg_column_3;
-                        break;
-                    case 3:
-                        resorce = R.drawable.table_item_bg_column_4;
-                        break;
-
-                }
-
-                for (TableItemView tableItemView : tableClick.getCloumnViewList()) {
-                    if (tableItemView.getRow() == 0) continue;
-                    TextView textView = tableItemView.getView().findViewById(R.id.table_text);
-                    textView.setTextColor(Color.WHITE);
-                    textView.setBackgroundResource(resorce);
-                }
-                agoTableClick = tableClick;
             }
 
             @Override

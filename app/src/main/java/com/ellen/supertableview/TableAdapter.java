@@ -13,21 +13,11 @@ import com.ellen.tableview.supertableview.adapter.superadapter.YItemViewHolder;
 
 public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewHolder, TableAdapter.MyYItemViewHolder> {
 
-    private String[] yTitles = {
-            "状态",
-            "检查位置",
-            "部位",
-            "轨距",
-            "水平",
-            "查照",
-            "护背",
-            "轨向",
-            "高低",
-            "病害"
-    };
+    private String[] yTitles;
 
-    public TableAdapter(Context context) {
+    public TableAdapter(Context context,String[] yTitles) {
         super(context);
+        this.yTitles = yTitles;
     }
 
     @Override
