@@ -103,6 +103,20 @@ public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends Y
         });
     }
 
+    public void superUpdateRowData(final int row, final SuperUpdateDataCallback superUpdateDataCallback){
+        final List<T> tList = new ArrayList<>();
+        super.updateRowData(row, new UpdateDataCallback() {
+            @Override
+            public void update(List<TableItemView> tableItemViewList) {
+                for(TableItemView tableItemView:tableItemViewList){
+                    T t = onCreateItemViewHolder(tableItemView.getView(),0,tableItemView.getRow(),row);
+                    tList.add(t);
+                }
+                superUpdateDataCallback.update(tList);
+            }
+        });
+    }
+
     public interface SuperUpdateDataCallback<T extends ItemViewHolder>{
         void update(List<T> tList);
     }

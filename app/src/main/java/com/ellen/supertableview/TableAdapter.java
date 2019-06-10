@@ -48,26 +48,29 @@ public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewH
         if(row == 0){
             switch (column){
                 case 0:
-                    myItemViewHolder.textView.setBackgroundResource(R.drawable.item_bg_red);
+                    myItemViewHolder.textView.setBackgroundResource(R.drawable.table_item_bg_column_1);
                     myItemViewHolder.textView.setText("已测量");
                     myItemViewHolder.textView.setTextColor(Color.WHITE);
                     break;
                 case 1:
-                    myItemViewHolder.textView.setBackgroundResource(R.drawable.item_bg_blue);
+                    myItemViewHolder.textView.setBackgroundResource(R.drawable.table_item_bg_column_2);
                     myItemViewHolder.textView.setText("测量中");
                     myItemViewHolder.textView.setTextColor(Color.WHITE);
                     break;
                 case 2:
-                    myItemViewHolder.textView.setBackgroundResource(R.drawable.item_bg_yellow);
+                    myItemViewHolder.textView.setBackgroundResource(R.drawable.table_item_bg_column_3);
                     myItemViewHolder.textView.setText("已跳过");
                     myItemViewHolder.textView.setTextColor(Color.WHITE);
                     break;
                 case 3:
-                    myItemViewHolder.textView.setBackgroundResource(R.drawable.item_bg_green);
+                    myItemViewHolder.textView.setBackgroundResource(R.drawable.table_item_bg_column_4);
                     myItemViewHolder.textView.setText("已上传");
                     myItemViewHolder.textView.setTextColor(Color.WHITE);
                     break;
             }
+        }
+        if(row>=2 && row<=6){
+            myItemViewHolder.textView.setBackgroundResource(R.drawable.table_item_bg_gray);
         }
     }
 
@@ -81,7 +84,7 @@ public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewH
        myYItemViewHolder.textView.setText(yTitles[row]);
     }
 
-    static class MyYItemViewHolder extends YItemViewHolder{
+    public static class MyYItemViewHolder extends YItemViewHolder{
 
         TextView textView;
 
@@ -91,7 +94,7 @@ public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewH
         }
     }
 
-    static class MyItemViewHolder extends ItemViewHolder{
+    public static class MyItemViewHolder extends ItemViewHolder{
 
         private TextView textView;
 

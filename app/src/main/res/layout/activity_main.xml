@@ -1,58 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.ellen.tableview.supertableview.TableView
-        android:id="@+id/tableView"
+    <FrameLayout
+        android:id="@+id/framelayout"
+        android:name="com.ellen.supertableview.fragment.TableFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
-        app:ColumnCount="4"
-        app:ItemHeight="40dp"
-        app:ItemWidth="120dp"
-        app:RowCount="10"
-        app:YItemWidth="60dp" />
-
-    <Button
-        android:id="@+id/bt_add_v"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="纵向添加数据" />
-
-    <Button
-        android:id="@+id/bt_add_h"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/bt_add_v"
-        android:text="横向添加数据" />
+        android:layout_height="match_parent"/>
 
     <Button
         android:id="@+id/bt_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="修改数据"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/bt_add_h"
-        android:text="修改数据" />
+        />
 
     <Button
-        android:id="@+id/bt_left_dinwei"
+        android:id="@+id/bt_left_dw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/bt_add_v"
-        android:text="左边定位到测量中" />
+        android:layout_toRightOf="@id/bt_update"
+        android:text="左定位"
+        android:layout_alignParentBottom="true"
+        />
 
     <Button
-        android:id="@+id/bt_right_dinwei"
+        android:id="@+id/bt_right_dw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/bt_left_dinwei"
-        android:layout_above="@id/bt_add_h"
-        android:text="右边定位到已上传" />
+        android:text="右定位"
+        android:layout_toRightOf="@id/bt_left_dw"
+        android:layout_alignParentBottom="true"
+        />
 
 </RelativeLayout>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
     <!-- 实心 -->
-    <solid android:color="#00FF00" />
+    <solid android:color="#FFFFFF" />
     <!-- 边框 -->
     <stroke
         android:width="0.1dp"
-        android:color="	#FFFFFF" />
+        android:color="#BDBDBD" />
     <!-- 圆角 -->
     <corners android:radius="0dp" />
     <!-- 边距 -->
@@ -16,7 +16,7 @@
         android:top="0dp" />
     <!-- 渐变 -->
     <!--<gradient-->
-    <!--android:angle="270"-->
-    <!--android:endColor="#FFFF78"-->
-    <!--android:startColor="#13C7AF" />-->
+        <!--android:angle="270"-->
+        <!--android:endColor="#FFFF78"-->
+        <!--android:startColor="#13C7AF" />-->
 </shape>
