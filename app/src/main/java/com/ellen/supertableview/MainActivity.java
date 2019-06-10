@@ -18,7 +18,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TableView tableView;
     private TableFragment tableFragment;
 
 
