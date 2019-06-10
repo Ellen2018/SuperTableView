@@ -37,6 +37,12 @@ public class TableFragment extends Fragment {
         superTableViewAdapter = new TableAdapter(getActivity());
         superTableViewAdapter.setOrientationV(true);
         tableView.setTableViewAdapter(superTableViewAdapter);
+        initView();
+        return view;
+    }
+
+    private void initView() {
+
         tableView.setOnItemClickListener(new TableView.OnItemClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -64,9 +70,9 @@ public class TableFragment extends Fragment {
                             textView.setBackgroundResource(R.drawable.table_item_bg_white);
                         }
                         if(tableItemView.getRow()>=2 && tableItemView.getRow()<=6){
-                            textView.setTextColor(Color.parseColor("#565656"));
-                        }else {
                             textView.setTextColor(Color.parseColor("#474747"));
+                        }else {
+                            textView.setTextColor(Color.BLACK);
                         }
                     }
                 }
@@ -103,13 +109,9 @@ public class TableFragment extends Fragment {
 
             }
         });
-        return view;
-    }
 
-    public ChooseUpDataCallback getChooseUpDataCallback() {
-        return chooseUpDataCallback;
     }
-
+    
     public void setChooseUpDataCallback(ChooseUpDataCallback chooseUpDataCallback) {
         this.chooseUpDataCallback = chooseUpDataCallback;
     }

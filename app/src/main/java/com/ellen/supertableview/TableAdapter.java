@@ -77,7 +77,7 @@ public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewH
             myItemViewHolder.textView.setTextColor(Color.parseColor("#474747"));
         }else {
             if(row > 0)
-            myItemViewHolder.textView.setTextColor(Color.parseColor("#565656"));
+            myItemViewHolder.textView.setTextColor(Color.BLACK);
         }
     }
 

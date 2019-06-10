@@ -19,8 +19,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private TableFragment tableFragment;
-
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
