@@ -38,7 +38,7 @@ public class TableFragment extends Fragment {
             "护背",
             "轨向",
             "高低",
-            "病害"
+            "病害",
     };
 
     @Nullable
@@ -46,7 +46,7 @@ public class TableFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.from(getActivity()).inflate(R.layout.fragment_table, container, false);
         tableView = view.findViewById(R.id.tableView);
-        superTableViewAdapter = new TableAdapter(getActivity(),yTitles);
+        superTableViewAdapter = new TableAdapter(getActivity(), yTitles);
         superTableViewAdapter.setOrientationV(true);
         tableView.setTableViewAdapter(superTableViewAdapter);
         initView();
@@ -60,7 +60,7 @@ public class TableFragment extends Fragment {
             @Override
             public void onClickItem(View view, TableClick tableClick) {
                 //检测是否需要滑动
-                if(tableClick.isPartHide() != null) {
+                if (tableClick.isPartHide() != null) {
                     if (tableClick.isPartHide()) {
                         tableView.setRightCloumnPosition(tableClick.getCloumn());
                     } else {
@@ -68,7 +68,7 @@ public class TableFragment extends Fragment {
                     }
                 }
 
-                if(tableClick.getRow() == 0) {
+                if (tableClick.getRow() == 0) {
                     if (agoTableClick != null) {
                         for (TableItemView tableItemView : agoTableClick.getCloumnViewList()) {
                             if (tableItemView.getRow() == 0) continue;
@@ -107,9 +107,9 @@ public class TableFragment extends Fragment {
                         textView.setBackgroundResource(resorce);
                     }
                     agoTableClick = tableClick;
-                }else {
-                    if(!(tableClick.getRow() >=2 && tableClick.getRow()<=6)){
-                        chooseUpDataCallback.upData(tableClick.getRow(),tableClick.getCloumn());
+                } else {
+                    if (!(tableClick.getRow() >= 2 && tableClick.getRow() <= 6)) {
+                        chooseUpDataCallback.upData(tableClick.getRow(), tableClick.getCloumn());
                     }
                 }
             }
@@ -127,14 +127,14 @@ public class TableFragment extends Fragment {
     }
 
     public void updateCloumnData(int column, SuperTableViewAdapter.SuperUpdateDataCallback<TableAdapter.MyItemViewHolder> superUpdateDataCallback) {
-        superTableViewAdapter.superUpdateCloumnData(column,superUpdateDataCallback);
+        superTableViewAdapter.superUpdateCloumnData(column, superUpdateDataCallback);
     }
 
     public TableView getTableView() {
         return tableView;
     }
 
-    public interface ChooseUpDataCallback{
-        void upData(int row,int column);
+    public interface ChooseUpDataCallback {
+        void upData(int row, int column);
     }
 }
