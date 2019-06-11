@@ -75,12 +75,9 @@ public class TableFragment extends Fragment {
                             TextView textView = tableItemView.getView().findViewById(R.id.table_text);
                             if (tableItemView.getRow() >= 2 && tableItemView.getRow() <= 6) {
                                 textView.setBackgroundResource(R.drawable.table_item_bg_gray);
+                                textView.setTextColor(Color.parseColor("#474747"));
                             } else {
                                 textView.setBackgroundResource(R.drawable.table_item_bg_white);
-                            }
-                            if(tableItemView.getRow()>=2 && tableItemView.getRow()<=6){
-                                textView.setTextColor(Color.parseColor("#474747"));
-                            }else {
                                 textView.setTextColor(Color.BLACK);
                             }
                         }
