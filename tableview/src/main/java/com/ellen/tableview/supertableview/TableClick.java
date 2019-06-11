@@ -12,7 +12,7 @@ public class TableClick {
     private int row;
     private List<TableItemView> cloumnViewList;
     private  List<TableItemView> rowViewList;
-    private boolean isPartHide = false;
+    private Boolean isPartHide = null;
     private YItemView yItemView;
 
     public YItemView getyItemView() {
@@ -23,7 +23,7 @@ public class TableClick {
         this.yItemView = yItemView;
     }
 
-    public boolean isPartHide() {
+    public Boolean isPartHide() {
         return isPartHide;
     }
 

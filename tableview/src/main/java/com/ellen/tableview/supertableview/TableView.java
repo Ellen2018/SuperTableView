@@ -324,7 +324,14 @@ public class TableView extends RelativeLayout {
                     //获取点击的位置的长度
                     int length1 = (column + 1) * itemWidth;
                     int length2 = horizontalScrollView.getScrollX() + horizontalScrollView.getWidth();
-                    tableClick.setPartHide(length1 > length2);
+                    int length3 = column * itemWidth;
+                    int length4 = (column+ 1) * itemWidth;
+                    if(length1 > length2){
+                        tableClick.setPartHide(true);
+                    }
+                    if(horizontalScrollView.getScrollX()>length3 && horizontalScrollView.getScrollX() < length4){
+                        tableClick.setPartHide(false);
+                    }
                     if (column != -1) {
                         onItemClickListener.onClickItem(v, tableClick);
                     } else {
