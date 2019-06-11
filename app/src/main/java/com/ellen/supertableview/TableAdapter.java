@@ -61,12 +61,10 @@ public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewH
                     myItemViewHolder.textView.setTextColor(Color.WHITE);
                     break;
             }
-        }
-        if(row>=2 && row<=6){
+        }else if(row>=2 && row<=6){
             myItemViewHolder.textView.setBackgroundResource(R.drawable.table_item_bg_gray);
             myItemViewHolder.textView.setTextColor(Color.parseColor("#474747"));
         }else {
-            if(row > 0)
             myItemViewHolder.textView.setTextColor(Color.BLACK);
         }
     }
