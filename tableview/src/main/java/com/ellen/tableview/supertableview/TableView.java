@@ -255,13 +255,21 @@ public class TableView extends RelativeLayout {
         this.tableViewAdapter.setGridLayout(gridLayoutTable);
         this.tableViewAdapter.setTableView(this);
         tableViewAdapter.bindAdapter();
-        final View xyView = tableViewAdapter.createXYView();
+        View xyView = tableViewAdapter.createXYView();
+        if(xyView == null){
+            TextView textView = new TextView(getContext());
+            textView.setBackgroundColor(Color.BLACK);
+            textView.setTextColor(Color.WHITE);
+            textView.setGravity(Gravity.CENTER);
+            textView.setText("Y/X");
+            xyView = textView;
+        }
         if(xyView != null) {
             xyView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onClickXYView(xyView);
+                        onItemClickListener.onClickXYView(v);
                     }
                 }
             });

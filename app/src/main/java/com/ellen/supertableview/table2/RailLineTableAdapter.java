@@ -82,12 +82,7 @@ public class RailLineTableAdapter extends TableViewAdapter {
 
     @Override
     public View createXYView() {
-        TextView textView = new TextView(context);
-        textView.setBackgroundColor(Color.parseColor("#000000"));
-        textView.setText("Y/X");
-        textView.setTextColor(Color.WHITE);
-        textView.setGravity(Gravity.CENTER);
-        return textView;
+        return null;
     }
 
     @Override

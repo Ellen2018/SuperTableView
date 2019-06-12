@@ -45,6 +45,13 @@ public class Table2Activity extends AppCompatActivity {
             @Override
             public void onClickItem(View view, TableClick tableClick) {
                 toast("("+tableClick.getRow()+","+tableClick.getCloumn()+")");
+                if(tableClick.isPartHide() != null) {
+                    if (tableClick.isPartHide()) {
+                        tableView.setRightCloumnPosition(tableClick.getCloumn());
+                    } else {
+                        tableView.setLeftCloumnPosition(tableClick.getCloumn());
+                    }
+                }
             }
 
             @Override
@@ -55,6 +62,13 @@ public class Table2Activity extends AppCompatActivity {
             @Override
             public void onClickXItem(View view, TableClick tableClick) {
                 toast("X:"+tableClick.getCloumn());
+                if(tableClick.isPartHide() != null) {
+                    if (tableClick.isPartHide()) {
+                        tableView.setRightCloumnPosition(tableClick.getCloumn());
+                    } else {
+                        tableView.setLeftCloumnPosition(tableClick.getCloumn());
+                    }
+                }
             }
 
             @Override
