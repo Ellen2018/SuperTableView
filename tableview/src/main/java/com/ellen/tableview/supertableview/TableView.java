@@ -265,7 +265,15 @@ public class TableView extends RelativeLayout {
                     }
                 }
             });
-            gridLayoutXY.addView(xyView);
+            RelativeLayout relativeLayout = new RelativeLayout(getContext());
+            relativeLayout.setMinimumWidth(yWidth);
+            relativeLayout.setMinimumHeight(xHeight);
+            relativeLayout.addView(xyView);
+            RelativeLayout.LayoutParams layoutParams = (LayoutParams) xyView.getLayoutParams();
+            layoutParams.height = xHeight;
+            layoutParams.width = yWidth;
+            xyView.setLayoutParams(layoutParams);
+            gridLayoutXY.addView(relativeLayout);
             tableViewAdapter.bindXYItemView(xyView);
             xyView.setMinimumWidth(yWidth);
             xyView.setMinimumHeight(xHeight);
@@ -370,9 +378,10 @@ public class TableView extends RelativeLayout {
         setItemOnClick(tableItemView.getView(), row, column);
         int finalIndex = tableViewAdapter.getFinalIndex(itemCount - 1, row, column);
         tableViewAdapter.bindView(view, finalIndex, row, column);
+        //适配item的宽和高
         RelativeLayout relativeLayout = new RelativeLayout(getContext());
         relativeLayout.setMinimumWidth(itemWidth);
-        relativeLayout.setMinimumWidth(itemHeight);
+        relativeLayout.setMinimumHeight(itemHeight);
         relativeLayout.addView(view);
         RelativeLayout.LayoutParams layoutParams = (LayoutParams) view.getLayoutParams();
         layoutParams.height = itemHeight;

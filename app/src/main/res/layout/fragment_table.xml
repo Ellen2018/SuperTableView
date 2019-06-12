@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:ColumnCount="4"
-        app:ItemHeight="80dp"
-        app:ItemWidth="170dp"
+        app:ItemHeight="40dp"
+        app:ItemWidth="120dp"
         app:RowCount="10"
         app:YItemWidth="88dp" />
 

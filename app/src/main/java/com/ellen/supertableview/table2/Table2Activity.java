@@ -20,7 +20,7 @@ import java.util.List;
 public class Table2Activity extends AppCompatActivity {
 
     private TableView tableView;
-    private TableAdapter tableAdapter;
+    private RailLineTableAdapter railLineTableAdapter;
     private String[] yTitles = {
             "状态",
             "检查位置",
@@ -39,7 +39,32 @@ public class Table2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table2);
         tableView = findViewById(R.id.tableView);
-        tableAdapter = new TableAdapter(this,yTitles);
-        tableView.setTableViewAdapter(tableAdapter);
+        railLineTableAdapter = new RailLineTableAdapter(this);
+        tableView.setTableViewAdapter(railLineTableAdapter);
+        tableView.setOnItemClickListener(new TableView.OnItemClickListener() {
+            @Override
+            public void onClickItem(View view, TableClick tableClick) {
+                toast("("+tableClick.getRow()+","+tableClick.getCloumn()+")");
+            }
+
+            @Override
+            public void onClickYItem(View view, TableClick tableClick) {
+                toast("Y:"+tableClick.getRow());
+            }
+
+            @Override
+            public void onClickXItem(View view, TableClick tableClick) {
+                toast("X:"+tableClick.getCloumn());
+            }
+
+            @Override
+            public void onClickXYView(View view) {
+                toast("XY交界处");
+            }
+        });
+    }
+
+    private void toast(String content){
+        Toast.makeText(this,content,Toast.LENGTH_SHORT).show();
     }
 }

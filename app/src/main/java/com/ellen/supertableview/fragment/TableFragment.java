@@ -109,6 +109,7 @@ public class TableFragment extends Fragment {
                     agoTableClick = tableClick;
                 } else {
                     if (!(tableClick.getRow() >= 2 && tableClick.getRow() <= 6)) {
+                        if(chooseUpDataCallback != null)
                         chooseUpDataCallback.upData(tableClick.getRow(), tableClick.getCloumn());
                     }
                 }
