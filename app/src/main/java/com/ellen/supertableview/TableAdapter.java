@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ellen.tableview.supertableview.adapter.superadapter.ItemViewHolder;
-import com.ellen.tableview.supertableview.adapter.superadapter.SuperTableViewAdapter;
-import com.ellen.tableview.supertableview.adapter.superadapter.YItemViewHolder;
+import com.ellen.tableview.supertableview.adapter.superadapter.y.SuperYTableViewAdapter;
+import com.ellen.tableview.supertableview.adapter.superadapter.XYItemViewHolder;
 
-public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewHolder, TableAdapter.MyYItemViewHolder> {
+public class TableAdapter extends SuperYTableViewAdapter<TableAdapter.MyItemViewHolder, TableAdapter.MyYItemViewHolder> {
 
     private String[] yTitles;
 
@@ -80,7 +80,17 @@ public class TableAdapter extends SuperTableViewAdapter<TableAdapter.MyItemViewH
        myYItemViewHolder.textView.setTextColor(Color.BLACK);
     }
 
-    public static class MyYItemViewHolder extends YItemViewHolder{
+    @Override
+    public View createXYView() {
+        return null;
+    }
+
+    @Override
+    public void bindXYItemView(View view) {
+
+    }
+
+    public static class MyYItemViewHolder extends XYItemViewHolder {
 
         TextView textView;
 

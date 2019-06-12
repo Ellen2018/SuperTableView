@@ -12,19 +12,12 @@ public class YItemView {
         this.row = row;
     }
 
-    public View getView() {
+    public android.view.View getView() {
         return View;
-    }
-
-    public void setView(View view) {
-        View = view;
     }
 
     public int getRow() {
         return row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
 }

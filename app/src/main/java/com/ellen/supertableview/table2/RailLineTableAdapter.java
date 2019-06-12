@@ -2,6 +2,7 @@ package com.ellen.supertableview.table2;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -50,17 +51,47 @@ public class RailLineTableAdapter extends TableViewAdapter {
     }
 
     @Override
+    public void bindAdapter() {
+
+    }
+
+    @Override
     public void bindView(View view, int finalIndex, int row, int column) {
 
     }
 
     @Override
     public View createYItemView(int row) {
-        return null;
+        return getView(R.layout.item_type_y);
     }
 
     @Override
     public void bindYItemView(View view, int row) {
+
+    }
+
+    @Override
+    public View createXItemView(int column) {
+        return getView(R.layout.item_line_table_x);
+    }
+
+    @Override
+    public void bindXItemView(View view, int column) {
+
+    }
+
+    @Override
+    public View createXYView() {
+        TextView textView = new TextView(context);
+        textView.setBackgroundColor(Color.parseColor("#000000"));
+        textView.setText("Y/X");
+        textView.setTextColor(Color.WHITE);
+        textView.setGravity(Gravity.CENTER);
+        return textView;
+    }
+
+    @Override
+    public void bindXYItemView(View view) {
 
     }
 

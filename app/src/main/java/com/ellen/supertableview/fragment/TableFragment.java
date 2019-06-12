@@ -18,14 +18,14 @@ import com.ellen.supertableview.TableAdapter;
 import com.ellen.tableview.supertableview.TableClick;
 import com.ellen.tableview.supertableview.TableItemView;
 import com.ellen.tableview.supertableview.TableView;
-import com.ellen.tableview.supertableview.adapter.superadapter.SuperTableViewAdapter;
+import com.ellen.tableview.supertableview.adapter.superadapter.y.SuperYTableViewAdapter;
 
 @SuppressLint("ValidFragment")
 public class TableFragment extends Fragment {
 
     private TableView tableView;
     private TableClick agoTableClick;
-    private SuperTableViewAdapter superTableViewAdapter;
+    private SuperYTableViewAdapter superTableViewAdapter;
     private ChooseUpDataCallback chooseUpDataCallback;
 
     private String[] yTitles = {
@@ -118,6 +118,19 @@ public class TableFragment extends Fragment {
             public void onClickYItem(View view, TableClick tableClick) {
 
             }
+
+            @Override
+            public void onClickXItem(View view, TableClick tableClick) {
+               for(TableItemView tableItemView:tableClick.getCloumnViewList()){
+                   tableItemView.getView().setBackgroundColor(Color.RED);
+               }
+               view.setBackgroundColor(Color.RED);
+            }
+
+            @Override
+            public void onClickXYView(View view) {
+
+            }
         });
 
     }
@@ -126,7 +139,7 @@ public class TableFragment extends Fragment {
         this.chooseUpDataCallback = chooseUpDataCallback;
     }
 
-    public void updateCloumnData(int column, SuperTableViewAdapter.SuperUpdateDataCallback<TableAdapter.MyItemViewHolder> superUpdateDataCallback) {
+    public void updateCloumnData(int column, SuperYTableViewAdapter.SuperUpdateDataCallback<TableAdapter.MyItemViewHolder> superUpdateDataCallback) {
         superTableViewAdapter.superUpdateCloumnData(column, superUpdateDataCallback);
     }
 

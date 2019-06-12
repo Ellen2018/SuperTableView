@@ -6,12 +6,14 @@
     <attr name="ColumnCount" format="integer"/>
     <attr name="RowCount" format="integer"/>
     <attr name="YItemWidth" format="dimension"/>
+    <attr name="XItemHeight" format="dimension"/>
     <declare-styleable name="TableView">
         <attr name="ItemWidth"/>
         <attr name="ItemHeight"/>
         <attr name="ColumnCount"/>
         <attr name="RowCount"/>
         <attr name="YItemWidth"/>
+        <attr name="XItemHeight"/>
     </declare-styleable>
 
 </resources>

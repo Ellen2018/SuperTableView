@@ -14,6 +14,7 @@ public class TableClick {
     private  List<TableItemView> rowViewList;
     private Boolean isPartHide = null;
     private YItemView yItemView;
+    private XItemView xItemView;
 
     public YItemView getyItemView() {
         return yItemView;
@@ -77,5 +78,13 @@ public class TableClick {
 
     public void setRowViewList(List<TableItemView> rowViewList) {
         this.rowViewList = rowViewList;
+    }
+
+    public XItemView getxItemView() {
+        return xItemView;
+    }
+
+    public void setxItemView(XItemView xItemView) {
+        this.xItemView = xItemView;
     }
 }

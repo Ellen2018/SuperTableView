@@ -5,12 +5,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.ellen.tableview.supertableview.TableView
-        android:id="@+id/tableView_line"
+        android:id="@+id/tableView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:RowCount="5"
-        app:ItemWidth="100dp"
-        app:ItemHeight="50dp"
-        app:ColumnCount="8" />
+        android:layout_height="wrap_content"
+        app:ColumnCount="4"
+        app:ItemHeight="40dp"
+        app:ItemWidth="120dp"
+        app:RowCount="10"
+        app:YItemWidth="88dp" />
+
+    <Button
+        android:id="@+id/bt"
+        android:text="添加数据"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

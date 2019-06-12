@@ -1,10 +1,12 @@
 package com.ellen.tableview.supertableview.adapter;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 
 import com.ellen.tableview.supertableview.TableItemView;
 import com.ellen.tableview.supertableview.TableView;
+import com.ellen.tableview.supertableview.XItemView;
 import com.ellen.tableview.supertableview.YItemView;
 
 import java.util.ArrayList;
@@ -51,17 +53,21 @@ public abstract class TableViewAdapter {
         this.tableView = tableView;
     }
 
-    public abstract View createItemView(int position, int row, int column);
+
 
     public int getItemCount() {
         return tableView.getColumnNumber() * tableView.getRowNumber();
     }
 
+    public abstract void bindAdapter();
     public abstract void bindView(View view, int finalIndex, int row, int column);
-
+    public abstract View createItemView(int position, int row, int column);
     public abstract View createYItemView(int row);
-
     public abstract void bindYItemView(View view, int row);
+    public abstract  View createXItemView(int column);
+    public abstract void bindXItemView(View view,int  column);
+    public abstract View createXYView();
+    public abstract void bindXYItemView(View view);
 
     public int getAllRow() {
         return getItemCount() / getCloumn();
@@ -75,14 +81,7 @@ public abstract class TableViewAdapter {
         }
     }
 
-    public void updateCloumn(int newColumn) {
-    }
-
-    public void notifyChange() {
-        tableView.setTableViewAdapter(this);
-    }
-
-    public void addDataColumn(List<View> viewList) {
+    public void addDataColumn(List<View> viewList,View xItemView) {
         gridLayout.removeAllViews();
         tableView.getMapItemViews().clear();
         tableView.setItemCount(0);
@@ -123,6 +122,16 @@ public abstract class TableViewAdapter {
                     }
                 }
             }
+        }
+        if(xItemView != null) {
+            //添加X轴View
+            tableView.getGridLayoutX().setColumnCount(tableView.getColumnNumber()+1);
+            tableView.getGridLayoutX().addView(xItemView);
+            XItemView xItemView1 = new XItemView(xItemView, tableView.getColumnNumber() - 1);
+            xItemView.setMinimumWidth(tableView.getItemWidth());
+            xItemView.setMinimumHeight(tableView.getxHeight());
+            tableView.getMapXItem().put(tableView.getColumnNumber() - 1, xItemView1);
+            tableView.setItemOnClick(xItemView, -1, tableView.getColumnNumber()-1);
         }
     }
 
@@ -169,17 +178,19 @@ public abstract class TableViewAdapter {
                 }
             }
         }
-        //添加Y轴View
-        tableView.getGridLayoutY().addView(yItemView);
-        YItemView yItemView1 = new YItemView(yItemView,tableView.getRowNumber()-1);
-        yItemView.setMinimumWidth(tableView.getyWidth());
-        yItemView.setMinimumHeight(tableView.getItemHeight());
-        tableView.getMapYItem().put(tableView.getRowNumber()-1,yItemView1);
-        tableView.setItemOnClick(yItemView,tableView.getRowNumber()-1,-1);
+        if(yItemView != null) {
+            //添加Y轴View
+            tableView.getGridLayoutY().addView(yItemView);
+            YItemView yItemView1 = new YItemView(yItemView, tableView.getRowNumber() - 1);
+            yItemView.setMinimumWidth(tableView.getyWidth());
+            yItemView.setMinimumHeight(tableView.getItemHeight());
+            tableView.getMapYItem().put(tableView.getRowNumber() - 1, yItemView1);
+            tableView.setItemOnClick(yItemView, tableView.getRowNumber() - 1, -1);
+        }
     }
 
-    public void addDataColumn(List<View> viewList,AddDataCallback addDataCallback){
-        addDataColumn(viewList);
+    public void addDataColumn(List<View> viewList,View xItemView,AddDataCallback addDataCallback){
+        addDataColumn(viewList,xItemView);
         addDataCallback.addViewSuccess(tableView.getMapItemViews(),tableView.getMapYItem());
     }
 

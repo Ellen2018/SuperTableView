@@ -1,4 +1,4 @@
-package com.ellen.tableview.supertableview.adapter.superadapter;
+package com.ellen.tableview.supertableview.adapter.superadapter.x;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,16 +6,23 @@ import android.view.View;
 
 import com.ellen.tableview.supertableview.TableItemView;
 import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
+import com.ellen.tableview.supertableview.adapter.superadapter.ItemViewHolder;
+import com.ellen.tableview.supertableview.adapter.superadapter.XYItemViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends YItemViewHolder> extends TableViewAdapter {
+public abstract class SuperXTableViewAdapter<T extends ItemViewHolder,E extends XYItemViewHolder> extends TableViewAdapter {
 
     private Context context;
 
-    public SuperTableViewAdapter(Context context){
+    public SuperXTableViewAdapter(Context context){
         this.context = context;
+    }
+
+    @Override
+    public void bindAdapter() {
+        getTableView().hideYAxis();
     }
 
     private View getView(int layoutId){
@@ -38,10 +45,7 @@ public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends Y
 
     @Override
     public View createYItemView(int row) {
-        View yItemView = getView(getyItemLayoutId());
-        E e= onCreateYItemViewHolder(yItemView,row);
-        onBindYItemViewHolder(e,row);
-        return yItemView;
+       return null;
     }
 
     @Override
@@ -49,14 +53,37 @@ public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends Y
 
     }
 
-    protected abstract int getyItemLayoutId();
+    @Override
+    public View createXItemView(int column) {
+        View xItemView = getView(getxItemLayoutId());
+        E e= onCreateXItemViewHolder(xItemView,column);
+        onBindXItemViewHolder(e,column);
+        return xItemView;
+    }
+
+    @Override
+    public void bindXItemView(View view, int column) {
+
+    }
+
+    @Override
+    public View createXYView() {
+        return null;
+    }
+
+    @Override
+    public void bindXYItemView(View view) {
+
+    }
+
+    protected abstract int getxItemLayoutId();
     protected abstract int getItemLayoutId();
 
     public abstract T onCreateItemViewHolder(View itemView,int position,int row,int column);
     public abstract void onBindItemViewHolder(T t,int position,int row,int column);
 
-    public abstract E onCreateYItemViewHolder(View yItemView,int row);
-    public abstract void onBindYItemViewHolder(E t,int row);
+    public abstract E onCreateXItemViewHolder(View xItemView,int column);
+    public abstract void onBindXItemViewHolder(E t,int column);
 
     public void addSingleDataColumn(AddItemCallback addItemCallback){
         List<View> views = new ArrayList<>();
@@ -65,7 +92,9 @@ public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends Y
             views.add(addItemView);
             addItemCallback.addItemSuccess(i,addItemView);
         }
-        addDataColumn(views);
+        View xItemView = getView(getxItemLayoutId());
+        addItemCallback.addXItemSuccess(getTableView().getColumnNumber()-1,xItemView);
+        addDataColumn(views,xItemView);
     }
 
     public void addSingleDataRow(AddYItemCallback addYItemCallback){
@@ -75,18 +104,16 @@ public abstract class SuperTableViewAdapter<T extends ItemViewHolder,E extends Y
             views.add(addItemView);
             addYItemCallback.addItemSuccess(i,addItemView);
         }
-        View yItemView = getView(getyItemLayoutId());
-        addDataRow(views,yItemView);
-        addYItemCallback.addYItemSuccess(getTableView().getRowNumber()-1,yItemView);
+        addDataRow(views,null);
     }
 
     public interface AddItemCallback{
-        void addItemSuccess(int poition,View view);
+        void addItemSuccess(int poition, View view);
+        void addXItemSuccess(int column, View yItemView);
     }
 
     public interface AddYItemCallback{
-        void addItemSuccess(int poition,View view);
-        void addYItemSuccess(int row,View yItemView);
+        void addItemSuccess(int poition, View view);
     }
 
     public Context getContext(){
