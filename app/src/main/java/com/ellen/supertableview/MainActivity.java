@@ -26,12 +26,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.bt_update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               tableFragment.getSuperTableViewAdapter().addSingleDataRow(new SuperXTableViewAdapter.AddYItemCallback() {
-                   @Override
-                   public void addItemSuccess(int poition, View view) {
 
-                   }
-               });
             }
         });
 

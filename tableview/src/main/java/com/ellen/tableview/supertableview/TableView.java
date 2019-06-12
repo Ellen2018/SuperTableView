@@ -370,7 +370,15 @@ public class TableView extends RelativeLayout {
         setItemOnClick(tableItemView.getView(), row, column);
         int finalIndex = tableViewAdapter.getFinalIndex(itemCount - 1, row, column);
         tableViewAdapter.bindView(view, finalIndex, row, column);
-        gridLayoutTable.addView(view);
+        RelativeLayout relativeLayout = new RelativeLayout(getContext());
+        relativeLayout.setMinimumWidth(itemWidth);
+        relativeLayout.setMinimumWidth(itemHeight);
+        relativeLayout.addView(view);
+        RelativeLayout.LayoutParams layoutParams = (LayoutParams) view.getLayoutParams();
+        layoutParams.height = itemHeight;
+        layoutParams.width = itemWidth;
+        view.setLayoutParams(layoutParams);
+        gridLayoutTable.addView(relativeLayout);
         mapItemViews.put(finalIndex, tableItemView);
     }
 
