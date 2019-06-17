@@ -38,11 +38,19 @@ public class Table2Activity extends AppCompatActivity {
             @Override
             public void onClickItem(View view, TableClick tableClick) {
                 toast("("+tableClick.getRow()+","+tableClick.getCloumn()+")");
-                if(tableClick.isPartHide() != null) {
-                    if (tableClick.isPartHide()) {
+                if(tableClick.getXPartHide() != null) {
+                    if (tableClick.getXPartHide()) {
                         tableView.setRightCloumnPosition(tableClick.getCloumn());
                     } else {
                         tableView.setLeftCloumnPosition(tableClick.getCloumn());
+                    }
+                }
+
+                if(tableClick.getYPartHide() != null){
+                    if(tableClick.getYPartHide()){
+                        tableView.setBottomRowPosition(tableClick.getRow());
+                    }else {
+                        tableView.setTopRowPosition(tableClick.getRow());
                     }
                 }
             }
@@ -56,8 +64,8 @@ public class Table2Activity extends AppCompatActivity {
             @Override
             public void onClickXItem(View view, TableClick tableClick) {
                 toast("X:"+tableClick.getCloumn());
-                if(tableClick.isPartHide() != null) {
-                    if (tableClick.isPartHide()) {
+                if(tableClick.getXPartHide() != null) {
+                    if (tableClick.getXPartHide()) {
                         tableView.setRightCloumnPosition(tableClick.getCloumn());
                     } else {
                         tableView.setLeftCloumnPosition(tableClick.getCloumn());

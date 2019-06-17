@@ -12,7 +12,18 @@ public class TableClick {
     private int row;
     private List<TableItemView> cloumnViewList;
     private  List<TableItemView> rowViewList;
-    private Boolean isPartHide = null;
+    /**
+     * true:右边部分隐藏
+     * false:左边部分隐藏
+     * null:没有隐藏
+     */
+    private Boolean isXPartHide = null;
+    /**
+     * true:底部部分隐藏
+     * false:顶部部分隐藏
+     * null:没有隐藏
+     */
+    private Boolean isYPartHide = null;
     private YItemView yItemView;
     private XItemView xItemView;
 
@@ -24,12 +35,20 @@ public class TableClick {
         this.yItemView = yItemView;
     }
 
-    public Boolean isPartHide() {
-        return isPartHide;
+    public Boolean getXPartHide() {
+        return isXPartHide;
     }
 
-    public void setPartHide(boolean partHide) {
-        isPartHide = partHide;
+    public void setXPartHide(Boolean XPartHide) {
+        isXPartHide = XPartHide;
+    }
+
+    public Boolean getYPartHide() {
+        return isYPartHide;
+    }
+
+    public void setYPartHide(Boolean YPartHide) {
+        isYPartHide = YPartHide;
     }
 
     public View getView() {

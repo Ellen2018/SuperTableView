@@ -60,8 +60,8 @@ public class TableFragment extends Fragment {
             @Override
             public void onClickItem(View view, TableClick tableClick) {
                 //检测是否需要滑动
-                if (tableClick.isPartHide() != null) {
-                    if (tableClick.isPartHide()) {
+                if (tableClick.getXPartHide() != null) {
+                    if (tableClick.getXPartHide()) {
                         tableView.setRightCloumnPosition(tableClick.getCloumn());
                     } else {
                         tableView.setLeftCloumnPosition(tableClick.getCloumn());

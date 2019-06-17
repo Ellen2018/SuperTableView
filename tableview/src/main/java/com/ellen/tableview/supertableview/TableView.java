@@ -527,15 +527,26 @@ public class TableView extends RelativeLayout {
                     tableClick.setyItemView(mapYItem.get(row));
                     tableClick.setxItemView(mapXItem.get(column));
                     //获取点击的位置的长度
-                    int length1 = (column + 1) * itemWidth;
-                    int length2 = horizontalScrollView.getScrollX() + horizontalScrollView.getWidth();
-                    int length3 = column * itemWidth;
-                    int length4 = (column+ 1) * itemWidth;
-                    if(length1 > length2){
-                        tableClick.setPartHide(true);
+                    int length_x1 = (column + 1) * itemWidth;
+                    int length_x2 = horizontalScrollView.getScrollX() + horizontalScrollView.getWidth();
+                    int length_x3 = column * itemWidth;
+                    int length_x4 = (column+ 1) * itemWidth;
+                    if(length_x1 > length_x2){
+                        tableClick.setXPartHide(true);
                     }
-                    if(horizontalScrollView.getScrollX()>length3 && horizontalScrollView.getScrollX() < length4){
-                        tableClick.setPartHide(false);
+                    if(horizontalScrollView.getScrollX()>length_x3 && horizontalScrollView.getScrollX() < length_x4){
+                        tableClick.setXPartHide(false);
+                    }
+
+                    int length_y1 = (row + 1) * itemHeight;
+                    int length_y2 = scrollView.getScrollY() + scrollView.getHeight();
+                    int length_y3 = row * itemHeight;
+                    int length_y4 = (row+ 1) * itemHeight;
+                    if(length_y1 > length_y2){
+                        tableClick.setYPartHide(true);
+                    }
+                    if(scrollView.getScrollX()>length_y3 && scrollView.getScrollX() < length_y4){
+                        tableClick.setYPartHide(false);
                     }
                     if (column < 0 && row >= 0) {
                         onItemClickListener.onClickYItem(v, tableClick);
