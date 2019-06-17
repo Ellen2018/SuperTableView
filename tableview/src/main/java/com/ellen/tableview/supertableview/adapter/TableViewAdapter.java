@@ -1,6 +1,5 @@
 package com.ellen.tableview.supertableview.adapter;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 
@@ -203,6 +202,7 @@ public abstract class TableViewAdapter {
         List<TableItemView> tableItemViewList = tableView.getMapRow().get(row);
         updateDataCallback.update(tableItemViewList);
     }
+
 
     public interface UpdateDataCallback {
         void update(List<TableItemView> tableItemViewList);

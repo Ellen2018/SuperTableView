@@ -2,20 +2,19 @@ package com.ellen.supertableview.table2;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ellen.supertableview.R;
 import com.ellen.tableview.supertableview.TableItemView;
-import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
 import com.ellen.tableview.supertableview.adapter.superadapter.ItemViewHolder;
+import com.ellen.tableview.supertableview.adapter.superadapter.noxy.SuperNoXYTableViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RailLineTableAdapter extends TableViewAdapter {
+public class RailLineTableAdapter extends SuperNoXYTableViewAdapter {
 
     private Context context;
 
@@ -51,11 +50,6 @@ public class RailLineTableAdapter extends TableViewAdapter {
     }
 
     @Override
-    public void bindAdapter() {
-
-    }
-
-    @Override
     public void bindView(View view, int finalIndex, int row, int column) {
 
     }
@@ -69,26 +63,6 @@ public class RailLineTableAdapter extends TableViewAdapter {
     public void bindYItemView(View view, int row) {
       TextView textView = view.findViewById(R.id.table_y_title);
       textView.setText(row+"");
-    }
-
-    @Override
-    public View createXItemView(int column) {
-        return getView(R.layout.item_line_table_x);
-    }
-
-    @Override
-    public void bindXItemView(View view, int column) {
-
-    }
-
-    @Override
-    public View createXYView() {
-        return null;
-    }
-
-    @Override
-    public void bindXYItemView(View view) {
-
     }
 
     public void updateRow(int row,RefreshRowCallback refreshRowCallback){
