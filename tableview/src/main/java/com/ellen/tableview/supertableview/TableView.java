@@ -545,7 +545,7 @@ public class TableView extends RelativeLayout {
                     if(length_y1 > length_y2){
                         tableClick.setYPartHide(true);
                     }
-                    if(scrollView.getScrollX()>length_y3 && scrollView.getScrollX() < length_y4){
+                    if(scrollView.getScrollY()>length_y3 && scrollView.getScrollY() < length_y4){
                         tableClick.setYPartHide(false);
                     }
                     if (column < 0 && row >= 0) {

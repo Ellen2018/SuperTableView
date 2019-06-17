@@ -58,7 +58,7 @@ public class Table2Activity extends AppCompatActivity {
             @Override
             public void onClickYItem(View view, TableClick tableClick) {
                 toast("Y:"+tableClick.getRow());
-                tableView.setBottomRowPosition(tableClick.getRow());
+                tableView.setTopRowPosition(tableClick.getRow());
             }
 
             @Override
