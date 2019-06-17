@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -368,7 +367,7 @@ public class TableView extends RelativeLayout {
 
     @TargetApi(Build.VERSION_CODES.M)
     private void initView() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_table, this);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_view_table, this);
         gridLayoutTable = view.findViewById(R.id.grid_layout);
         gridLayoutY = view.findViewById(R.id.grid_layout_y);
         gridLayoutX = view.findViewById(R.id.grid_layout_x);
