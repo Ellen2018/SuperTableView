@@ -283,6 +283,10 @@ public class TableView extends RelativeLayout {
         return mapItemViews;
     }
 
+    public GridLayout getGridLayoutTable() {
+        return gridLayoutTable;
+    }
+
     private void clear() {
         mapYItem.clear();
         mapXItem.clear();

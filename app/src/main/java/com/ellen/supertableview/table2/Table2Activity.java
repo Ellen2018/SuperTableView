@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ellen.supertableview.R;
 import com.ellen.tableview.supertableview.TableClick;
 import com.ellen.tableview.supertableview.TableView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Table2Activity extends AppCompatActivity {
 
@@ -76,6 +80,22 @@ public class Table2Activity extends AppCompatActivity {
             @Override
             public void onClickXYView(View view) {
                 toast("XY交界处");
+                railLineTableAdapter.addRow(new RailLineTableAdapter.RefreshRowCallback() {
+                    @Override
+                    public void columnOneAdd(RailLineTableAdapter.ColumnOneViewHolder columnOneViewHolder, int row, int column) {
+
+                    }
+
+                    @Override
+                    public void columnTwoAdd(RailLineTableAdapter.ColumnTwoViewHolder columnTwoViewHolder, int row, int column) {
+
+                    }
+
+                    @Override
+                    public void columnThreeAdd(RailLineTableAdapter.ColumnThreeViewHolder columnThreeViewHolder, int row, int column) {
+
+                    }
+                });
             }
         });
     }

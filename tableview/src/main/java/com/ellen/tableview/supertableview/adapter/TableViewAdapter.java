@@ -1,6 +1,8 @@
 package com.ellen.tableview.supertableview.adapter;
 
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.GridLayout;
 
 import com.ellen.tableview.supertableview.TableItemView;
@@ -52,8 +54,6 @@ public abstract class TableViewAdapter {
         this.tableView = tableView;
     }
 
-
-
     public int getItemCount() {
         return tableView.getColumnNumber() * tableView.getRowNumber();
     }
@@ -81,7 +81,7 @@ public abstract class TableViewAdapter {
     }
 
     public void addDataColumn(List<View> viewList,View xItemView) {
-        gridLayout.removeAllViews();
+        tableView.getGridLayoutTable().removeAllViews();
         tableView.getMapItemViews().clear();
         tableView.setItemCount(0);
         for (int i = 0; i < viewList.size(); i++) {
@@ -113,7 +113,12 @@ public abstract class TableViewAdapter {
                         }
                         tableView.getMapItemViews().put(index, tableItemView);
                         tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
-                        gridLayout.addView(tableItemView.getView());
+                        View view = tableItemView.getView();
+                        ViewGroup viewParent = (ViewGroup) view.getParent();
+                        if(viewParent != null) {
+                            viewParent.removeView(view);
+                        }
+                        tableView.getGridLayoutTable().addView(tableItemView.getView());
                         tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
                         tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
                         tableView.setItemCount(tableView.getItemCount()+1);
@@ -135,7 +140,7 @@ public abstract class TableViewAdapter {
     }
 
     public void addDataRow(List<View> viewList,View yItemView) {
-        gridLayout.removeAllViews();
+        tableView.getGridLayoutTable().removeAllViews();
         tableView.getMapItemViews().clear();
         tableView.setItemCount(0);
         for (int i = 0; i < viewList.size(); i++) {
@@ -168,7 +173,12 @@ public abstract class TableViewAdapter {
                         }
                         tableView.getMapItemViews().put(index, tableItemView);
                         tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
-                        gridLayout.addView(tableItemView.getView());
+                        View view = tableItemView.getView();
+                        ViewGroup viewParent = (ViewGroup) view.getParent();
+                        if(viewParent != null) {
+                            viewParent.removeView(view);
+                        }
+                        tableView.getGridLayoutTable().addView(tableItemView.getView());
                         tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
                         tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
                         tableView.setItemCount(tableView.getItemCount() + 1);
