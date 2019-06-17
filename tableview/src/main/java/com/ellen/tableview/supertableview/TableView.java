@@ -104,6 +104,8 @@ public class TableView extends RelativeLayout {
 
         }
 
+        typedArray.recycle();
+
         LinearLayout.LayoutParams yParams = (LinearLayout.LayoutParams) gridLayoutY.getLayoutParams();
         yParams.height = LayoutParams.MATCH_PARENT;// 控件的高强制设成20
         yParams.width = yWidth;
@@ -120,6 +122,56 @@ public class TableView extends RelativeLayout {
         xParams.width = yWidth;
         gridLayoutXY.setLayoutParams(xyParams);
 
+    }
+
+    public TableView(Context context, AttributeSet attrs, int defStyle){
+        super(context,attrs,defStyle);
+        initView();
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TableView);
+        int n = typedArray.getIndexCount();
+        for (int i = 0; i < n; i++) {
+            int attr = typedArray.getIndex(i);
+            if (attr == R.styleable.TableView_ItemWidth) {
+                float width = typedArray.getDimension(attr, this.itemWidth);
+                this.itemWidth = (int) width;
+            } else if (attr == R.styleable.TableView_ItemHeight) {
+                float height = typedArray.getDimension(attr, this.itemHeight);
+                this.itemHeight = (int) height;
+            } else if (attr == R.styleable.TableView_ColumnCount) {
+                this.columnNumber = typedArray.getInteger(attr, this.columnNumber);
+                gridLayoutTable.setColumnCount(columnNumber);
+                gridLayoutY.setColumnCount(1);
+                gridLayoutX.setColumnCount(columnNumber);
+            } else if (attr == R.styleable.TableView_RowCount) {
+                this.rowNumber = typedArray.getInteger(attr, this.rowNumber);
+                gridLayoutTable.setRowCount(rowNumber);
+                gridLayoutY.setRowCount(rowNumber);
+                gridLayoutX.setRowCount(1);
+            } else if (attr == R.styleable.TableView_YItemWidth) {
+                yWidth = (int) typedArray.getDimension(attr, 100);// 控件的宽强制设成30;
+            }else if(attr == R.styleable.TableView_XItemHeight){
+                xHeight = (int) typedArray.getDimension(attr, 100);// 控件的宽强制设成30;
+            }
+
+        }
+
+        typedArray.recycle();
+
+        LinearLayout.LayoutParams yParams = (LinearLayout.LayoutParams) gridLayoutY.getLayoutParams();
+        yParams.height = LayoutParams.MATCH_PARENT;// 控件的高强制设成20
+        yParams.width = yWidth;
+        gridLayoutY.setLayoutParams(yParams); //使设置好的布局参数应用到控件
+
+        FrameLayout.LayoutParams xParams = (FrameLayout.LayoutParams) gridLayoutX.getLayoutParams();
+        xParams.height = xHeight;// 控件的高强制设成20
+        xParams.width = LayoutParams.MATCH_PARENT;
+        gridLayoutX.setPadding(yWidth,0,0,0);
+        gridLayoutX.setLayoutParams(xParams); //使设置好的布局参数应用到控件
+
+        RelativeLayout.LayoutParams xyParams = (LayoutParams) gridLayoutXY.getLayoutParams();
+        xParams.height = xHeight;
+        xParams.width = yWidth;
+        gridLayoutXY.setLayoutParams(xyParams);
     }
 
     public int getColumnNumber() {
@@ -321,6 +373,7 @@ public class TableView extends RelativeLayout {
         gridLayoutY = view.findViewById(R.id.grid_layout_y);
         gridLayoutX = view.findViewById(R.id.grid_layout_x);
         gridLayoutXY = view.findViewById(R.id.grid_layout_xy);
+        scrollView = view.findViewById(R.id.scrollView);
         horizontalScrollView = view.findViewById(R.id.horizontalScrollView);
         horizontalScrollView_x = view.findViewById(R.id.horizontalScrollView_x);
         horizontalScrollView.setOnScrollChangeListener(new OnScrollChangeListener() {
@@ -434,6 +487,18 @@ public class TableView extends RelativeLayout {
         int allWidth = (position + 1) * itemWidth;
         int scrollWidth = allWidth - width + yItemWidth;
         horizontalScrollView.scrollTo(scrollWidth, 0);
+    }
+
+    public void setTopRowPosition(int position){
+        scrollView.scrollTo(0,position*itemHeight);
+    }
+
+    public void setBottomRowPosition(int position){
+        int yItemWidth = (int) scrollView.getY() + this.getPaddingTop();
+        int height = this.getHeight();
+        int allHeight = (position + 1) * itemHeight;
+        int scrollHeight = allHeight - height+yItemWidth;
+        scrollView.scrollTo(0,scrollHeight);
     }
 
     public interface OnItemClickListener {

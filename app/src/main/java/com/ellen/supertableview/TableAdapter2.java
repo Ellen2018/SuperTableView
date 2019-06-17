@@ -1,16 +1,12 @@
 package com.ellen.supertableview;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ellen.tableview.supertableview.adapter.superadapter.ItemViewHolder;
 import com.ellen.tableview.supertableview.adapter.superadapter.XYItemViewHolder;
 import com.ellen.tableview.supertableview.adapter.superadapter.x.SuperXTableViewAdapter;
-import com.ellen.tableview.supertableview.adapter.superadapter.y.SuperYTableViewAdapter;
 
 public class TableAdapter2 extends SuperXTableViewAdapter<TableAdapter2.MyItemViewHolder, TableAdapter2.MyXItemViewHolder> {
 

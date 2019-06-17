@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <com.ellen.tableview.supertableview.TableView
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         app:ColumnCount="8"
         app:ItemHeight="40dp"
         app:ItemWidth="120dp"
@@ -16,9 +17,10 @@
 
     <Button
         android:id="@+id/bt"
-        android:text="添加数据"
-        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="添加数据"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -67,7 +67,8 @@ public class RailLineTableAdapter extends TableViewAdapter {
 
     @Override
     public void bindYItemView(View view, int row) {
-
+      TextView textView = view.findViewById(R.id.table_y_title);
+      textView.setText(row+"");
     }
 
     @Override
