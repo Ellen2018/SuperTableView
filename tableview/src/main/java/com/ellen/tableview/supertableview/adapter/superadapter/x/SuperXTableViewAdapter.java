@@ -12,7 +12,6 @@ public abstract class SuperXTableViewAdapter<T extends ItemViewHolder,E extends 
     @Override
     protected XYItemViewHolder createXItemViewHolder(int column, int type) {
         E e = createXViewHolder(column);
-
         return e;
     }
 

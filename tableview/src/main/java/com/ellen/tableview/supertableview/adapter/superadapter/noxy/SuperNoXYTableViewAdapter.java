@@ -31,7 +31,6 @@ public abstract class SuperNoXYTableViewAdapter<T extends ItemViewHolder> extend
     @Override
     protected ItemViewHolder createItemViewHolder(int row, int column, int type) {
         T t = createViewHolder(row,column);
-
         return t;
     }
 

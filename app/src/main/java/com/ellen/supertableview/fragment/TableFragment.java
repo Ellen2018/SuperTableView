@@ -61,7 +61,7 @@ public class TableFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClickItem(View view, TableClick tableClick) {
-              
+
             }
 
             @Override
