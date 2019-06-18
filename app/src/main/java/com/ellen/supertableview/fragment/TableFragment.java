@@ -18,6 +18,7 @@ import com.ellen.supertableview.R;
 import com.ellen.tableview.supertableview.TableClick;
 import com.ellen.tableview.supertableview.TableItemView;
 import com.ellen.tableview.supertableview.TableView;
+import com.ellen.tableview.supertableview.adapter.superadapter.x.SuperXTableViewAdapter;
 import com.ellen.tableview.supertableview.adapter.superadapter.y.SuperYTableViewAdapter;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class TableFragment extends Fragment {
 
     private TableView tableView;
     private TableClick agoTableClick;
-    private SuperYTableViewAdapter superTableViewAdapter;
+    private SuperXTableViewAdapter superTableViewAdapter;
     private ChooseUpDataCallback chooseUpDataCallback;
 
     private List<String> yTitles = new ArrayList<>();
@@ -38,6 +39,12 @@ public class TableFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.from(getActivity()).inflate(R.layout.fragment_table, container, false);
+        view.findViewById(R.id.bt_remove).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                superTableViewAdapter.removeColumn(2);
+            }
+        });
         tableView = view.findViewById(R.id.tableView);
         yTitles.add("1");
         yTitles.add("2");
@@ -47,8 +54,8 @@ public class TableFragment extends Fragment {
         yTitles.add("6");
         yTitles.add("7");
         itemTitles.add("a");
-        tableView.setRowNumber(yTitles.size());
-        tableView.setColumnNumber(itemTitles.size());
+        tableView.setRowNumber(itemTitles.size());
+        tableView.setColumnNumber(yTitles.size());
         superTableViewAdapter = new TableAdapter(getActivity(), yTitles,itemTitles);
         tableView.setTableViewAdapter(superTableViewAdapter);
         initView();
@@ -61,16 +68,17 @@ public class TableFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClickItem(View view, TableClick tableClick) {
-
+              Toast.makeText(getActivity(),"("+tableClick.getRow()+","+tableClick.getCloumn()+")",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onClickYItem(View view, TableClick tableClick) {
-                superTableViewAdapter.addRow();
+                Toast.makeText(getActivity(),"点击了Y："+tableClick.getRow(),Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onClickXItem(View view, TableClick tableClick) {
+                Toast.makeText(getActivity(),"点击了X："+tableClick.getCloumn(),Toast.LENGTH_SHORT).show();
                for(TableItemView tableItemView:tableClick.getCloumnViewList()){
                    tableItemView.getView().setBackgroundColor(Color.RED);
                }

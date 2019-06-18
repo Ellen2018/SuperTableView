@@ -13,6 +13,7 @@ import com.ellen.tableview.supertableview.YItemView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public abstract class TableViewAdapter {
 
@@ -58,22 +59,30 @@ public abstract class TableViewAdapter {
         return getTableRow() * getTableColumn();
     }
 
-    public int getTableRow(){
+    public int getTableRow() {
         return tableView.getRowNumber();
     }
 
-    public int getTableColumn(){
+    public int getTableColumn() {
         return tableView.getColumnNumber();
     }
 
     public abstract void bindAdapter();
+
     public abstract void bindView(View view, int finalIndex, int row, int column);
+
     public abstract View createItemView(int position, int row, int column);
+
     public abstract View createYItemView(int row);
+
     public abstract void bindYItemView(View view, int row);
-    public abstract  View createXItemView(int column);
-    public abstract void bindXItemView(View view,int  column);
+
+    public abstract View createXItemView(int column);
+
+    public abstract void bindXItemView(View view, int column);
+
     public abstract View createXYView();
+
     public abstract void bindXYItemView(View view);
 
     public int getAllRow() {
@@ -88,7 +97,7 @@ public abstract class TableViewAdapter {
         }
     }
 
-    public void addDataColumn(List<View> viewList,View xItemView) {
+    public void addDataColumn(List<View> viewList, View xItemView) {
         tableView.getGridLayoutTable().removeAllViews();
         tableView.getMapItemViews().clear();
         tableView.setItemCount(0);
@@ -123,31 +132,31 @@ public abstract class TableViewAdapter {
                         tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
                         View view = tableItemView.getView();
                         ViewGroup viewParent = (ViewGroup) view.getParent();
-                        if(viewParent != null) {
+                        if (viewParent != null) {
                             viewParent.removeView(view);
                         }
                         tableView.getGridLayoutTable().addView(tableItemView.getView());
                         tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
                         tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
-                        tableView.setItemCount(tableView.getItemCount()+1);
+                        tableView.setItemCount(tableView.getItemCount() + 1);
                         break;
                     }
                 }
             }
         }
-        if(xItemView != null) {
+        if (xItemView != null) {
             //添加X轴View
-            tableView.getGridLayoutX().setColumnCount(tableView.getColumnNumber()+1);
+            tableView.getGridLayoutX().setColumnCount(tableView.getColumnNumber() + 1);
             tableView.getGridLayoutX().addView(xItemView);
             XItemView xItemView1 = new XItemView(xItemView, tableView.getColumnNumber() - 1);
             xItemView.setMinimumWidth(tableView.getItemWidth());
             xItemView.setMinimumHeight(tableView.getxHeight());
             tableView.getMapXItem().put(tableView.getColumnNumber() - 1, xItemView1);
-            tableView.setItemOnClick(xItemView, -1, tableView.getColumnNumber()-1);
+            tableView.setItemOnClick(xItemView, -1, tableView.getColumnNumber() - 1);
         }
     }
 
-    public void addDataRow(List<View> viewList,View yItemView) {
+    public void addDataRow(List<View> viewList, View yItemView) {
         tableView.getGridLayoutTable().removeAllViews();
         tableView.getMapItemViews().clear();
         tableView.setItemCount(0);
@@ -183,7 +192,7 @@ public abstract class TableViewAdapter {
                         tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
                         View view = tableItemView.getView();
                         ViewGroup viewParent = (ViewGroup) view.getParent();
-                        if(viewParent != null) {
+                        if (viewParent != null) {
                             viewParent.removeView(view);
                         }
                         tableView.getGridLayoutTable().addView(tableItemView.getView());
@@ -195,7 +204,7 @@ public abstract class TableViewAdapter {
                 }
             }
         }
-        if(yItemView != null) {
+        if (yItemView != null) {
             //添加Y轴View
             tableView.getGridLayoutY().addView(yItemView);
             YItemView yItemView1 = new YItemView(yItemView, tableView.getRowNumber() - 1);
@@ -206,9 +215,9 @@ public abstract class TableViewAdapter {
         }
     }
 
-    public void addDataColumn(List<View> viewList,View xItemView,AddDataCallback addDataCallback){
-        addDataColumn(viewList,xItemView);
-        addDataCallback.addViewSuccess(tableView.getMapItemViews(),tableView.getMapYItem());
+    public void addDataColumn(List<View> viewList, View xItemView, AddDataCallback addDataCallback) {
+        addDataColumn(viewList, xItemView);
+        addDataCallback.addViewSuccess(tableView.getMapItemViews(), tableView.getMapYItem());
     }
 
     public void updateCloumnData(int column, UpdateDataCallback updateDataCallback) {
@@ -221,13 +230,182 @@ public abstract class TableViewAdapter {
         updateDataCallback.update(tableItemViewList);
     }
 
+    public void removeRow(int row) {
+        if (!(row >= 0 && row <= tableView.getMapRow().size() - 1)) {
+            return;
+        }
+        tableView.getGridLayoutTable().removeAllViews();
+        tableView.getMapItemViews().clear();
+        tableView.getGridLayoutY().removeAllViews();
+        getTableView().getMapColumn().clear();
+        tableView.setItemCount(0);
+        //移除掉行集合中的此行
+        getTableView().getMapRow().remove(row);
+        for (int copyRow = 0; copyRow < getTableView().getRowNumber(); copyRow++) {
+            if (copyRow != row) {
+                if (copyRow < row) {
+                    List<TableItemView> rowTableItemViewList = getTableView().getMapRow().get(copyRow);
+                    for (TableItemView tableItemView : rowTableItemViewList) {
+                        tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
+                        View view = tableItemView.getView();
+                        ViewGroup viewParent = (ViewGroup) view.getParent();
+                        if (viewParent != null) {
+                            viewParent.removeView(view);
+                        }
+                        tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
+                        tableView.getGridLayoutTable().addView(tableItemView.getView());
+                        tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
+                        tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
+                        tableView.setItemCount(tableView.getItemCount() + 1);
+                        if (getTableView().getMapColumn().get(tableItemView.getCloumn()) == null) {
+                            List<TableItemView> tableItemViewList = new ArrayList<>();
+                            tableItemViewList.add(tableItemView);
+                            getTableView().getMapColumn().put(tableItemView.getCloumn(), tableItemViewList);
+                        } else {
+                            List<TableItemView> tableItemViewList = getTableView().getMapColumn().get(tableItemView.getCloumn());
+                            tableItemViewList.add(tableItemView);
+                        }
+                    }
+
+                } else {
+                    List<TableItemView> rowTableItemViewList = getTableView().getMapRow().get(copyRow);
+                    getTableView().getMapRow().remove(copyRow);
+                    getTableView().getMapRow().put(copyRow - 1, rowTableItemViewList);
+                    for (TableItemView tableItemView : rowTableItemViewList) {
+                        tableItemView.setRow(tableItemView.getRow() - 1);
+                        tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
+                        View view = tableItemView.getView();
+                        ViewGroup viewParent = (ViewGroup) view.getParent();
+                        if (viewParent != null) {
+                            viewParent.removeView(view);
+                        }
+                        tableView.getGridLayoutTable().addView(tableItemView.getView());
+                        tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
+                        tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
+                        tableView.setItemCount(tableView.getItemCount() + 1);
+                        if (getTableView().getMapColumn().get(tableItemView.getCloumn()) == null) {
+                            List<TableItemView> tableItemViewList = new ArrayList<>();
+                            tableItemViewList.add(tableItemView);
+                            getTableView().getMapColumn().put(tableItemView.getCloumn(), tableItemViewList);
+                        } else {
+                            List<TableItemView> tableItemViewList = getTableView().getMapColumn().get(tableItemView.getCloumn());
+                            tableItemViewList.add(tableItemView);
+                        }
+                    }
+                }
+
+            }
+        }
+        //移除Y轴
+        if (getTableView().getGridLayoutY().getVisibility() == View.VISIBLE) {
+            getTableView().getMapYItem().remove(row);
+            for (int i = 0; i < getTableView().getRowNumber(); i++) {
+                if (i != row) {
+                    YItemView yItemView = getTableView().getMapYItem().get(i);
+                    if (i > row) {
+                        getTableView().getMapYItem().remove(i);
+                        getTableView().getMapYItem().put(i - 1, yItemView);
+                        yItemView.setRow(i - 1);
+                    }
+                    getTableView().getGridLayoutY().addView(yItemView.getView());
+                    yItemView.getView().setMinimumWidth(tableView.getyWidth());
+                    yItemView.getView().setMinimumHeight(tableView.getItemHeight());
+                    tableView.setItemOnClick(yItemView.getView(), yItemView.getRow(), -1);
+                }
+            }
+        }
+        getTableView().setRowNumber(getTableView().getRowNumber() - 1);
+    }
+
+    public void removeColumn(int column) {
+        if (!(column >= 0 && column <= tableView.getMapColumn().size() - 1)) {
+            return;
+        }
+        tableView.getGridLayoutTable().removeAllViews();
+        tableView.getMapItemViews().clear();
+        tableView.getGridLayoutX().removeAllViews();
+        getTableView().getMapColumn().clear();
+        tableView.setItemCount(0);
+        for (int row = 0; row < getTableView().getRowNumber(); row++) {
+            List<TableItemView> rowItemViewList = getTableView().getMapRow().get(row);
+            for (TableItemView tableItemView : rowItemViewList) {
+                if (tableItemView.getCloumn() != column) {
+                    if (tableItemView.getCloumn() < column) {
+                        if (getTableView().getMapColumn().get(tableItemView.getCloumn()) == null) {
+                            List<TableItemView> tableItemViewList = new ArrayList<>();
+                            tableItemViewList.add(tableItemView);
+                            getTableView().getMapColumn().put(tableItemView.getCloumn(), tableItemViewList);
+                        } else {
+                            List<TableItemView> tableItemViewList = getTableView().getMapColumn().get(tableItemView.getCloumn());
+                            tableItemViewList.add(tableItemView);
+                        }
+                        tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
+                        View view = tableItemView.getView();
+                        ViewGroup viewParent = (ViewGroup) view.getParent();
+                        if (viewParent != null) {
+                            viewParent.removeView(view);
+                        }
+                        tableView.getGridLayoutTable().addView(tableItemView.getView());
+                        tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
+                        tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
+                        tableView.setItemCount(tableView.getItemCount() + 1);
+                    } else {
+                        tableItemView.setCloumn(tableItemView.getCloumn() - 1);
+                        if (getTableView().getMapColumn().get(tableItemView.getCloumn()) == null) {
+                            List<TableItemView> tableItemViewList = new ArrayList<>();
+                            tableItemViewList.add(tableItemView);
+                            getTableView().getMapColumn().put(tableItemView.getCloumn(), tableItemViewList);
+                        } else {
+                            List<TableItemView> tableItemViewList = getTableView().getMapColumn().get(tableItemView.getCloumn());
+                            tableItemViewList.add(tableItemView);
+                        }
+                        tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
+                        View view = tableItemView.getView();
+                        ViewGroup viewParent = (ViewGroup) view.getParent();
+                        if (viewParent != null) {
+                            viewParent.removeView(view);
+                        }
+                        tableView.getGridLayoutTable().addView(tableItemView.getView());
+                        tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
+                        tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
+                        tableView.setItemCount(tableView.getItemCount() + 1);
+                    }
+                }
+            }
+            rowItemViewList.remove(column);
+        }
+        //移除X轴
+        if (getTableView().getGridLayoutX().getVisibility() == View.VISIBLE) {
+            getTableView().getMapXItem().remove(column);
+            for (int i = 0; i < getTableView().getColumnNumber(); i++) {
+                if (i != column) {
+                    XItemView xItemView = getTableView().getMapXItem().get(i);
+                    if (i > column) {
+                        getTableView().getMapXItem().remove(i);
+                        getTableView().getMapXItem().put(i - 1, xItemView);
+                        xItemView.setColumn(xItemView.getColumn() - 1);
+                    }
+                    View view = xItemView.getView();
+                    ViewGroup viewParent = (ViewGroup) view.getParent();
+                    if (viewParent != null) {
+                        viewParent.removeView(view);
+                    }
+                    tableView.getGridLayoutX().addView(xItemView.getView());
+                    xItemView.getView().setMinimumWidth(tableView.getItemWidth());
+                    xItemView.getView().setMinimumHeight(tableView.getxHeight());
+                    tableView.setItemOnClick(xItemView.getView(), -1, xItemView.getColumn());
+                }
+            }
+        }
+        getTableView().setColumnNumber(getTableView().getColumnNumber() - 1);
+    }
 
     public interface UpdateDataCallback {
         void update(List<TableItemView> tableItemViewList);
     }
 
-    public interface AddDataCallback{
-        void addViewSuccess(Map<Integer,TableItemView> tableViewMap,Map<Integer,YItemView> yItemViewMap);
+    public interface AddDataCallback {
+        void addViewSuccess(Map<Integer, TableItemView> tableViewMap, Map<Integer, YItemView> yItemViewMap);
     }
 
 }

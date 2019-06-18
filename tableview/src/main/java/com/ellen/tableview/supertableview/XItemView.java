@@ -19,4 +19,8 @@ public class XItemView {
     public int getColumn() {
         return column;
     }
+
+    public void setColumn(int column){
+        this.column = column;
+    }
 }

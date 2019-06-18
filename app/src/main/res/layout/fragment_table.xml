@@ -8,10 +8,17 @@
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:ColumnCount="4"
         app:ItemHeight="40dp"
         app:ItemWidth="120dp"
         app:RowCount="10"
         app:YItemWidth="88dp" />
+
+    <Button
+        android:id="@+id/bt_remove"
+        android:text="移除"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

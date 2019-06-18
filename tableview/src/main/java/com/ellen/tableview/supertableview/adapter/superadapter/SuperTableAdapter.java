@@ -135,7 +135,7 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
 
     public void addRow(){
          //获取y轴的type
-         int yType = geYItemType(getTableView().getRowNumber());
+        int yType = geYItemType(getTableView().getRowNumber());
         XYItemViewHolder yItemViewHolder = createYItemViewHolder(getTableView().getRowNumber(),yType);
         yViewHolderMap.put(getTableView().getRowNumber(),yItemViewHolder);
         View yView = null;

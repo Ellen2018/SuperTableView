@@ -203,6 +203,7 @@ public class TableView extends RelativeLayout {
 
     public void setColumnNumber(int columnNumber) {
         this.columnNumber = columnNumber;
+        if(columnNumber>gridLayoutTable.getColumnCount())
         gridLayoutTable.setColumnCount(columnNumber);
     }
 
@@ -212,6 +213,7 @@ public class TableView extends RelativeLayout {
 
     public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
+        if(rowNumber>gridLayoutTable.getRowCount())
         gridLayoutTable.setRowCount(rowNumber);
     }
 

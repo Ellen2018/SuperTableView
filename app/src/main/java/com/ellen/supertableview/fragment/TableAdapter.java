@@ -6,14 +6,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ellen.supertableview.R;
-import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
 import com.ellen.tableview.supertableview.adapter.superadapter.ItemViewHolder;
 import com.ellen.tableview.supertableview.adapter.superadapter.XYItemViewHolder;
-import com.ellen.tableview.supertableview.adapter.superadapter.y.SuperYTableViewAdapter;
+import com.ellen.tableview.supertableview.adapter.superadapter.x.SuperXTableViewAdapter;
 
 import java.util.List;
 
-public class TableAdapter extends SuperYTableViewAdapter<TableAdapter.MyItemViewHolder, TableAdapter.YItemViewHolder> {
+public class TableAdapter extends SuperXTableViewAdapter<TableAdapter.MyItemViewHolder, TableAdapter.XItemViewHolder> {
 
     public Context context;
     public List<String> yTitles;
@@ -25,15 +24,15 @@ public class TableAdapter extends SuperYTableViewAdapter<TableAdapter.MyItemView
     }
 
     @Override
-    protected YItemViewHolder createYViewHolder(int row) {
+    protected XItemViewHolder createXViewHolder(int column) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_line_table_x,null);
-        YItemViewHolder yItemViewHolder = new YItemViewHolder(view);
-        return yItemViewHolder;
+        XItemViewHolder xyItemViewHolder = new XItemViewHolder(view);
+        return xyItemViewHolder;
     }
 
     @Override
-    protected void bindYViewHolder(YItemViewHolder yItemViewHolder, int row) {
-        yItemViewHolder.tv.setText(yTitles.get(row));
+    protected void bindXViewHolder(XItemViewHolder yItemViewHolder, int column) {
+         yItemViewHolder.tv.setText(yTitles.get(column));
     }
 
     @Override
@@ -45,24 +44,24 @@ public class TableAdapter extends SuperYTableViewAdapter<TableAdapter.MyItemView
 
     @Override
     protected void bindTableItemViewHolder(MyItemViewHolder myItemViewHolder, int row, int column) {
-         myItemViewHolder.tv.setText(itemTitles.get(column));
+         myItemViewHolder.tv.setText(column+"");
     }
 
     @Override
     public int getTableColumn() {
-        return itemTitles.size();
+        return yTitles.size();
     }
 
     @Override
     public int getTableRow() {
-        return yTitles.size();
+        return itemTitles.size();
     }
 
-    public static class YItemViewHolder extends XYItemViewHolder{
+    public static class XItemViewHolder extends XYItemViewHolder{
 
         TextView tv;
 
-        public YItemViewHolder(View yItemView) {
+        public XItemViewHolder(View yItemView) {
             super(yItemView);
             tv = yItemView.findViewById(R.id.tv);
         }
