@@ -55,7 +55,15 @@ public abstract class TableViewAdapter {
     }
 
     public int getItemCount() {
-        return tableView.getColumnNumber() * tableView.getRowNumber();
+        return getTableRow() * getTableColumn();
+    }
+
+    public int getTableRow(){
+        return tableView.getRowNumber();
+    }
+
+    public int getTableColumn(){
+        return tableView.getColumnNumber();
     }
 
     public abstract void bindAdapter();

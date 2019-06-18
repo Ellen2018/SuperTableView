@@ -1,84 +1,79 @@
 package com.ellen.supertableview.table2;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ellen.supertableview.R;
-import com.ellen.tableview.supertableview.TableItemView;
-import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
 import com.ellen.tableview.supertableview.adapter.superadapter.ItemViewHolder;
-import com.ellen.tableview.supertableview.adapter.superadapter.noxy.SuperNoXYTableViewAdapter;
+import com.ellen.tableview.supertableview.adapter.superadapter.SuperTableAdapter;
+import com.ellen.tableview.supertableview.adapter.superadapter.XYItemViewHolder;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class RailLineTableAdapter extends TableViewAdapter {
+public class RailLineTableAdapter extends SuperTableAdapter {
 
     private Context context;
+    private String[] xTitles;
 
-    private View getView(int layoutId){
-        View view = LayoutInflater.from(context).inflate(layoutId,null);
-        return view;
-    }
-
-    public RailLineTableAdapter(Context context){
+    public RailLineTableAdapter(Context context,String[] xTitles){
         this.context = context;
+        this.xTitles = xTitles;
     }
 
     @Override
-    public View createItemView(int position, int row, int column) {
-        View view = null;
-        if(row == 0) {
-           view = getView(R.layout.item_line_table_x);
-        }else {
-            if(column == 0){
-                view = getView(R.layout.item_line_table_column_1);
-            }else if(column == 1){
-                view = getView(R.layout.item_line_table_column_2);
-            }else {
-                view = getView(R.layout.item_line_table_column_3);
-                if(column == 6 || column == 7){
-                    TextView textView = view.findViewById(R.id.textview);
-                    textView.setBackgroundResource(R.drawable.line_table_item_bg_column_red);
-                    textView.setTextColor(Color.WHITE);
-                }
-            }
-        }
-        return view;
+    protected XYItemViewHolder createXItemViewHolder(int column, int type) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_line_table_x,null);
+        return new XViewHolder(view);
     }
 
     @Override
-    public void bindAdapter() {
-
+    protected void bindXItemViewHolder(XYItemViewHolder xItemViewHolder, int column) {
+        XViewHolder xViewHolder = (XViewHolder) xItemViewHolder;
+        xViewHolder.textView.setText(xTitles[column]);
     }
 
     @Override
-    public void bindView(View view, int finalIndex, int row, int column) {
-
-    }
-
-    @Override
-    public View createYItemView(int row) {
-        return getView(R.layout.item_type_y);
-    }
-
-    @Override
-    public void bindYItemView(View view, int row) {
-      TextView textView = view.findViewById(R.id.table_y_title);
-      textView.setText(row+"");
-    }
-
-    @Override
-    public View createXItemView(int column) {
+    protected XYItemViewHolder createYItemViewHolder(int row, int type) {
         return null;
     }
 
     @Override
-    public void bindXItemView(View view, int column) {
+    protected void bindYItemViewHolder(XYItemViewHolder yItemViewHolder, int row) {
 
+    }
+
+    @Override
+    protected int getItemType(int row, int column) {
+        if(column == 0){
+            return 0;
+        }else if(column == 1){
+            return 1;
+        }else {
+            return 2;
+        }
+    }
+
+    @Override
+    protected ItemViewHolder createItemViewHolder(int row, int column, int type) {
+        if(type == 0){
+            return new ColumnOneViewHolder(LayoutInflater.from(context).inflate(R.layout.item_line_table_column_1,null));
+        }else if(type == 1){
+            return new ColumnTwoViewHolder(LayoutInflater.from(context).inflate(R.layout.item_line_table_column_2,null));
+        }else if(type == 2){
+            return new ColumnThreeViewHolder(LayoutInflater.from(context).inflate(R.layout.item_line_table_column_3,null));
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    protected void bindItemViewHolder(ItemViewHolder itemViewHolder, int row, int column) {
+
+    }
+
+    @Override
+    public void bindAdapter() {
+        getTableView().hideYAxis();
     }
 
     @Override
@@ -91,42 +86,12 @@ public class RailLineTableAdapter extends TableViewAdapter {
 
     }
 
-    public void updateRow(int row,RefreshRowCallback refreshRowCallback){
-        List<TableItemView> tableItemViewList = getTableView().getMapRow().get(row);
-        for(TableItemView tableItemView:tableItemViewList){
-            if(tableItemView.getCloumn() == 0){
-                refreshRowCallback.columnOneAdd(new ColumnOneViewHolder(tableItemView.getView()),tableItemView.getRow(),tableItemView.getCloumn());
-            }else if(tableItemView.getCloumn() == 1){
-                refreshRowCallback.columnTwoAdd(new ColumnTwoViewHolder(tableItemView.getView()),tableItemView.getRow(),tableItemView.getCloumn());
-            }else {
-                refreshRowCallback.columnThreeAdd(new ColumnThreeViewHolder(tableItemView.getView()),tableItemView.getRow(),tableItemView.getCloumn());
-            }
+    public static class XViewHolder extends XYItemViewHolder{
+        TextView textView;
+        public XViewHolder(View yItemView) {
+            super(yItemView);
+            textView = yItemView.findViewById(R.id.tv);
         }
-    }
-
-    public void addRow(RefreshRowCallback refreshRowCallback){
-        List<View> viewList = new ArrayList<>();
-        for(int i=0;i<getTableView().getColumnNumber();i++){
-            View view = null;
-            if(i == 0){
-                view = getView(R.layout.item_line_table_column_1);
-                refreshRowCallback.columnOneAdd(new ColumnOneViewHolder(view),getTableView().getRowNumber(),i);
-            }else if(i == 1){
-                view = getView(R.layout.item_line_table_column_2);
-                refreshRowCallback.columnTwoAdd(new ColumnTwoViewHolder(view),getTableView().getRowNumber(),i);
-            }else {
-                view = getView(R.layout.item_line_table_column_3);
-                refreshRowCallback.columnThreeAdd(new ColumnThreeViewHolder(view),getTableView().getRowNumber(),i);
-            }
-            viewList.add(view);
-        }
-        addDataRow(viewList,getView(R.layout.item_line_table_column_1));
-    }
-
-    public interface  RefreshRowCallback{
-         void columnOneAdd(ColumnOneViewHolder columnOneViewHolder,int row,int column);
-         void columnTwoAdd(ColumnTwoViewHolder columnTwoViewHolder,int row,int column);
-         void columnThreeAdd(ColumnThreeViewHolder columnThreeViewHolder,int row,int column);
     }
 
     public static class ColumnOneViewHolder extends ItemViewHolder {

@@ -4,13 +4,13 @@ import android.view.View;
 
 public class XYItemViewHolder {
 
-    private View yItemView;
+    private View xyItemView;
 
-    public XYItemViewHolder(View yItemView){
-        this.yItemView = yItemView;
+    public XYItemViewHolder(View xyItemView){
+        this.xyItemView = xyItemView;
     }
 
-    public View getyItemView() {
-        return yItemView;
+    public View getItemView() {
+        return xyItemView;
     }
 }

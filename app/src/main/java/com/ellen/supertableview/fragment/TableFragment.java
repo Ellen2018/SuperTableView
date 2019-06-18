@@ -12,13 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ellen.supertableview.R;
-import com.ellen.supertableview.TableAdapter;
 import com.ellen.tableview.supertableview.TableClick;
 import com.ellen.tableview.supertableview.TableItemView;
 import com.ellen.tableview.supertableview.TableView;
 import com.ellen.tableview.supertableview.adapter.superadapter.y.SuperYTableViewAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressLint("ValidFragment")
 public class TableFragment extends Fragment {
@@ -28,26 +31,25 @@ public class TableFragment extends Fragment {
     private SuperYTableViewAdapter superTableViewAdapter;
     private ChooseUpDataCallback chooseUpDataCallback;
 
-    private String[] yTitles = {
-            "状态",
-            "检查位置",
-            "部位",
-            "轨距",
-            "水平",
-            "查照",
-            "护背",
-            "轨向",
-            "高低",
-            "病害",
-    };
+    private List<String> yTitles = new ArrayList<>();
+    private List<String> itemTitles = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.from(getActivity()).inflate(R.layout.fragment_table, container, false);
         tableView = view.findViewById(R.id.tableView);
-        superTableViewAdapter = new TableAdapter(getActivity(), yTitles);
-        superTableViewAdapter.setOrientationV(true);
+        yTitles.add("1");
+        yTitles.add("2");
+        yTitles.add("3");
+        yTitles.add("4");
+        yTitles.add("5");
+        yTitles.add("6");
+        yTitles.add("7");
+        itemTitles.add("a");
+        tableView.setRowNumber(yTitles.size());
+        tableView.setColumnNumber(itemTitles.size());
+        superTableViewAdapter = new TableAdapter(getActivity(), yTitles,itemTitles);
         tableView.setTableViewAdapter(superTableViewAdapter);
         initView();
         return view;
@@ -59,65 +61,12 @@ public class TableFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClickItem(View view, TableClick tableClick) {
-                //检测是否需要滑动
-                if (tableClick.getXPartHide() != null) {
-                    if (tableClick.getXPartHide()) {
-                        tableView.setRightCloumnPosition(tableClick.getCloumn());
-                    } else {
-                        tableView.setLeftCloumnPosition(tableClick.getCloumn());
-                    }
-                }
-
-                if (tableClick.getRow() == 0) {
-                    if (agoTableClick != null) {
-                        for (TableItemView tableItemView : agoTableClick.getCloumnViewList()) {
-                            if (tableItemView.getRow() == 0) continue;
-                            TextView textView = tableItemView.getView().findViewById(R.id.table_text);
-                            if (tableItemView.getRow() >= 2 && tableItemView.getRow() <= 6) {
-                                textView.setBackgroundResource(R.drawable.table_item_bg_gray);
-                                textView.setTextColor(Color.parseColor("#474747"));
-                            } else {
-                                textView.setBackgroundResource(R.drawable.table_item_bg_white);
-                                textView.setTextColor(Color.BLACK);
-                            }
-                        }
-                    }
-                    int cloumn = tableClick.getCloumn();
-                    int resorce = 0;
-                    switch (cloumn) {
-                        case 0:
-                            resorce = R.drawable.table_item_bg_column_1;
-                            break;
-                        case 1:
-                            resorce = R.drawable.table_item_bg_column_2;
-                            break;
-                        case 2:
-                            resorce = R.drawable.table_item_bg_column_3;
-                            break;
-                        case 3:
-                            resorce = R.drawable.table_item_bg_column_4;
-                            break;
-
-                    }
-
-                    for (TableItemView tableItemView : tableClick.getCloumnViewList()) {
-                        if (tableItemView.getRow() == 0) continue;
-                        TextView textView = tableItemView.getView().findViewById(R.id.table_text);
-                        textView.setTextColor(Color.WHITE);
-                        textView.setBackgroundResource(resorce);
-                    }
-                    agoTableClick = tableClick;
-                } else {
-                    if (!(tableClick.getRow() >= 2 && tableClick.getRow() <= 6)) {
-                        if(chooseUpDataCallback != null)
-                        chooseUpDataCallback.upData(tableClick.getRow(), tableClick.getCloumn());
-                    }
-                }
+              
             }
 
             @Override
             public void onClickYItem(View view, TableClick tableClick) {
-
+                superTableViewAdapter.addRow();
             }
 
             @Override
@@ -138,10 +87,6 @@ public class TableFragment extends Fragment {
 
     public void setChooseUpDataCallback(ChooseUpDataCallback chooseUpDataCallback) {
         this.chooseUpDataCallback = chooseUpDataCallback;
-    }
-
-    public void updateCloumnData(int column, SuperYTableViewAdapter.SuperUpdateDataCallback<TableAdapter.MyItemViewHolder> superUpdateDataCallback) {
-        superTableViewAdapter.superUpdateCloumnData(column, superUpdateDataCallback);
     }
 
     public TableView getTableView() {
