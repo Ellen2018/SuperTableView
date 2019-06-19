@@ -8,17 +8,27 @@
         android:id="@+id/tableView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:ItemHeight="40dp"
+        app:ItemHeight="50dp"
         app:ItemWidth="120dp"
         app:RowCount="10"
+        app:XItemHeight="50dp"
         app:YItemWidth="88dp" />
 
     <Button
         android:id="@+id/bt_remove"
-        android:text="移除"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="100dp"
+        android:text="移除" />
+
+    <Button
+        android:id="@+id/bt_remove1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_toRightOf="@id/bt_remove"
+        android:text="移除" />
 
 </RelativeLayout>

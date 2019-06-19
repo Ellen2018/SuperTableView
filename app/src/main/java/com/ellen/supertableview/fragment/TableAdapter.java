@@ -15,12 +15,12 @@ import java.util.List;
 public class TableAdapter extends SuperXTableViewAdapter<TableAdapter.MyItemViewHolder, TableAdapter.XItemViewHolder> {
 
     public Context context;
-    public List<String> yTitles;
+    public List<String> xTitles;
     public List<String> itemTitles;
-    public TableAdapter(Context context,List<String> yTitles,List<String> itemTitles){
+    public TableAdapter(Context context,List<String> xTitles,List<String> itemTitles){
         this.context = context;
         this.itemTitles = itemTitles;
-        this.yTitles = yTitles;
+        this.xTitles = xTitles;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class TableAdapter extends SuperXTableViewAdapter<TableAdapter.MyItemView
 
     @Override
     protected void bindXViewHolder(XItemViewHolder yItemViewHolder, int column) {
-         yItemViewHolder.tv.setText(yTitles.get(column));
+         yItemViewHolder.tv.setText(xTitles.get(column));
     }
 
     @Override
@@ -44,12 +44,12 @@ public class TableAdapter extends SuperXTableViewAdapter<TableAdapter.MyItemView
 
     @Override
     protected void bindTableItemViewHolder(MyItemViewHolder myItemViewHolder, int row, int column) {
-         myItemViewHolder.tv.setText(column+"");
+         myItemViewHolder.tv.setText(itemTitles.get(row));
     }
 
     @Override
     public int getTableColumn() {
-        return yTitles.size();
+        return xTitles.size();
     }
 
     @Override

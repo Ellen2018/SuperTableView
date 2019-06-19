@@ -1,10 +1,12 @@
 package com.ellen.tableview.supertableview.adapter.superadapter;
 
+import android.util.Log;
 import android.view.View;
 
 import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,14 +14,18 @@ import java.util.TreeMap;
 
 public abstract class SuperTableAdapter extends TableViewAdapter {
 
-    private Map<Integer,XYItemViewHolder> xViewHolderMap;
-    private Map<Integer,XYItemViewHolder> yViewHolderMap;
-    private Map<ItemPosition,ItemViewHolder> itemViewHolderMap;
+    private Map<Integer, XYItemViewHolder> xViewHolderMap;
+    private Map<Integer, XYItemViewHolder> yViewHolderMap;
+    private Map<ItemPosition, ItemViewHolder> itemViewHolderMap;
+    private Map<Integer, List<ItemPosition>> xItemPositionMap;
+    private Map<Integer, List<ItemPosition>> yItemPositionMap;
 
-    public SuperTableAdapter(){
+    public SuperTableAdapter() {
         xViewHolderMap = new TreeMap<>();
         yViewHolderMap = new TreeMap<>();
         itemViewHolderMap = new TreeMap<>();
+        xItemPositionMap = new HashMap<>();
+        yItemPositionMap = new HashMap<>();
     }
 
     @Override
@@ -29,23 +35,41 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
 
     @Override
     public View createItemView(int position, int row, int column) {
-        int type = getItemType(row,column);
-        ItemViewHolder itemViewHolder = createItemViewHolder(row,column,type);
-        bindItemViewHolder(itemViewHolder,row,column);
-        ItemPosition itemPosition = new ItemPosition(position,row,column);
-        itemViewHolderMap.put(itemPosition,itemViewHolder);
+        int type = getItemType(row, column);
+        ItemViewHolder itemViewHolder = createItemViewHolder(row, column, type);
+        bindItemViewHolder(itemViewHolder, row, column);
+        ItemPosition itemPosition = new ItemPosition(position, row, column);
+        //x
+        if (xItemPositionMap.get(column) == null) {
+            List<ItemPosition> itemPositionList = new ArrayList<>();
+            itemPositionList.add(itemPosition);
+            xItemPositionMap.put(column, itemPositionList);
+        } else {
+            List<ItemPosition> itemPositionList = xItemPositionMap.get(column);
+            itemPositionList.add(itemPosition);
+        }
+        //y
+        if (yItemPositionMap.get(row) == null) {
+            List<ItemPosition> itemPositionList = new ArrayList<>();
+            itemPositionList.add(itemPosition);
+            yItemPositionMap.put(row, itemPositionList);
+        } else {
+            List<ItemPosition> itemPositionList = yItemPositionMap.get(row);
+            itemPositionList.add(itemPosition);
+        }
+        itemViewHolderMap.put(itemPosition, itemViewHolder);
         return itemViewHolder.getItemView();
     }
 
     @Override
     public View createYItemView(int row) {
         int type = geYItemType(row);
-        XYItemViewHolder xyItemViewHolder = createYItemViewHolder(row,type);
-        if(xyItemViewHolder != null) {
+        XYItemViewHolder xyItemViewHolder = createYItemViewHolder(row, type);
+        if (xyItemViewHolder != null) {
             bindYItemViewHolder(xyItemViewHolder, row);
-            yViewHolderMap.put(row,xyItemViewHolder);
+            yViewHolderMap.put(row, xyItemViewHolder);
             return xyItemViewHolder.getItemView();
-        }else {
+        } else {
             return null;
         }
     }
@@ -58,12 +82,12 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
     @Override
     public View createXItemView(int column) {
         int type = getXItemType(column);
-        XYItemViewHolder xyItemViewHolder = createXItemViewHolder(column,type);
-        if(xyItemViewHolder != null) {
+        XYItemViewHolder xyItemViewHolder = createXItemViewHolder(column, type);
+        if (xyItemViewHolder != null) {
             bindXItemViewHolder(xyItemViewHolder, column);
-            xViewHolderMap.put(column,xyItemViewHolder);
+            xViewHolderMap.put(column, xyItemViewHolder);
             return xyItemViewHolder.getItemView();
-        }else {
+        } else {
             return null;
         }
     }
@@ -74,89 +98,172 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
     }
 
     //X轴
-    protected int getXItemType(int column){
+    protected int getXItemType(int column) {
         return 0;
     }
-    protected abstract XYItemViewHolder createXItemViewHolder(int column,int type);
-    protected abstract void bindXItemViewHolder(XYItemViewHolder xItemViewHolder,int column);
-    //Y轴
-    protected int geYItemType(int row){
-        return 0;
-    }
-    protected abstract XYItemViewHolder createYItemViewHolder(int row,int type);
-    protected abstract void bindYItemViewHolder(XYItemViewHolder yItemViewHolder,int row);
-    //Item
-    protected int getItemType(int row,int column){
-        return 0;
-    }
-    protected abstract ItemViewHolder createItemViewHolder(int row,int column,int type);
-    protected abstract void bindItemViewHolder(ItemViewHolder itemViewHolder,int row,int column);
 
-    public void notifyChanged(){
+    protected abstract XYItemViewHolder createXItemViewHolder(int column, int type);
+
+    protected abstract void bindXItemViewHolder(XYItemViewHolder xItemViewHolder, int column);
+
+    //Y轴
+    protected int geYItemType(int row) {
+        return 0;
+    }
+
+    protected abstract XYItemViewHolder createYItemViewHolder(int row, int type);
+
+    protected abstract void bindYItemViewHolder(XYItemViewHolder yItemViewHolder, int row);
+
+    //Item
+    protected int getItemType(int row, int column) {
+        return 0;
+    }
+
+    protected abstract ItemViewHolder createItemViewHolder(int row, int column, int type);
+
+    protected abstract void bindItemViewHolder(ItemViewHolder itemViewHolder, int row, int column);
+
+    public void notifyChanged() {
+        if (getTableView().getColumnNumber() != getTableColumn()) {
+            //存在增加或者是删除
+            if (getTableColumn() < getTableView().getColumnNumber()) {
+
+                //删除
+                int rowNumber = getTableView().getRowNumber();
+                int removeColumn = getTableView().getColumnNumber() - 1;
+                //删除itemViewHolderMap
+                xViewHolderMap.remove(removeColumn);
+
+                //遍历yItemPositionMap
+                for (int row = 0; row < rowNumber; row++) {
+                    List<ItemPosition> itemPositionList = yItemPositionMap.get(row);
+                    for (int j = 0; j < itemPositionList.size(); j++) {
+                        if (j == removeColumn) {
+                            itemViewHolderMap.remove(itemPositionList.get(j));
+                            itemPositionList.remove(j);
+                            break;
+                        }
+                    }
+                }
+                xItemPositionMap.remove(removeColumn);
+                removeColumn(removeColumn);
+            } else {
+                //增加
+                addColumn();
+            }
+        }
+
+        if (getTableView().getRowNumber() != getTableRow()) {
+            //存在增加或者是删除
+            if (getTableRow() > getTableView().getRowNumber()) {
+                //增加
+                addRow();
+            } else {
+                //删除
+                int columnNumber = getTableView().getColumnNumber();
+                int removeRow = getTableView().getRowNumber() - 1;
+                //删除itemViewHolderMap
+                yViewHolderMap.remove(removeRow);
+
+                //遍历yItemPositionMap
+                for (int column = 0; column < columnNumber; column++) {
+                    List<ItemPosition> itemPositionList = xItemPositionMap.get(column);
+                    for (int j = 0; j < itemPositionList.size(); j++) {
+                        if (j == removeRow) {
+                            itemViewHolderMap.remove(itemPositionList.get(j));
+                            itemPositionList.remove(j);
+                            break;
+                        }
+                    }
+                }
+                yItemPositionMap.remove(removeRow);
+                removeRow(removeRow);
+            }
+        }
+
         //更新x轴
         Set<Integer> xSet = xViewHolderMap.keySet();
-        for(int i:xSet){
-            bindXItemViewHolder(xViewHolderMap.get(i),i);
+        for (int i : xSet) {
+            bindXItemViewHolder(xViewHolderMap.get(i), i);
         }
         //更新y轴
         Set<Integer> ySet = yViewHolderMap.keySet();
-        for(int i:ySet){
-            bindYItemViewHolder(yViewHolderMap.get(i),i);
+        for (int i : ySet) {
+            bindYItemViewHolder(yViewHolderMap.get(i), i);
         }
         //更新item
         Set<ItemPosition> itemSet = itemViewHolderMap.keySet();
-        for(ItemPosition itemPosition:itemSet){
-            bindItemViewHolder(itemViewHolderMap.get(itemPosition),itemPosition.row,itemPosition.column);
+        for (ItemPosition itemPosition : itemSet) {
+            bindItemViewHolder(itemViewHolderMap.get(itemPosition), itemPosition.row, itemPosition.column);
         }
     }
 
-    public void addColumn(){
+    public void addColumn() {
         //获取x轴的type
         int xType = getXItemType(getTableView().getColumnNumber());
         //获取添加的x轴的ViewHolder
-        XYItemViewHolder xyItemViewHolder = createXItemViewHolder(getTableView().getColumnNumber(),xType);
-        xViewHolderMap.put(getTableView().getColumnNumber(),xyItemViewHolder);
+        XYItemViewHolder xyItemViewHolder = createXItemViewHolder(getTableView().getColumnNumber(), xType);
+        xViewHolderMap.put(getTableView().getColumnNumber(), xyItemViewHolder);
         View xView = null;
-        if(xyItemViewHolder != null) {
-          xView = xyItemViewHolder.getItemView();
+        if (xyItemViewHolder != null) {
+            xView = xyItemViewHolder.getItemView();
         }
 
         //添加一列数据
         List<View> viewList = new ArrayList<>();
-        for(int row = 0;row<getTableView().getRowNumber();row++){
-            int itemType = getItemType(row,getTableView().getColumnNumber());
-            ItemViewHolder itemViewHolder = createItemViewHolder(row,getTableView().getColumnNumber(),itemType);
-            ItemPosition itemPosition = new ItemPosition(itemViewHolderMap.size(),row,getTableView().getColumnNumber());
-            itemViewHolderMap.put(itemPosition,itemViewHolder);
+        for (int row = 0; row < getTableView().getRowNumber(); row++) {
+            int itemType = getItemType(row, getTableView().getColumnNumber());
+            ItemViewHolder itemViewHolder = createItemViewHolder(row, getTableView().getColumnNumber(), itemType);
+            ItemPosition itemPosition = new ItemPosition(itemViewHolderMap.size(), row, getTableView().getColumnNumber());
+            itemViewHolderMap.put(itemPosition, itemViewHolder);
             viewList.add(itemViewHolder.getItemView());
         }
-        addDataColumn(viewList,xView);
+        addDataColumn(viewList, xView);
     }
 
-    public void addRow(){
-         //获取y轴的type
+    public void addRow() {
+        //获取y轴的type
         int yType = geYItemType(getTableView().getRowNumber());
-        XYItemViewHolder yItemViewHolder = createYItemViewHolder(getTableView().getRowNumber(),yType);
-        yViewHolderMap.put(getTableView().getRowNumber(),yItemViewHolder);
+        XYItemViewHolder yItemViewHolder = createYItemViewHolder(getTableView().getRowNumber(), yType);
+        yViewHolderMap.put(getTableView().getRowNumber(), yItemViewHolder);
         View yView = null;
-        if(yItemViewHolder != null){
-           yView = yItemViewHolder.getItemView();
+        if (yItemViewHolder != null) {
+            yView = yItemViewHolder.getItemView();
         }
 
 
         //添加一列数据
         List<View> viewList = new ArrayList<>();
-        for(int column = 0;column<getTableView().getColumnNumber();column++){
-            int itemType = getItemType(getTableView().getRowNumber(),column);
-            ItemViewHolder itemViewHolder = createItemViewHolder(getTableView().getColumnNumber(),column,itemType);
-            ItemPosition itemPosition = new ItemPosition(itemViewHolderMap.size(),getTableView().getColumnNumber(),column);
-            itemViewHolderMap.put(itemPosition,itemViewHolder);
+        for (int column = 0; column < getTableView().getColumnNumber(); column++) {
+            int itemType = getItemType(getTableView().getRowNumber(), column);
+            ItemViewHolder itemViewHolder = createItemViewHolder(getTableView().getRowNumber(), column, itemType);
+            ItemPosition itemPosition = new ItemPosition(itemViewHolderMap.size(), getTableView().getRowNumber(), column);
+            itemViewHolderMap.put(itemPosition, itemViewHolder);
             viewList.add(itemViewHolder.getItemView());
         }
-        addDataRow(viewList,yView);
+        addDataRow(viewList, yView);
     }
 
-    private static class ItemPosition implements Comparable<ItemPosition>{
+    public void updateRow(int row, SuperUpdateDataCallback superUpdateDataCallback) {
+        List<ItemPosition> itemPositionList = xItemPositionMap.get(row);
+        List<ItemViewHolder> itemViewHolderList = new ArrayList<>();
+        for (ItemPosition itemPosition : itemPositionList) {
+            itemViewHolderList.add(itemViewHolderMap.get(itemPosition));
+        }
+        superUpdateDataCallback.update(itemViewHolderList);
+    }
+
+    public void updateColumn(int column, SuperUpdateDataCallback superUpdateDataCallback) {
+        List<ItemPosition> itemPositionList = yItemPositionMap.get(column);
+        List<ItemViewHolder> itemViewHolderList = new ArrayList<>();
+        for (ItemPosition itemPosition : itemPositionList) {
+            itemViewHolderList.add(itemViewHolderMap.get(itemPosition));
+        }
+        superUpdateDataCallback.update(itemViewHolderList);
+    }
+
+    private static class ItemPosition implements Comparable<ItemPosition> {
         private int position;
         private int row;
         private int column;
@@ -195,5 +302,9 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
         public int compareTo(ItemPosition o) {
             return this.position - o.position;
         }
+    }
+
+    public interface SuperUpdateDataCallback {
+        void update(List<ItemViewHolder> itemViewHolderList);
     }
 }

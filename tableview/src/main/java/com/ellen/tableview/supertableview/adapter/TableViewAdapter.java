@@ -230,7 +230,7 @@ public abstract class TableViewAdapter {
         updateDataCallback.update(tableItemViewList);
     }
 
-    public void removeRow(int row) {
+    protected void removeRow(int row) {
         if (!(row >= 0 && row <= tableView.getMapRow().size() - 1)) {
             return;
         }
@@ -317,7 +317,7 @@ public abstract class TableViewAdapter {
         getTableView().setRowNumber(getTableView().getRowNumber() - 1);
     }
 
-    public void removeColumn(int column) {
+    protected void removeColumn(int column) {
         if (!(column >= 0 && column <= tableView.getMapColumn().size() - 1)) {
             return;
         }
@@ -326,19 +326,12 @@ public abstract class TableViewAdapter {
         tableView.getGridLayoutX().removeAllViews();
         getTableView().getMapColumn().clear();
         tableView.setItemCount(0);
+        tableView.getGridLayoutTable().setColumnCount(getTableView().getColumnNumber()-1);
         for (int row = 0; row < getTableView().getRowNumber(); row++) {
             List<TableItemView> rowItemViewList = getTableView().getMapRow().get(row);
             for (TableItemView tableItemView : rowItemViewList) {
                 if (tableItemView.getCloumn() != column) {
                     if (tableItemView.getCloumn() < column) {
-                        if (getTableView().getMapColumn().get(tableItemView.getCloumn()) == null) {
-                            List<TableItemView> tableItemViewList = new ArrayList<>();
-                            tableItemViewList.add(tableItemView);
-                            getTableView().getMapColumn().put(tableItemView.getCloumn(), tableItemViewList);
-                        } else {
-                            List<TableItemView> tableItemViewList = getTableView().getMapColumn().get(tableItemView.getCloumn());
-                            tableItemViewList.add(tableItemView);
-                        }
                         tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
                         View view = tableItemView.getView();
                         ViewGroup viewParent = (ViewGroup) view.getParent();
@@ -349,16 +342,16 @@ public abstract class TableViewAdapter {
                         tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
                         tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
                         tableView.setItemCount(tableView.getItemCount() + 1);
+                        if (getTableView().getMapColumn().get(tableItemView.getCloumn()) == null) {
+                            List<TableItemView> tableItemViewList = new ArrayList<>();
+                            tableItemViewList.add(tableItemView);
+                            getTableView().getMapColumn().put(tableItemView.getCloumn(), tableItemViewList);
+                        } else {
+                            List<TableItemView> tableItemViewList = getTableView().getMapColumn().get(tableItemView.getCloumn());
+                            tableItemViewList.add(tableItemView);
+                        }
                     } else {
                         tableItemView.setCloumn(tableItemView.getCloumn() - 1);
-                        if (getTableView().getMapColumn().get(tableItemView.getCloumn()) == null) {
-                            List<TableItemView> tableItemViewList = new ArrayList<>();
-                            tableItemViewList.add(tableItemView);
-                            getTableView().getMapColumn().put(tableItemView.getCloumn(), tableItemViewList);
-                        } else {
-                            List<TableItemView> tableItemViewList = getTableView().getMapColumn().get(tableItemView.getCloumn());
-                            tableItemViewList.add(tableItemView);
-                        }
                         tableView.setItemOnClick(tableItemView.getView(), tableItemView.getRow(), tableItemView.getCloumn());
                         View view = tableItemView.getView();
                         ViewGroup viewParent = (ViewGroup) view.getParent();
@@ -369,6 +362,14 @@ public abstract class TableViewAdapter {
                         tableItemView.getView().setMinimumWidth(tableView.getItemWidth());
                         tableItemView.getView().setMinimumHeight(tableView.getItemHeight());
                         tableView.setItemCount(tableView.getItemCount() + 1);
+                        if (getTableView().getMapColumn().get(tableItemView.getCloumn()) == null) {
+                            List<TableItemView> tableItemViewList = new ArrayList<>();
+                            tableItemViewList.add(tableItemView);
+                            getTableView().getMapColumn().put(tableItemView.getCloumn(), tableItemViewList);
+                        } else {
+                            List<TableItemView> tableItemViewList = getTableView().getMapColumn().get(tableItemView.getCloumn());
+                            tableItemViewList.add(tableItemView);
+                        }
                     }
                 }
             }
