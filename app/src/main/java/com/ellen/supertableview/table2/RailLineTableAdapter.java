@@ -43,6 +43,11 @@ public class RailLineTableAdapter extends SuperTableAdapter {
     }
 
     @Override
+    public int getItemCount() {
+        return super.getItemCount();
+    }
+
+    @Override
     protected int getItemType(int row, int column) {
         if(column == 0){
             return 0;

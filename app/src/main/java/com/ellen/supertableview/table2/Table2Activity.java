@@ -32,30 +32,12 @@ public class Table2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table2);
         tableView = findViewById(R.id.tableView);
-        tableView.setColumnNumber(yTitles.length);
-        tableView.setRowNumber(1);
+        tableView.setRowNumber(2);
         railLineTableAdapter = new RailLineTableAdapter(this,yTitles);
         tableView.setTableViewAdapter(railLineTableAdapter);
         tableView.setOnItemClickListener(new TableView.OnItemClickListener() {
             @Override
             public void onClickItem(View view, TableClick tableClick) {
-                toast("("+tableClick.getRow()+","+tableClick.getCloumn()+")");
-                if(tableClick.getXPartHide() != null) {
-                    if (tableClick.getXPartHide()) {
-                        tableView.setRightCloumnPosition(tableClick.getCloumn());
-                    } else {
-                        tableView.setLeftCloumnPosition(tableClick.getCloumn());
-                    }
-                }
-
-                if(tableClick.getYPartHide() != null){
-                    if(tableClick.getYPartHide()){
-                        tableView.setBottomRowPosition(tableClick.getRow());
-                    }else {
-                        tableView.setTopRowPosition(tableClick.getRow());
-                    }
-                }
-                railLineTableAdapter.notifyChanged();
             }
 
             @Override
@@ -67,7 +49,7 @@ public class Table2Activity extends AppCompatActivity {
             @Override
             public void onClickXItem(View view, TableClick tableClick) {
                 yTitles[0] = "haha";
-                railLineTableAdapter.addRow();
+                railLineTableAdapter.notifyChanged();
             }
 
             @Override

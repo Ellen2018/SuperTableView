@@ -87,13 +87,9 @@ public class TableView extends RelativeLayout {
                 this.itemHeight = (int) height;
             } else if (attr == R.styleable.TableView_ColumnCount) {
                 this.columnNumber = typedArray.getInteger(attr, this.columnNumber);
-                gridLayoutTable.setColumnCount(columnNumber);
                 gridLayoutY.setColumnCount(1);
-                gridLayoutX.setColumnCount(columnNumber);
             } else if (attr == R.styleable.TableView_RowCount) {
                 this.rowNumber = typedArray.getInteger(attr, this.rowNumber);
-                gridLayoutTable.setRowCount(rowNumber);
-                gridLayoutY.setRowCount(rowNumber);
                 gridLayoutX.setRowCount(1);
             } else if (attr == R.styleable.TableView_YItemWidth) {
                 yWidth = (int) typedArray.getDimension(attr, 100);// 控件的宽强制设成30;
@@ -203,7 +199,7 @@ public class TableView extends RelativeLayout {
 
     public void setColumnNumber(int columnNumber) {
         this.columnNumber = columnNumber;
-        if (columnNumber >= gridLayoutTable.getColumnCount())
+        if (columnNumber > gridLayoutTable.getColumnCount())
             gridLayoutTable.setColumnCount(columnNumber);
     }
 
@@ -213,7 +209,7 @@ public class TableView extends RelativeLayout {
 
     public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
-        if (rowNumber >= gridLayoutTable.getRowCount())
+        if (rowNumber > gridLayoutTable.getRowCount())
             gridLayoutTable.setRowCount(rowNumber);
     }
 
@@ -311,6 +307,10 @@ public class TableView extends RelativeLayout {
         this.tableViewAdapter.setCloumn(columnNumber);
         this.tableViewAdapter.setGridLayout(gridLayoutTable);
         this.tableViewAdapter.setTableView(this);
+        setColumnNumber(tableViewAdapter.getTableColumn());
+        setRowNumber(tableViewAdapter.getTableRow());
+        getGridLayoutY().setRowCount(tableViewAdapter.getTableRow());
+        getGridLayoutX().setColumnCount(tableViewAdapter.getTableColumn());
         tableViewAdapter.bindAdapter();
         View xyView = tableViewAdapter.createXYView();
         if (xyView == null) {
