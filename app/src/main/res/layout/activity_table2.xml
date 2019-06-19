@@ -10,9 +10,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         app:ColumnCount="8"
-        app:ItemHeight="40dp"
+        app:ItemHeight="51dp"
         app:ItemWidth="120dp"
         app:RowCount="30"
+        app:XItemHeight="51dp"
         app:YItemWidth="88dp" />
 
     <Button
