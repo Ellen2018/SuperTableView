@@ -67,6 +67,9 @@ public class TableView extends RelativeLayout {
     //item实时个数
     private int itemCount = 0;
 
+    private boolean isHidenX = false;
+    private boolean isHideY = false;
+
     public TableView(Context context) {
         super(context);
         initView();
@@ -170,6 +173,11 @@ public class TableView extends RelativeLayout {
     }
 
     public int getColumnNumber() {
+        if(tableViewAdapter != null){
+            if(tableViewAdapter.isRemoveXClear() || tableViewAdapter.isRemoveYClear()){
+                return 0;
+            }
+        }
         return columnNumber;
     }
 
@@ -197,6 +205,14 @@ public class TableView extends RelativeLayout {
         this.yWidth = yWidth;
     }
 
+    public boolean isHidenX() {
+        return isHidenX;
+    }
+
+    public boolean isHideY() {
+        return isHideY;
+    }
+
     public void setColumnNumber(int columnNumber) {
         this.columnNumber = columnNumber;
         if (columnNumber > gridLayoutTable.getColumnCount())
@@ -204,6 +220,11 @@ public class TableView extends RelativeLayout {
     }
 
     public int getRowNumber() {
+        if(tableViewAdapter != null){
+            if(tableViewAdapter.isRemoveXClear() || tableViewAdapter.isRemoveYClear()){
+                return 0;
+            }
+        }
         return rowNumber;
     }
 
@@ -458,6 +479,7 @@ public class TableView extends RelativeLayout {
     }
 
     public void hideYAxis() {
+        isHideY = true;
         gridLayoutY.setVisibility(GONE);
         FrameLayout.LayoutParams linearParams = (FrameLayout.LayoutParams) gridLayoutX.getLayoutParams();
         linearParams.height = xHeight;// 控件的高强制设成20
@@ -468,6 +490,7 @@ public class TableView extends RelativeLayout {
     }
 
     public void hideXAxis() {
+        isHidenX = true;
         gridLayoutX.setVisibility(GONE);
         gridLayoutXY.setVisibility(GONE);
         horizontalScrollView_x.setVisibility(GONE);

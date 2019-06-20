@@ -1,94 +1,73 @@
 package com.ellen.supertableview.table2;
 
+
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ellen.supertableview.R;
 import com.ellen.tableview.supertableview.adapter.superadapter.ItemViewHolder;
-import com.ellen.tableview.supertableview.adapter.superadapter.SuperTableAdapter;
 import com.ellen.tableview.supertableview.adapter.superadapter.XYItemViewHolder;
+import com.ellen.tableview.supertableview.adapter.superadapter.xy.SuperXYTableViewAdapter;
 
-public class RailLineTableAdapter extends SuperTableAdapter {
+import java.util.List;
+
+public class RailLineTableAdapter extends SuperXYTableViewAdapter<RailLineTableAdapter.XViewHolder,
+        RailLineTableAdapter.YViewHolder, RailLineTableAdapter.MyItemViewHolder> {
 
     private Context context;
-    private String[] xTitles;
+    private List<String> xList;
+    private List<String> yList;
 
-    public RailLineTableAdapter(Context context,String[] xTitles){
+    public RailLineTableAdapter(Context context, List<String> xList,List<String> yList){
         this.context = context;
-        this.xTitles = xTitles;
+        this.xList = xList;
+        this.yList = yList;
     }
 
     @Override
-    protected XYItemViewHolder createXItemViewHolder(int column, int type) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_line_table_x,null);
-        return new XViewHolder(view);
+    protected MyItemViewHolder createViewHolder(int row, int column) {
+        return new MyItemViewHolder(getViewByLayoutId(context,R.layout.item_table));
     }
 
     @Override
-    protected void bindXItemViewHolder(XYItemViewHolder xItemViewHolder, int column) {
-        XViewHolder xViewHolder = (XViewHolder) xItemViewHolder;
-        xViewHolder.textView.setText(xTitles[column]);
+    protected void bindViewHolder(MyItemViewHolder myItemViewHolder, int row, int column) {
+       myItemViewHolder.textView.setText("("+row+","+column+")");
     }
 
     @Override
-    protected XYItemViewHolder createYItemViewHolder(int row, int type) {
-        return null;
+    protected XViewHolder createXItemViewHolder(int column) {
+        return new XViewHolder(getViewByLayoutId(context,R.layout.item_line_table_x));
     }
 
     @Override
-    protected void bindYItemViewHolder(XYItemViewHolder yItemViewHolder, int row) {
-
+    protected void bindXViewHolder(XViewHolder xViewHolder, int column) {
+        xViewHolder.textView.setText(xList.get(column));
     }
 
     @Override
-    public int getItemCount() {
-        return super.getItemCount();
+    protected YViewHolder createYViewHolder(int column) {
+        return new YViewHolder(getViewByLayoutId(context,R.layout.item_type_y));
+    }
+
+    @Override
+    protected void bindYViewHolder(YViewHolder yViewHolder, int row) {
+        yViewHolder.textView.setText(yList.get(row));
     }
 
     @Override
     public int getTableRow() {
-        return 8;
+        return yList.size();
     }
 
     @Override
-    protected int getItemType(int row, int column) {
-        if(column == 0){
-            return 0;
-        }else if(column == 1){
-            return 1;
-        }else {
-            return 2;
-        }
-    }
-
-    @Override
-    protected ItemViewHolder createItemViewHolder(int row, int column, int type) {
-        if(type == 0){
-            return new ColumnOneViewHolder(LayoutInflater.from(context).inflate(R.layout.item_line_table_column_1,null));
-        }else if(type == 1){
-            return new ColumnTwoViewHolder(LayoutInflater.from(context).inflate(R.layout.item_line_table_column_2,null));
-        }else if(type == 2){
-            return new ColumnThreeViewHolder(LayoutInflater.from(context).inflate(R.layout.item_line_table_column_3,null));
-        }else {
-            return null;
-        }
-    }
-
-    @Override
-    protected void bindItemViewHolder(ItemViewHolder itemViewHolder, int row, int column) {
-
-    }
-
-    @Override
-    public void bindAdapter() {
-        getTableView().hideYAxis();
+    public int getTableColumn() {
+        return xList.size();
     }
 
     @Override
     public View createXYView() {
-        return null;
+        return getViewByLayoutId(context,R.layout.item_xy);
     }
 
     @Override
@@ -96,59 +75,28 @@ public class RailLineTableAdapter extends SuperTableAdapter {
 
     }
 
-    public static class XViewHolder extends XYItemViewHolder{
+    static class XViewHolder extends XYItemViewHolder{
         TextView textView;
-        public XViewHolder(View yItemView) {
-            super(yItemView);
-            textView = yItemView.findViewById(R.id.tv);
-        }
-    }
-
-    public static class ColumnOneViewHolder extends ItemViewHolder {
-
-        private TextView textView;
-
-        public ColumnOneViewHolder(View itemView) {
+        public XViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.textview);
-        }
-
-        public TextView getTextView() {
-            return textView;
+            textView = findViewById(R.id.tv);
         }
     }
 
-    public static class ColumnTwoViewHolder extends ItemViewHolder {
-
-        private TextView textViewLeft;
-        private TextView textViewRight;
-
-        public ColumnTwoViewHolder(View itemView) {
+    static class YViewHolder extends XYItemViewHolder{
+        TextView textView;
+        public YViewHolder(View itemView) {
             super(itemView);
-            textViewLeft = findViewById(R.id.textview_left);
-            textViewRight = findViewById(R.id.textview_right);
-        }
-
-        public TextView getTextViewLeft() {
-            return textViewLeft;
-        }
-
-        public TextView getTextViewRight() {
-            return textViewRight;
+            textView= findViewById(R.id.table_y_title);
         }
     }
 
-    public static class ColumnThreeViewHolder extends ItemViewHolder {
-
-        private TextView textView;
-
-        public ColumnThreeViewHolder(View itemView) {
+    static class MyItemViewHolder extends ItemViewHolder {
+        TextView textView;
+        public MyItemViewHolder(View itemView) {
             super(itemView);
-            textView = findViewById(R.id.textview);
-        }
-
-        public TextView getTextView() {
-            return textView;
+            textView = findViewById(R.id.table_text);
         }
     }
+
 }

@@ -7,7 +7,7 @@
     <com.ellen.tableview.supertableview.TableView
         android:id="@+id/tableView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:layout_marginTop="30dp"
         app:ColumnCount="8"
         app:ItemHeight="51dp"
@@ -17,11 +17,27 @@
         app:YItemWidth="88dp" />
 
     <Button
-        android:id="@+id/bt"
+        android:id="@+id/bt1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="添加数据"
-        android:visibility="gone" />
+        android:text="添加数据" />
+
+    <Button
+        android:id="@+id/bt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/bt1"
+        android:text="删除数据" />
+
+    <Button
+        android:id="@+id/bt3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/bt2"
+        android:layout_alignParentBottom="true"
+        android:text="修改数据" />
+
 
 </RelativeLayout>
