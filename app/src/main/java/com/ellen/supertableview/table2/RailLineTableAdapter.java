@@ -125,8 +125,8 @@ public class RailLineTableAdapter extends SuperTableAdapter {
 
         public ColumnTwoViewHolder(View itemView) {
             super(itemView);
-            textViewLeft = itemView.findViewById(R.id.textview_left);
-            textViewRight = itemView.findViewById(R.id.textview_right);
+            textViewLeft = findViewById(R.id.textview_left);
+            textViewRight = findViewById(R.id.textview_right);
         }
 
         public TextView getTextViewLeft() {
@@ -144,7 +144,7 @@ public class RailLineTableAdapter extends SuperTableAdapter {
 
         public ColumnThreeViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.textview);
+            textView = findViewById(R.id.textview);
         }
 
         public TextView getTextView() {

@@ -2,15 +2,9 @@ package com.ellen.tableview.supertableview.adapter.superadapter;
 
 import android.view.View;
 
-public class ItemViewHolder {
+public class ItemViewHolder extends BaseItemViewHolder{
 
-    private View itemView;
-
-    public ItemViewHolder(View itemView){
-        this.itemView = itemView;
-    }
-
-    public View getItemView() {
-        return itemView;
+    public ItemViewHolder(View itemView) {
+        super(itemView);
     }
 }

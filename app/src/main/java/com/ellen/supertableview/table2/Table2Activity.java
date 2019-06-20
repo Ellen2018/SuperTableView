@@ -48,6 +48,7 @@ public class Table2Activity extends AppCompatActivity {
 
             @Override
             public void onClickXItem(View view, TableClick tableClick) {
+                yTitles[3] = "5";
                 railLineTableAdapter.notifyChanged();
             }
 

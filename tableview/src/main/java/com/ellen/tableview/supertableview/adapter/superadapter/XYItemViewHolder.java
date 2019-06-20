@@ -2,15 +2,9 @@ package com.ellen.tableview.supertableview.adapter.superadapter;
 
 import android.view.View;
 
-public class XYItemViewHolder {
+public class XYItemViewHolder extends BaseItemViewHolder {
 
-    private View xyItemView;
-
-    public XYItemViewHolder(View xyItemView){
-        this.xyItemView = xyItemView;
-    }
-
-    public View getItemView() {
-        return xyItemView;
+    public XYItemViewHolder(View itemView) {
+        super(itemView);
     }
 }
