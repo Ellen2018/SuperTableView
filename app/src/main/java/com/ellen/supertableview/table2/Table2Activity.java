@@ -46,6 +46,7 @@ public class Table2Activity extends AppCompatActivity implements View.OnClickLis
         tableView.setOnItemClickListener(new TableView.OnItemClickListener() {
             @Override
             public void onClickItem(View view, TableClick tableClick) {
+                Toast.makeText(Table2Activity.this,"点击了"+tableClick.getCloumn(),Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -72,6 +73,10 @@ public class Table2Activity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.bt1:
                 xList.add("3");
+                xList.add("5");
+                if(xList.size()>10){
+                    yList.clear();
+                }
                 break;
             case R.id.bt2:
                 xList.remove(0);

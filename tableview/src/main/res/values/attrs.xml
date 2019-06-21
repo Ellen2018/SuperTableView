@@ -7,6 +7,9 @@
     <attr name="RowCount" format="integer"/>
     <attr name="YItemWidth" format="dimension"/>
     <attr name="XItemHeight" format="dimension"/>
+    <attr name="isHideX" format="boolean"/>
+    <attr name="isHideY" format="boolean"/>
+    <attr name="isHideXY" format="boolean"/>
     <declare-styleable name="TableView">
         <attr name="ItemWidth"/>
         <attr name="ItemHeight"/>
@@ -14,6 +17,9 @@
         <attr name="RowCount"/>
         <attr name="YItemWidth"/>
         <attr name="XItemHeight"/>
+        <attr name="isHideX"/>
+        <attr name="isHideY"/>
+        <attr name="isHideXY"/>
     </declare-styleable>
 
 </resources>

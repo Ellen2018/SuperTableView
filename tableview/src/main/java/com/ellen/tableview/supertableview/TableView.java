@@ -69,6 +69,7 @@ public class TableView extends RelativeLayout {
 
     private boolean isHidenX = false;
     private boolean isHideY = false;
+    private boolean isHideXY = false;
 
     public TableView(Context context) {
         super(context);
@@ -98,6 +99,12 @@ public class TableView extends RelativeLayout {
                 yWidth = (int) typedArray.getDimension(attr, 100);// 控件的宽强制设成30;
             } else if (attr == R.styleable.TableView_XItemHeight) {
                 xHeight = (int) typedArray.getDimension(attr, 100);// 控件的宽强制设成30;
+            } else if (attr == R.styleable.TableView_isHideX) {
+                isHidenX = typedArray.getBoolean(attr,false);
+            } else if (attr == R.styleable.TableView_isHideY) {
+                isHideY = typedArray.getBoolean(attr,false);
+            }else if (attr == R.styleable.TableView_isHideXY) {
+                isHideXY = typedArray.getBoolean(attr,false);
             }
 
         }
@@ -119,6 +126,15 @@ public class TableView extends RelativeLayout {
         xParams.height = xHeight;
         xParams.width = yWidth;
         gridLayoutXY.setLayoutParams(xyParams);
+        if(isHideXY){
+            hideXY();
+        }
+        if(isHidenX){
+            hideXAxis();
+        }
+        if(isHideY){
+            hideYAxis();
+        }
 
     }
 
@@ -149,8 +165,13 @@ public class TableView extends RelativeLayout {
                 yWidth = (int) typedArray.getDimension(attr, 100);// 控件的宽强制设成30;
             } else if (attr == R.styleable.TableView_XItemHeight) {
                 xHeight = (int) typedArray.getDimension(attr, 100);// 控件的宽强制设成30;
+            } else if (attr == R.styleable.TableView_isHideX) {
+               isHidenX = typedArray.getBoolean(attr,false);
+            } else if (attr == R.styleable.TableView_isHideY) {
+                isHideY = typedArray.getBoolean(attr,false);
+            }else if (attr == R.styleable.TableView_isHideXY) {
+                isHideXY = typedArray.getBoolean(attr,false);
             }
-
         }
 
         typedArray.recycle();
@@ -170,14 +191,18 @@ public class TableView extends RelativeLayout {
         xParams.height = xHeight;
         xParams.width = yWidth;
         gridLayoutXY.setLayoutParams(xyParams);
+        if(isHideXY){
+            hideXY();
+        }
+        if(isHidenX){
+            hideXAxis();
+        }
+        if(isHideY){
+            hideYAxis();
+        }
     }
 
     public int getColumnNumber() {
-        if(tableViewAdapter != null){
-            if(tableViewAdapter.isRemoveXClear() || tableViewAdapter.isRemoveYClear()){
-                return 0;
-            }
-        }
         return columnNumber;
     }
 
@@ -213,6 +238,10 @@ public class TableView extends RelativeLayout {
         return isHideY;
     }
 
+    public boolean isHideXY() {
+        return isHideXY;
+    }
+
     public void setColumnNumber(int columnNumber) {
         this.columnNumber = columnNumber;
         if (columnNumber > gridLayoutTable.getColumnCount())
@@ -220,11 +249,6 @@ public class TableView extends RelativeLayout {
     }
 
     public int getRowNumber() {
-        if(tableViewAdapter != null){
-            if(tableViewAdapter.isRemoveXClear() || tableViewAdapter.isRemoveYClear()){
-                return 0;
-            }
-        }
         return rowNumber;
     }
 
@@ -494,6 +518,11 @@ public class TableView extends RelativeLayout {
         gridLayoutX.setVisibility(GONE);
         gridLayoutXY.setVisibility(GONE);
         horizontalScrollView_x.setVisibility(GONE);
+    }
+
+    public void hideXY(){
+        isHideXY = true;
+        gridLayoutXY.setVisibility(GONE);
     }
 
     /**

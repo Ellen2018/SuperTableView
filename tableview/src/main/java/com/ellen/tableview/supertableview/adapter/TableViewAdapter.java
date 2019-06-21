@@ -336,12 +336,7 @@ public abstract class TableViewAdapter {
     }
 
     protected void removeColumn(int column) {
-        if(getTableView().getColumnNumber() == 1){
-            getTableView().setVisibility(View.GONE);
-            isRemoveXClear = true;
-            return;
-        }
-        if ((!(column >= 0 && column <= tableView.getMapColumn().size() - 1)) || getTableView().getColumnNumber() <= 0) {
+        if ((!(column >= 0 && column <= tableView.getColumnNumber() - 1)) || getTableView().getColumnNumber() <= 0) {
             return;
         }
         tableView.getGridLayoutTable().removeAllViews();
