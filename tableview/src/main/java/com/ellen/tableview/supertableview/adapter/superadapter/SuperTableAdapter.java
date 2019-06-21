@@ -152,6 +152,7 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
             } else {
                 int rowNumber = getTableView().getRowNumber();
                 for (int i = 0; i < rowNumber - getTableRow(); i++) {
+                    Log.e("移除了没",""+i);
                     removeRow();
                 }
             }

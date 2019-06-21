@@ -2,6 +2,7 @@ package com.ellen.supertableview.table2;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -52,7 +53,7 @@ public class RailLineTableAdapter extends SuperXYTableViewAdapter<RailLineTableA
 
     @Override
     protected void bindYViewHolder(YViewHolder yViewHolder, int row) {
-        yViewHolder.textView.setText(yList.get(row));
+        Log.e("y行",row+"");
     }
 
     @Override
