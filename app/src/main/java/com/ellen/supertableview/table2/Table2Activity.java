@@ -55,6 +55,7 @@ public class Table2Activity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onClickXItem(View view, TableClick tableClick) {
+                
             }
 
             @Override
