@@ -9,4 +9,4 @@
 >
 
 
-> implementation 'com.github.Ellen2018:SuperTableView:1.0.3'
+> [![](https://www.jitpack.io/v/Ellen2018/SuperTableView.svg)](https://www.jitpack.io/#Ellen2018/SuperTableView)
