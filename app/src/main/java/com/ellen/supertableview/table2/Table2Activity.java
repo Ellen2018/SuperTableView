@@ -47,7 +47,6 @@ public class Table2Activity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClickItem(View view, TableClick tableClick) {
                 Toast.makeText(Table2Activity.this,"点击了"+tableClick.getCloumn(),Toast.LENGTH_SHORT).show();
-                
             }
 
             @Override
