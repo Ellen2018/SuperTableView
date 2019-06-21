@@ -113,16 +113,6 @@ public abstract class TableViewAdapter {
     }
 
     public void addDataColumn(List<View> viewList, View xItemView) {
-        if(isRemoveXClear){
-            if(getTableView().isHideY()) {
-                getTableView().getGridLayoutXY().setVisibility(View.VISIBLE);
-                getTableView().getGridLayoutY().setVisibility(View.VISIBLE);
-            }
-            getTableView().getGridLayoutX().setVisibility(View.VISIBLE);
-            getTableView().getGridLayoutTable().setVisibility(View.VISIBLE);
-            isRemoveXClear = false;
-            return;
-        }
         tableView.getGridLayoutTable().removeAllViews();
         tableView.getMapItemViews().clear();
         tableView.setItemCount(0);
@@ -182,16 +172,6 @@ public abstract class TableViewAdapter {
     }
 
     public void addDataRow(List<View> viewList, View yItemView) {
-        if(isRemoveYClear){
-            if(!getTableView().isHidenX()) {
-                getTableView().getGridLayoutXY().setVisibility(View.VISIBLE);
-                getTableView().getGridLayoutX().setVisibility(View.VISIBLE);
-            }
-            getTableView().getGridLayoutY().setVisibility(View.VISIBLE);
-            getTableView().getGridLayoutTable().setVisibility(View.VISIBLE);
-            isRemoveYClear = false;
-            return;
-        }
         tableView.getGridLayoutTable().removeAllViews();
         tableView.getMapItemViews().clear();
         tableView.setItemCount(0);
@@ -209,6 +189,7 @@ public abstract class TableViewAdapter {
 
             //处理列
             List<TableItemView> tableItemViewListColumn = tableView.getMapColumn().get(i);
+            Log.e("列数",i+"");
             tableItemViewListColumn.add(tableItemView);
         }
         tableView.setRowNumber(tableView.getRowNumber() + 1);
@@ -266,22 +247,13 @@ public abstract class TableViewAdapter {
     }
 
     protected void removeRow(int row) {
-        if(getTableView().getRowNumber() == 1){
-            if(!getTableView().isHidenX()){
-                getTableView().getGridLayoutX().setVisibility(View.GONE);
-                getTableView().getGridLayoutXY().setVisibility(View.GONE);
-            }
-            getTableView().getGridLayoutY().setVisibility(View.GONE);
-            getTableView().getGridLayoutTable().setVisibility(View.GONE);
-            isRemoveYClear = true;
-            return;
-        }
         if ((!(row >= 0 && row <= tableView.getMapRow().size() - 1)) || getTableView().getRowNumber()<=0) {
             return;
         }
         tableView.getGridLayoutTable().removeAllViews();
         tableView.getMapItemViews().clear();
         tableView.getGridLayoutY().removeAllViews();
+        if(getTableView().getRowNumber() > 1)
         getTableView().getMapColumn().clear();
         tableView.setItemCount(0);
         //移除掉行集合中的此行
@@ -360,16 +332,12 @@ public abstract class TableViewAdapter {
             }
         }
         getTableView().setRowNumber(getTableView().getRowNumber() - 1);
+        Log.e("列的个数",getTableView().getMapColumn().size()+"");
     }
 
     protected void removeColumn(int column) {
         if(getTableView().getColumnNumber() == 1){
-            if(!getTableView().isHideY()){
-                getTableView().getGridLayoutY().setVisibility(View.GONE);
-                getTableView().getGridLayoutXY().setVisibility(View.GONE);
-            }
-            getTableView().getGridLayoutX().setVisibility(View.GONE);
-            getTableView().getGridLayoutTable().setVisibility(View.GONE);
+            getTableView().setVisibility(View.GONE);
             isRemoveXClear = true;
             return;
         }

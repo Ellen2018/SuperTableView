@@ -71,13 +71,13 @@ public class Table2Activity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt1:
-                yList.add("3");
+                xList.add("3");
                 break;
             case R.id.bt2:
-                yList.remove(0);
+                xList.remove(0);
                 break;
             case R.id.bt3:
-                yList.set(xList.size()-1,"5");
+                xList.set(xList.size()-1,"5");
                 break;
         }
         railLineTableAdapter.notifyChanged();
