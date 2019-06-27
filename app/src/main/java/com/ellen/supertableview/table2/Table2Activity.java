@@ -51,11 +51,12 @@ public class Table2Activity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onClickYItem(View view, TableClick tableClick) {
+                toast("Y:"+tableClick.getRow());
             }
 
             @Override
             public void onClickXItem(View view, TableClick tableClick) {
-
+                toast("X:"+tableClick.getCloumn());
             }
 
             @Override

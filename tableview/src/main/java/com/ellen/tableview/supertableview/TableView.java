@@ -51,6 +51,9 @@ public class TableView extends RelativeLayout {
     private TableViewAdapter tableViewAdapter;
     //
     private Map<Integer, TableItemView> mapItemViews;
+    //
+    private OnScrollChangeListener onHScrollChangeListener;
+    private OnScrollChangeListener onVScrollChangeListener;
 
     //列数
     private int columnNumber = 10;
@@ -242,6 +245,22 @@ public class TableView extends RelativeLayout {
         return isHideXY;
     }
 
+    public OnScrollChangeListener getOnHScrollChangeListener() {
+        return onHScrollChangeListener;
+    }
+
+    public void setOnHScrollChangeListener(OnScrollChangeListener onHScrollChangeListener) {
+        this.onHScrollChangeListener = onHScrollChangeListener;
+    }
+
+    public OnScrollChangeListener getOnVScrollChangeListener() {
+        return onVScrollChangeListener;
+    }
+
+    public void setOnVScrollChangeListener(OnScrollChangeListener onVScrollChangeListener) {
+        this.onVScrollChangeListener = onVScrollChangeListener;
+    }
+
     public void setColumnNumber(int columnNumber) {
         this.columnNumber = columnNumber;
         if (columnNumber > gridLayoutTable.getColumnCount())
@@ -424,18 +443,32 @@ public class TableView extends RelativeLayout {
         gridLayoutX = view.findViewById(R.id.grid_layout_x);
         gridLayoutXY = view.findViewById(R.id.grid_layout_xy);
         scrollView = view.findViewById(R.id.scrollView);
+        scrollView.setOnScrollChangeListener(new OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(onVScrollChangeListener != null){
+                    onHScrollChangeListener.onScrollChange(v,scrollX,scrollY,oldScrollX,oldScrollY);
+                }
+            }
+        });
         horizontalScrollView = view.findViewById(R.id.horizontalScrollView);
         horizontalScrollView_x = view.findViewById(R.id.horizontalScrollView_x);
         horizontalScrollView.setOnScrollChangeListener(new OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 horizontalScrollView_x.scrollTo(scrollX, scrollY);
+                if(onHScrollChangeListener != null){
+                    onHScrollChangeListener.onScrollChange(v,scrollX,scrollY,oldScrollX,oldScrollY);
+                }
             }
         });
         horizontalScrollView_x.setOnScrollChangeListener(new OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 horizontalScrollView.scrollTo(scrollX, scrollY);
+                if(onHScrollChangeListener != null){
+                    onHScrollChangeListener.onScrollChange(v,scrollX,scrollY,oldScrollX,oldScrollY);
+                }
             }
         });
         mapColumn = new HashMap<>();
