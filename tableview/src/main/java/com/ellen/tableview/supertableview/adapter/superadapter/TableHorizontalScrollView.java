@@ -14,7 +14,6 @@ import android.widget.HorizontalScrollView;
  * @date: 2018/6/25
  */
 public class TableHorizontalScrollView extends HorizontalScrollView {
-    private final static String TAG = "CusHorizontalScrollView";
 
     public TableHorizontalScrollView(Context context) {
         super(context);

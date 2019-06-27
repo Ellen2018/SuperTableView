@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.ellen.tableview.supertableview.adapter.superadapter.TableHorizontalScrollView
+    <HorizontalScrollView
         android:id="@+id/horizontalScrollView_x"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </com.ellen.tableview.supertableview.adapter.superadapter.TableHorizontalScrollView>
+    </HorizontalScrollView>
 
     <GridLayout
         android:id="@+id/grid_layout_xy"
@@ -49,7 +49,7 @@
                     android:background="#CFCFCF"
                     android:visibility="gone" />
 
-                <com.ellen.tableview.supertableview.adapter.superadapter.TableHorizontalScrollView
+                <HorizontalScrollView
                     android:id="@+id/horizontalScrollView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -60,7 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
-                </com.ellen.tableview.supertableview.adapter.superadapter.TableHorizontalScrollView>
+                </HorizontalScrollView>
 
             </LinearLayout>
 
