@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.ellen.tableview.R;
 import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
+import com.ellen.tableview.supertableview.adapter.superadapter.TableHorizontalScrollView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,8 +34,8 @@ public class TableView extends RelativeLayout {
     private GridLayout gridLayoutX;
     private GridLayout gridLayoutXY;
     //用于列定位
-    private HorizontalScrollView horizontalScrollView;
-    private HorizontalScrollView horizontalScrollView_x;
+    private TableHorizontalScrollView horizontalScrollView;
+    private TableHorizontalScrollView horizontalScrollView_x;
     //用于行定位
     private ScrollView scrollView;
     //item点击事件
@@ -203,6 +204,16 @@ public class TableView extends RelativeLayout {
         if(isHideY){
             hideYAxis();
         }
+    }
+
+    public OnTouchListener getOnTouchListener() {
+       return horizontalScrollView.getOnTouchListener();
+    }
+
+    @Override
+    public void setOnTouchListener(OnTouchListener onTouchListener) {
+        horizontalScrollView.setOnTouchListener(onTouchListener);
+        horizontalScrollView_x.setOnTouchListener(onTouchListener);
     }
 
     public int getColumnNumber() {

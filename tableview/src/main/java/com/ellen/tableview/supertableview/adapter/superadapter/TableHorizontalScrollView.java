@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.HorizontalScrollView;
 
 /**
@@ -14,6 +15,17 @@ import android.widget.HorizontalScrollView;
  * @date: 2018/6/25
  */
 public class TableHorizontalScrollView extends HorizontalScrollView {
+
+    private OnTouchListener onTouchListener;
+
+    public OnTouchListener getOnTouchListener() {
+        return onTouchListener;
+    }
+
+    @Override
+    public void setOnTouchListener(OnTouchListener onTouchListener) {
+        this.onTouchListener = onTouchListener;
+    }
 
     public TableHorizontalScrollView(Context context) {
         super(context);
@@ -57,25 +69,8 @@ public class TableHorizontalScrollView extends HorizontalScrollView {
     @Override
     public boolean onTouchEvent(MotionEvent ev)
     {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                if (isScrollToRight())
-                {
-                    // 把事件交给父控件处理，例如：viewpager滑动
-                    getParent().requestDisallowInterceptTouchEvent(false);
-                }
-                break;
-
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                // 请求父控件可以拦截事件
-                getParent().requestDisallowInterceptTouchEvent(false);
-                break;
-
-            default:
+        if(onTouchListener != null){
+            return onTouchListener.onTouch(this,ev);
         }
         return super.onTouchEvent(ev);
     }
