@@ -65,15 +65,14 @@ public class TableHorizontalScrollView extends HorizontalScrollView {
                 if (isScrollToLeft() || isScrollToRight())
                 {
                     // 把事件交给父控件处理，例如：viewpager滑动
-                    getParent().requestDisallowInterceptTouchEvent(false);
+                   return false;
                 }
                 break;
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 // 请求父控件可以拦截事件
-                getParent().requestDisallowInterceptTouchEvent(false);
-                break;
+                return false;
 
             default:
         }
