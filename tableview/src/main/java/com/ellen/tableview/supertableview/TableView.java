@@ -33,6 +33,7 @@ public class TableView extends RelativeLayout {
     private GridLayout gridLayoutY;
     private GridLayout gridLayoutX;
     private GridLayout gridLayoutXY;
+    private LinearLayout ll_table;
     //用于列定位
     private TableHorizontalScrollView horizontalScrollView;
     private TableHorizontalScrollView horizontalScrollView_x;
@@ -454,6 +455,7 @@ public class TableView extends RelativeLayout {
         gridLayoutX = view.findViewById(R.id.grid_layout_x);
         gridLayoutXY = view.findViewById(R.id.grid_layout_xy);
         scrollView = view.findViewById(R.id.scrollView);
+        ll_table = view.findViewById(R.id.ll_table);
         scrollView.setOnScrollChangeListener(new OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -591,7 +593,7 @@ public class TableView extends RelativeLayout {
     }
 
     public int getTableWidth(){
-        return gridLayoutTable.getWidth();
+        return ll_table.getWidth();
     }
 
     /**
