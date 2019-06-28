@@ -586,6 +586,14 @@ public class TableView extends RelativeLayout {
         return horizontalScrollView.isScrollToRight();
     }
 
+    public int getActualTableWidth(){
+        return horizontalScrollView.getWidth();
+    }
+
+    public int getTableWidth(){
+        return gridLayoutTable.getWidth();
+    }
+
     /**
      * 是否已经滑到了最左边
      * @return
