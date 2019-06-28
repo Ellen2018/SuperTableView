@@ -69,10 +69,15 @@ public class TableHorizontalScrollView extends HorizontalScrollView {
     @Override
     public boolean onTouchEvent(MotionEvent ev)
     {
+        boolean isHandler = false;
         if(onTouchListener != null){
-            return onTouchListener.onTouch(this,ev);
+             isHandler = onTouchListener.onTouch(this,ev);
         }
-        return super.onTouchEvent(ev);
+        if(!isHandler) {
+            return super.onTouchEvent(ev);
+        }else {
+            return true;
+        }
     }
 
     /**
