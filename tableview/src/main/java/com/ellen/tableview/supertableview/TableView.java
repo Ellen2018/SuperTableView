@@ -593,7 +593,7 @@ public class TableView extends RelativeLayout {
     }
 
     public int getTableWidth(){
-        return ll_table.getWidth();
+        return gridLayoutTable.getWidth();
     }
 
     /**
