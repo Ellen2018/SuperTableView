@@ -80,7 +80,7 @@ public class TableHorizontalScrollView extends HorizontalScrollView {
      *
      * @return
      */
-    private boolean isScrollToRight() {
+    public boolean isScrollToRight() {
         return getChildAt(getChildCount() - 1).getRight() == getScrollX() + getWidth();
     }
 
@@ -88,7 +88,7 @@ public class TableHorizontalScrollView extends HorizontalScrollView {
      * 是否已经滑到了最左边
      * @return
      */
-    private boolean isScrollToLeft() {
+    public boolean isScrollToLeft() {
         return getScrollX() == 0;
     }
 }

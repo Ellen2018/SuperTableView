@@ -569,6 +569,31 @@ public class TableView extends RelativeLayout {
         gridLayoutXY.setVisibility(GONE);
     }
 
+    public int getScrollLeft(){
+        return horizontalScrollView.getScrollX();
+    }
+
+    public int getScrollRight(){
+        return horizontalScrollView.getScrollX() + gridLayoutTable.getWidth();
+    }
+
+    /**
+     * 是否已经滑到了最右边
+     *
+     * @return
+     */
+    public boolean isScrollToRight() {
+        return horizontalScrollView.isScrollToRight();
+    }
+
+    /**
+     * 是否已经滑到了最左边
+     * @return
+     */
+    public boolean isScrollToLeft() {
+        return horizontalScrollView.isScrollToLeft();
+    }
+
     /**
      * 列：左边定位到position位置
      */
