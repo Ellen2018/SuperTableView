@@ -8,7 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -32,11 +34,12 @@ public class TableFragment extends Fragment {
 
     private TableView tableView;
     private TableClick agoTableClick;
-    private SuperXTableViewAdapter superTableViewAdapter;
+    private TableAdapter superTableViewAdapter;
     private ChooseUpDataCallback chooseUpDataCallback;
 
     private List<String> xTitles = new ArrayList<>();
     private List<String> itemTitles = new ArrayList<>();
+    private int aa =20;
 
     private boolean a = false;
 
@@ -44,38 +47,16 @@ public class TableFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.from(getActivity()).inflate(R.layout.fragment_table, container, false);
+        tableView = view.findViewById(R.id.tableView);
+        superTableViewAdapter = new TableAdapter(getActivity(), xTitles, itemTitles);
+        superTableViewAdapter.setRowNumber(aa);
+        tableView.setTableViewAdapter(superTableViewAdapter);
         view.findViewById(R.id.bt_remove).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemTitles.remove(0);
-                itemTitles.set(0,"哈哈");
-                xTitles.remove(1);
-                xTitles.set(1,"尼玛");
-                superTableViewAdapter.notifyChanged();
-
+               superTableViewAdapter.notifyChanged();
             }
         });
-        view.findViewById(R.id.bt_remove1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                xTitles.add(3,"哈哈");
-                superTableViewAdapter.notifyChanged();
-            }
-        });
-        tableView = view.findViewById(R.id.tableView);
-        xTitles.add("1");
-        xTitles.add("2");
-        xTitles.add("3");
-        xTitles.add("4");
-        xTitles.add("5");
-        xTitles.add("6");
-        xTitles.add("7");
-        itemTitles.add("a");
-        itemTitles.add("b");
-        tableView.setRowNumber(itemTitles.size());
-        tableView.setColumnNumber(xTitles.size());
-        superTableViewAdapter = new TableAdapter(getActivity(), xTitles, itemTitles);
-        tableView.setTableViewAdapter(superTableViewAdapter);
         initView();
         return view;
     }

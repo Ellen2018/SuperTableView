@@ -16,11 +16,18 @@ public class TableAdapter extends SuperXTableViewAdapter<TableAdapter.MyItemView
 
     public Context context;
     public List<String> xTitles;
-    public List<String> itemTitles;
+    public int rowNumber = 20;
     public TableAdapter(Context context,List<String> xTitles,List<String> itemTitles){
         this.context = context;
-        this.itemTitles = itemTitles;
         this.xTitles = xTitles;
+    }
+
+    public int getRowNumber() {
+        return rowNumber;
+    }
+
+    public void setRowNumber(int rowNumber) {
+        this.rowNumber = rowNumber;
     }
 
     @Override
@@ -32,7 +39,6 @@ public class TableAdapter extends SuperXTableViewAdapter<TableAdapter.MyItemView
 
     @Override
     protected void bindXViewHolder(XItemViewHolder yItemViewHolder, int column) {
-         yItemViewHolder.tv.setText(xTitles.get(column));
     }
 
     @Override
@@ -44,17 +50,17 @@ public class TableAdapter extends SuperXTableViewAdapter<TableAdapter.MyItemView
 
     @Override
     protected void bindTableItemViewHolder(MyItemViewHolder myItemViewHolder, int row, int column) {
-         myItemViewHolder.tv.setText(itemTitles.get(row));
+        myItemViewHolder.tv.setText(String.valueOf(row));
     }
 
     @Override
     public int getTableColumn() {
-        return xTitles.size();
+        return 10;
     }
 
     @Override
     public int getTableRow() {
-        return itemTitles.size();
+        return rowNumber;
     }
 
     public static class XItemViewHolder extends XYItemViewHolder{

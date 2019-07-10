@@ -152,7 +152,6 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
             } else {
                 int rowNumber = getTableView().getRowNumber();
                 for (int i = 0; i < rowNumber - getTableRow(); i++) {
-                    Log.e("移除了没",""+i);
                     removeRow();
                 }
             }
@@ -222,7 +221,7 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
         removeRow(removeRow);
     }
 
-    private void addColumn() {
+    public void addColumn() {
         //获取x轴的type
         int xType = getXItemType(getTableView().getColumnNumber());
         //获取添加的x轴的ViewHolder
@@ -253,7 +252,7 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
         addDataColumn(viewList, xView);
     }
 
-    private final void addRow() {
+    public final void addRow() {
         //获取y轴的type
         int yType = geYItemType(getTableView().getRowNumber());
         XYItemViewHolder yItemViewHolder = createYItemViewHolder(getTableView().getRowNumber(), yType);

@@ -71,6 +71,8 @@ public class TableView extends RelativeLayout {
     private int xHeight = 100;
     //item实时个数
     private int itemCount = 0;
+    //复用的个数
+    private int fuYongCount = 100;
 
     private boolean isHidenX = false;
     private boolean isHideY = false;
@@ -459,8 +461,11 @@ public class TableView extends RelativeLayout {
         scrollView.setOnScrollChangeListener(new OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                //应该在这里写逻辑
+
                 if(onVScrollChangeListener != null){
-                    onHScrollChangeListener.onScrollChange(v,scrollX,scrollY,oldScrollX,oldScrollY);
+                    onVScrollChangeListener.onScrollChange(v,scrollX,scrollY,oldScrollX,oldScrollY);
                 }
             }
         });

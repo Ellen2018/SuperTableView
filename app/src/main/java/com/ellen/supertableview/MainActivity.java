@@ -23,12 +23,5 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.framelayout, tableFragment = new TableFragment(), "f1")
                 .commit();
-        findViewById(R.id.bt_update).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
     }
 }

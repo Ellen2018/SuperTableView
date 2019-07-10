@@ -11,30 +11,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <Button
-        android:id="@+id/bt_update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="修改数据"
-        android:layout_alignParentBottom="true"
-        />
-
-    <Button
-        android:id="@+id/bt_left_dw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/bt_update"
-        android:text="左定位"
-        android:layout_alignParentBottom="true"
-        />
-
-    <Button
-        android:id="@+id/bt_right_dw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="右定位"
-        android:layout_toRightOf="@id/bt_left_dw"
-        android:layout_alignParentBottom="true"
-        />
-
 </RelativeLayout>
