@@ -55,7 +55,7 @@ public class TableAdapter extends SuperXTableViewAdapter<TableAdapter.MyItemView
 
     @Override
     public int getTableColumn() {
-        return 10;
+        return 5;
     }
 
     @Override

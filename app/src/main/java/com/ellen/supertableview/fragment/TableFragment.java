@@ -51,10 +51,15 @@ public class TableFragment extends Fragment {
         superTableViewAdapter = new TableAdapter(getActivity(), xTitles, itemTitles);
         superTableViewAdapter.setRowNumber(aa);
         tableView.setTableViewAdapter(superTableViewAdapter);
-        view.findViewById(R.id.bt_remove).setOnClickListener(new View.OnClickListener() {
+        tableView.setOnVScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
-            public void onClick(View v) {
-               superTableViewAdapter.notifyChanged();
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                Log.e("执行没？","ok");
+                if(scrollY+tableView.getHeight() >= (tableView.getRowNumber()-5)*tableView.getItemHeight()){
+                    for(int i=0;i<10;i++) {
+                        superTableViewAdapter.addRow();
+                    }
+                }
             }
         });
         initView();

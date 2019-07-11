@@ -4,6 +4,7 @@ package com.ellen.supertableview.table2;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.ellen.supertableview.R;
@@ -74,6 +75,12 @@ public class RailLineTableAdapter extends SuperXYTableViewAdapter<RailLineTableA
     @Override
     public void bindXYItemView(View view) {
 
+    }
+
+    @Override
+    public void bindAdapter() {
+        super.bindAdapter();
+        getTableView().getGridLayoutTable().setOrientation(GridLayout.VERTICAL);
     }
 
     static class XViewHolder extends XYItemViewHolder{

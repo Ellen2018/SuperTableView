@@ -35,10 +35,10 @@ public class Table2Activity extends AppCompatActivity implements View.OnClickLis
         btUpdate.setOnClickListener(this);
         xList = new ArrayList<>();
         yList = new ArrayList<>();
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 2; i++) {
             xList.add("x" + i);
         }
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i <2; i++) {
             yList.add("y" + i);
         }
         railLineTableAdapter = new RailLineTableAdapter(this, xList, yList);
@@ -46,7 +46,7 @@ public class Table2Activity extends AppCompatActivity implements View.OnClickLis
         tableView.setOnItemClickListener(new TableView.OnItemClickListener() {
             @Override
             public void onClickItem(View view, TableClick tableClick) {
-                Toast.makeText(Table2Activity.this,"点击了"+tableClick.getCloumn(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(Table2Activity.this,"点击了("+tableClick.getRow()+","+tableClick.getCloumn()+")",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -74,17 +74,14 @@ public class Table2Activity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt1:
-                yList.add("3");
-                yList.add("5");
-                if(yList.size()>10){
-                    xList.clear();
-                }
+                xList.add("3");
+                xList.add("5");
                 break;
             case R.id.bt2:
-                yList.remove(0);
+                //xList.remove(0);
                 break;
             case R.id.bt3:
-                yList.set(yList.size()-1,"5");
+                xList.set(yList.size()-1,"5");
                 break;
         }
         railLineTableAdapter.notifyChanged();

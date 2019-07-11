@@ -6,7 +6,6 @@ import android.view.View;
 import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -248,8 +247,9 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
                 itemPositionList.add(itemPosition);
             }
             viewList.add(itemViewHolder.getItemView());
+            this.bindItemViewHolder(itemViewHolder,row,getTableView().getColumnNumber());
         }
-        addDataColumn(viewList, xView);
+        addColumnAuto(viewList, xView);
     }
 
     public final void addRow() {
@@ -279,8 +279,9 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
                 itemPositionList.add(itemPosition);
             }
             viewList.add(itemViewHolder.getItemView());
+            this.bindItemViewHolder(itemViewHolder,getTableView().getRowNumber(),column);
         }
-        addDataRow(viewList, yView);
+        addRowAuto(viewList, yView);
     }
 
     protected final void updateRow(int row, SuperUpdateDataCallback superUpdateDataCallback) {
