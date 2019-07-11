@@ -429,15 +429,19 @@ public class TableView extends RelativeLayout {
         int itemCountCopy = 0;
         if (pagingMode != null) {
             if (pagingMode.isVer()) {
+                if(tableViewAdapter.getTableRow()<=pagingMode.getFirstSize()){
+                    pagingMode.setFirstSize(tableViewAdapter.getTableRow());
+                }
                 itemCountCopy = pagingMode.getFirstSize() * tableViewAdapter.getTableColumn();
                 setColumnNumber(tableViewAdapter.getTableColumn());
                 setRowNumber(pagingMode.getFirstSize());
                 getGridLayoutY().setRowCount(pagingMode.getFirstSize());
                 getGridLayoutX().setColumnCount(tableViewAdapter.getTableColumn());
             } else {
+                if(tableViewAdapter.getTableColumn()<=pagingMode.getFirstSize()){
+                    pagingMode.setFirstSize(tableViewAdapter.getTableColumn());
+                }
                 itemCountCopy = pagingMode.getFirstSize() * tableViewAdapter.getTableRow();
-                Log.e("首次加载",pagingMode.getFirstSize()+"");
-                Log.e("预加载",tableViewAdapter.getTableRow()+"");
                 setColumnNumber(pagingMode.getFirstSize());
                 setRowNumber(tableViewAdapter.getTableRow());
                 getGridLayoutY().setRowCount(tableViewAdapter.getTableRow());
