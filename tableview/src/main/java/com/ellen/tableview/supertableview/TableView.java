@@ -512,6 +512,7 @@ public class TableView extends RelativeLayout {
                     if(scrollY+tableView.getHeight() > (tableView.getRowNumber()-pagingMode.getLoadBeforeSize())*tableView.getItemHeight()) {
                         if (tableView.getRowNumber() < tableViewAdapter.getTableRow()) {
                             for (int i = 0; i < pagingMode.getAddSize(); i++) {
+                                if(tableView.getRowNumber() == tableViewAdapter.getTableRow())break;
                                 SuperTableAdapter superTableAdapter = (SuperTableAdapter) tableViewAdapter;
                                 superTableAdapter.addRow();
                             }
@@ -535,6 +536,7 @@ public class TableView extends RelativeLayout {
                     if(scrollX+tableView.getWidth()> (tableView.getColumnNumber()-pagingMode.getLoadBeforeSize())*tableView.getItemWidth()) {
                         if (tableView.getColumnNumber() < tableViewAdapter.getTableColumn()) {
                             for (int i = 0; i < pagingMode.getAddSize(); i++) {
+                                if(tableView.getColumnNumber() == tableViewAdapter.getTableColumn())break;
                                 SuperTableAdapter superTableAdapter = (SuperTableAdapter) tableViewAdapter;
                                 superTableAdapter.addColumn();
                             }

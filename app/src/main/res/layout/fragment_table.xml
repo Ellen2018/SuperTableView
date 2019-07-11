@@ -7,7 +7,7 @@
     <com.ellen.tableview.supertableview.TableView
         android:id="@+id/tableView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         app:ItemHeight="50dp"
         app:ItemWidth="120dp"
         app:RowCount="10"

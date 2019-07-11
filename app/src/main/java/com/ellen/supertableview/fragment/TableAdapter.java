@@ -61,7 +61,7 @@ public class TableAdapter extends SuperXTableViewAdapter<TableAdapter.MyItemView
 
     @Override
     public int getTableRow() {
-        return 20;
+        return 220;
     }
 
     @Override
