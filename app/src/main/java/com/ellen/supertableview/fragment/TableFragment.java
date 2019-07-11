@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ellen.supertableview.R;
+import com.ellen.tableview.supertableview.PagingMode;
 import com.ellen.tableview.supertableview.TableClick;
 import com.ellen.tableview.supertableview.TableItemView;
 import com.ellen.tableview.supertableview.TableView;
@@ -49,19 +50,20 @@ public class TableFragment extends Fragment {
         View view = inflater.from(getActivity()).inflate(R.layout.fragment_table, container, false);
         tableView = view.findViewById(R.id.tableView);
         superTableViewAdapter = new TableAdapter(getActivity(), xTitles, itemTitles);
-        superTableViewAdapter.setRowNumber(aa);
+        PagingMode pagingMode = new PagingMode(true,20,10,2);
+        tableView.setPagingMode(pagingMode);
         tableView.setTableViewAdapter(superTableViewAdapter);
-        tableView.setOnVScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                Log.e("执行没？","ok");
-                if(scrollY+tableView.getHeight() >= (tableView.getRowNumber()-5)*tableView.getItemHeight()){
-                    for(int i=0;i<10;i++) {
-                        superTableViewAdapter.addRow();
-                    }
-                }
-            }
-        });
+//        tableView.setOnVScrollChangeListener(new View.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                Log.e("执行没？","ok");
+//                if(scrollY+tableView.getHeight() >= (tableView.getRowNumber()-5)*tableView.getItemHeight()){
+//                    for(int i=0;i<10;i++) {
+//                        superTableViewAdapter.addRow();
+//                    }
+//                }
+//            }
+//        });
         initView();
         return view;
     }

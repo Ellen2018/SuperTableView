@@ -1,6 +1,7 @@
 package com.ellen.tableview.supertableview.adapter.superadapter.y;
 
 import android.view.View;
+import android.widget.GridLayout;
 
 import com.ellen.tableview.supertableview.adapter.superadapter.ItemViewHolder;
 import com.ellen.tableview.supertableview.adapter.superadapter.SuperTableAdapter;
@@ -45,6 +46,7 @@ public abstract class SuperYTableViewAdapter<T extends ItemViewHolder,E extends 
     public void bindAdapter() {
          getTableView().hideXAxis();
          setOrientationV(true);
+         getTableView().getGridLayoutTable().setOrientation(GridLayout.VERTICAL);
     }
 
     @Override

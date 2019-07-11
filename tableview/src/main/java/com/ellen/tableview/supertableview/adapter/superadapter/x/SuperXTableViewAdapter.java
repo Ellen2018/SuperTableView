@@ -44,7 +44,6 @@ public abstract class SuperXTableViewAdapter<T extends ItemViewHolder,E extends 
 
     @Override
     public void bindAdapter() {
-         getTableView().getGridLayoutTable().setOrientation(GridLayout.VERTICAL);
          getTableView().hideYAxis();
          setOrientationV(false);
     }

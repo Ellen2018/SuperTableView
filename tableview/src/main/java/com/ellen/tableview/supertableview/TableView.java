@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.ellen.tableview.R;
 import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
+import com.ellen.tableview.supertableview.adapter.superadapter.SuperTableAdapter;
 import com.ellen.tableview.supertableview.adapter.superadapter.TableHorizontalScrollView;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class TableView extends RelativeLayout {
     //
     private OnScrollChangeListener onHScrollChangeListener;
     private OnScrollChangeListener onVScrollChangeListener;
+    private PagingMode pagingMode = null;
 
     //列数
     private int columnNumber = 10;
@@ -222,6 +224,14 @@ public class TableView extends RelativeLayout {
         horizontalScrollView_x.setOnTouchListener(onTouchListener);
     }
 
+    public PagingMode getPagingMode() {
+        return pagingMode;
+    }
+
+    public void setPagingMode(PagingMode pagingMode) {
+        this.pagingMode = pagingMode;
+    }
+
     public int getColumnNumber() {
         return columnNumber;
     }
@@ -371,10 +381,6 @@ public class TableView extends RelativeLayout {
         this.tableViewAdapter.setCloumn(columnNumber);
         this.tableViewAdapter.setGridLayout(gridLayoutTable);
         this.tableViewAdapter.setTableView(this);
-        setColumnNumber(tableViewAdapter.getTableColumn());
-        setRowNumber(tableViewAdapter.getTableRow());
-        getGridLayoutY().setRowCount(tableViewAdapter.getTableRow());
-        getGridLayoutX().setColumnCount(tableViewAdapter.getTableColumn());
         this.tableViewAdapter.bindAdapter();
         View xyView = tableViewAdapter.createXYView();
         if (xyView == null) {
@@ -420,16 +426,40 @@ public class TableView extends RelativeLayout {
                 setItemOnClick(view, -1, i);
             }
         }
-        for (int i = 0; i < tableViewAdapter.getItemCount(); i++) {
+        int itemCountCopy = 0;
+        if (pagingMode != null) {
+            if (pagingMode.isVer()) {
+                itemCountCopy = pagingMode.getFirstSize() * tableViewAdapter.getTableColumn();
+                setColumnNumber(tableViewAdapter.getTableColumn());
+                setRowNumber(pagingMode.getFirstSize());
+                getGridLayoutY().setRowCount(pagingMode.getFirstSize());
+                getGridLayoutX().setColumnCount(tableViewAdapter.getTableColumn());
+            } else {
+                itemCountCopy = pagingMode.getFirstSize() * tableViewAdapter.getTableRow();
+                Log.e("首次加载",pagingMode.getFirstSize()+"");
+                Log.e("预加载",tableViewAdapter.getTableRow()+"");
+                setColumnNumber(pagingMode.getFirstSize());
+                setRowNumber(tableViewAdapter.getTableRow());
+                getGridLayoutY().setRowCount(tableViewAdapter.getTableRow());
+                getGridLayoutX().setColumnCount(pagingMode.getFirstSize());
+            }
+        } else {
+            itemCountCopy = tableViewAdapter.getItemCount();
+            setColumnNumber(tableViewAdapter.getTableColumn());
+            setRowNumber(tableViewAdapter.getTableRow());
+            getGridLayoutY().setRowCount(tableViewAdapter.getTableRow());
+            getGridLayoutX().setColumnCount(tableViewAdapter.getTableColumn());
+        }
+
+        for (int i = 0; i < itemCountCopy; i++) {
             itemCount++;
             View view = null;
-            if(gridLayoutTable.getOrientation() == GridLayout.VERTICAL){
+            if (gridLayoutTable.getOrientation() == GridLayout.VERTICAL) {
                 //竖直方向
-                Log.e("执行了吗","ok");
-                final int column = getRow(itemCount - 1, columnNumber);
-                final int row = getColumn(itemCount - 1, getRow(itemCount - 1, columnNumber), columnNumber);
+                int row = (itemCount-1) % rowNumber;
+                int column = (itemCount-1) / rowNumber;
                 view = tableViewAdapter.createItemView(i, row, column);
-            }else {
+            } else {
                 //水平方向
                 final int row = getRow(itemCount - 1, columnNumber);
                 final int column = getColumn(itemCount - 1, getRow(itemCount - 1, columnNumber), columnNumber);
@@ -477,6 +507,17 @@ public class TableView extends RelativeLayout {
                 if (onVScrollChangeListener != null) {
                     onVScrollChangeListener.onScrollChange(v, scrollX, scrollY, oldScrollX, oldScrollY);
                 }
+                if (pagingMode != null && pagingMode.isVer()) {
+                    TableView tableView = TableView.this;
+                    if(scrollY+tableView.getHeight() > (tableView.getRowNumber()-pagingMode.getLoadBeforeSize())*tableView.getItemHeight()) {
+                        if (tableView.getRowNumber() < tableViewAdapter.getTableRow()) {
+                            for (int i = 0; i < pagingMode.getAddSize(); i++) {
+                                SuperTableAdapter superTableAdapter = (SuperTableAdapter) tableViewAdapter;
+                                superTableAdapter.addRow();
+                            }
+                        }
+                    }
+                }
             }
         });
         horizontalScrollView = view.findViewById(R.id.horizontalScrollView);
@@ -488,6 +529,18 @@ public class TableView extends RelativeLayout {
                 if (onHScrollChangeListener != null) {
                     onHScrollChangeListener.onScrollChange(v, scrollX, scrollY, oldScrollX, oldScrollY);
                 }
+                //分页加载模式
+                if (pagingMode != null && !pagingMode.isVer()) {
+                    TableView tableView = TableView.this;
+                    if(scrollX+tableView.getWidth()> (tableView.getColumnNumber()-pagingMode.getLoadBeforeSize())*tableView.getItemWidth()) {
+                        if (tableView.getColumnNumber() < tableViewAdapter.getTableColumn()) {
+                            for (int i = 0; i < pagingMode.getAddSize(); i++) {
+                                SuperTableAdapter superTableAdapter = (SuperTableAdapter) tableViewAdapter;
+                                superTableAdapter.addColumn();
+                            }
+                        }
+                    }
+                }
             }
         });
         horizontalScrollView_x.setOnScrollChangeListener(new OnScrollChangeListener() {
@@ -497,6 +550,7 @@ public class TableView extends RelativeLayout {
                 if (onHScrollChangeListener != null) {
                     onHScrollChangeListener.onScrollChange(v, scrollX, scrollY, oldScrollX, oldScrollY);
                 }
+                //分页加载模式
             }
         });
         mapColumn = new HashMap<>();
@@ -517,10 +571,10 @@ public class TableView extends RelativeLayout {
     public void addItem(final View view) {
         int row = 0;
         int column = 0;
-        if(gridLayoutTable.getOrientation() == GridLayout.VERTICAL){
-            column = getRow(itemCount - 1, columnNumber);
-            row = getColumn(itemCount - 1, getRow(itemCount - 1, columnNumber), columnNumber);
-        }else {
+        if (gridLayoutTable.getOrientation() == GridLayout.VERTICAL) {
+             row = (itemCount-1) % rowNumber;
+             column = (itemCount-1) / rowNumber;
+        } else {
             row = getRow(itemCount - 1, columnNumber);
             column = getColumn(itemCount - 1, getRow(itemCount - 1, columnNumber), columnNumber);
         }

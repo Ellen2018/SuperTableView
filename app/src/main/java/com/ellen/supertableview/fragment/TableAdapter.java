@@ -3,6 +3,7 @@ package com.ellen.supertableview.fragment;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.ellen.supertableview.R;
@@ -50,7 +51,7 @@ public class TableAdapter extends SuperXTableViewAdapter<TableAdapter.MyItemView
 
     @Override
     protected void bindTableItemViewHolder(MyItemViewHolder myItemViewHolder, int row, int column) {
-        myItemViewHolder.tv.setText(String.valueOf(row));
+        myItemViewHolder.tv.setText("("+row+","+column+")");
     }
 
     @Override
@@ -60,7 +61,12 @@ public class TableAdapter extends SuperXTableViewAdapter<TableAdapter.MyItemView
 
     @Override
     public int getTableRow() {
-        return rowNumber;
+        return 200;
+    }
+
+    @Override
+    public void bindAdapter() {
+        super.bindAdapter();
     }
 
     public static class XItemViewHolder extends XYItemViewHolder{
