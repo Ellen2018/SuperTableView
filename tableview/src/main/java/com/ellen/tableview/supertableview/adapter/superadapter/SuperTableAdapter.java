@@ -2,6 +2,7 @@ package com.ellen.tableview.supertableview.adapter.superadapter;
 
 import android.view.View;
 
+import com.ellen.tableview.supertableview.PagingMode;
 import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
 
 import java.util.ArrayList;
@@ -131,10 +132,15 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
                     removeColumn();
                 }
             } else {
-                //增加
-                int columnNumber = getTableView().getColumnNumber();
-                for (int i = 0; i < getTableColumn() - columnNumber; i++) {
-                    addColumn();
+                //增加->预加载模式不要添加，那么该如何做呢？
+                PagingMode pagingMode = getTableView().getPagingMode();
+                if(pagingMode != null){
+                    //如何当前处于分页模式，那么可以不做任何逻辑处理
+                }else {
+                    int columnNumber = getTableView().getColumnNumber();
+                    for (int i = 0; i < getTableColumn() - columnNumber; i++) {
+                        addColumn();
+                    }
                 }
             }
         }
@@ -143,9 +149,14 @@ public abstract class SuperTableAdapter extends TableViewAdapter {
             //存在增加或者是删除
             if (getTableRow() > getTableView().getRowNumber()) {
                 //增加
-                int rowNumber = getTableView().getRowNumber();
-                for (int i = 0; i < getTableRow() - rowNumber; i++) {
-                    addRow();
+                PagingMode pagingMode = getTableView().getPagingMode();
+                if(pagingMode != null){
+                    //如何当前处于分页模式，那么可以不做任何逻辑处理
+                }else {
+                    int rowNumber = getTableView().getRowNumber();
+                    for (int i = 0; i < getTableRow() - rowNumber; i++) {
+                        addRow();
+                    }
                 }
             } else {
                 int rowNumber = getTableView().getRowNumber();

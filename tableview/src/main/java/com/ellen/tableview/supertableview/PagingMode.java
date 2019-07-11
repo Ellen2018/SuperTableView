@@ -16,6 +16,10 @@ public class PagingMode {
     private int addSize;
 
     private int loadBeforeSize = 1;
+    /**
+     * 记录数据总个数,防止notifiChange增加bug
+     */
+    private int currentSize = 0;
 
     public int getLoadBeforeSize() {
         return loadBeforeSize;
@@ -54,5 +58,13 @@ public class PagingMode {
 
     public void setAddSize(int addSize) {
         this.addSize = addSize;
+    }
+
+    public int getCurrentSize() {
+        return currentSize;
+    }
+
+    public void setCurrentSize(int currentSize) {
+        this.currentSize = currentSize;
     }
 }

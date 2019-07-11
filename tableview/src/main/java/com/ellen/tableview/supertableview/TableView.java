@@ -429,6 +429,7 @@ public class TableView extends RelativeLayout {
         int itemCountCopy = 0;
         if (pagingMode != null) {
             if (pagingMode.isVer()) {
+                pagingMode.setCurrentSize(tableViewAdapter.getTableRow());
                 if(tableViewAdapter.getTableRow()<=pagingMode.getFirstSize()){
                     pagingMode.setFirstSize(tableViewAdapter.getTableRow());
                 }
@@ -438,6 +439,7 @@ public class TableView extends RelativeLayout {
                 getGridLayoutY().setRowCount(pagingMode.getFirstSize());
                 getGridLayoutX().setColumnCount(tableViewAdapter.getTableColumn());
             } else {
+                pagingMode.setCurrentSize(tableViewAdapter.getTableColumn());
                 if(tableViewAdapter.getTableColumn()<=pagingMode.getFirstSize()){
                     pagingMode.setFirstSize(tableViewAdapter.getTableColumn());
                 }
