@@ -50,7 +50,7 @@ public class TableFragment extends Fragment {
         View view = inflater.from(getActivity()).inflate(R.layout.fragment_table, container, false);
         tableView = view.findViewById(R.id.tableView);
         superTableViewAdapter = new TableAdapter(getActivity(), xTitles, itemTitles);
-        PagingMode pagingMode = new PagingMode(true,20,10,2);
+        PagingMode pagingMode = new PagingMode(true,10,1,1);
         tableView.setPagingMode(pagingMode);
         tableView.setTableViewAdapter(superTableViewAdapter);
 //        tableView.setOnVScrollChangeListener(new View.OnScrollChangeListener() {

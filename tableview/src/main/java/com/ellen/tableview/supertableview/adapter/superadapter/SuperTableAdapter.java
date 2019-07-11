@@ -1,6 +1,5 @@
 package com.ellen.tableview.supertableview.adapter.superadapter;
 
-import android.util.Log;
 import android.view.View;
 
 import com.ellen.tableview.supertableview.adapter.TableViewAdapter;
