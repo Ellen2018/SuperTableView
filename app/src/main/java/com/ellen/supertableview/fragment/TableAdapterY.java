@@ -35,7 +35,7 @@ public class TableAdapterY extends SuperYTableViewAdapter<TableAdapterY.Item, Ta
 
     @Override
     public int getTableRow() {
-        return 6;
+        return 20;
     }
 
 

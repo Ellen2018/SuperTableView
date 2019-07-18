@@ -467,7 +467,6 @@ public class TableView extends RelativeLayout {
                 view = tableViewAdapter.createItemView(i, row, column);
             } else {
                 //水平方向
-                Log.e("Ellen执行没","ok");
                 final int row = getRow(itemCount - 1, columnNumber);
                 final int column = getColumn(itemCount - 1, getRow(itemCount - 1, columnNumber), columnNumber);
                 view = tableViewAdapter.createItemView(i, row, column);

@@ -49,9 +49,10 @@ public class TableFragment extends Fragment {
         View view = inflater.from(getActivity()).inflate(R.layout.fragment_table, container, false);
         tableView = view.findViewById(R.id.tableView);
         superTableViewAdapter = new TableAdapterY(getActivity());
-        PagingMode pagingMode = new PagingMode(false,50,50,2);
+        PagingMode pagingMode = new PagingMode(false,20,5,2);
         tableView.setPagingMode(pagingMode);
         tableView.setTableViewAdapter(superTableViewAdapter);
+        superTableViewAdapter.notifyChanged();
         return view;
     }
 }
