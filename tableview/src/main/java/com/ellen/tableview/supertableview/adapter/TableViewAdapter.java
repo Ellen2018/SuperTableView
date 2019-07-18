@@ -1,8 +1,6 @@
 package com.ellen.tableview.supertableview.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +22,6 @@ public abstract class TableViewAdapter {
     private boolean isOrientationV = false;
     private GridLayout gridLayout;
     private TableView tableView;
-    private boolean isRemoveXClear = false;
-    private boolean isRemoveYClear = false;
-
-    public boolean isRemoveXClear() {
-        return isRemoveXClear;
-    }
-
-    public boolean isRemoveYClear() {
-        return isRemoveYClear;
-    }
 
     public int getCloumn() {
         return cloumn;

@@ -1,14 +1,12 @@
 package com.ellen.tableview.supertableview.adapter.superadapter.x;
 
 import android.view.View;
-import android.widget.GridLayout;
 
 import com.ellen.tableview.supertableview.adapter.superadapter.ItemViewHolder;
 import com.ellen.tableview.supertableview.adapter.superadapter.SuperTableAdapter;
 import com.ellen.tableview.supertableview.adapter.superadapter.XYItemViewHolder;
 
 public abstract class SuperXTableViewAdapter<T extends ItemViewHolder,E extends XYItemViewHolder> extends SuperTableAdapter {
-
 
     @Override
     protected XYItemViewHolder createXItemViewHolder(int column, int type) {

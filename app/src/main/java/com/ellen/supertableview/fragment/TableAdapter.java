@@ -3,7 +3,6 @@ package com.ellen.supertableview.fragment;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.ellen.supertableview.R;
@@ -56,12 +55,12 @@ public class TableAdapter extends SuperXTableViewAdapter<TableAdapter.MyItemView
 
     @Override
     public int getTableColumn() {
-        return 5;
+        return 22000;
     }
 
     @Override
     public int getTableRow() {
-        return 22000;
+        return 5;
     }
 
     @Override

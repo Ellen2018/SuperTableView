@@ -467,6 +467,7 @@ public class TableView extends RelativeLayout {
                 view = tableViewAdapter.createItemView(i, row, column);
             } else {
                 //水平方向
+                Log.e("Ellen执行没","ok");
                 final int row = getRow(itemCount - 1, columnNumber);
                 final int column = getColumn(itemCount - 1, getRow(itemCount - 1, columnNumber), columnNumber);
                 view = tableViewAdapter.createItemView(i, row, column);
@@ -503,6 +504,7 @@ public class TableView extends RelativeLayout {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_view_table, this);
         gridLayoutTable = view.findViewById(R.id.grid_layout);
         gridLayoutY = view.findViewById(R.id.grid_layout_y);
+        gridLayoutY.setOrientation(GridLayout.VERTICAL);
         gridLayoutX = view.findViewById(R.id.grid_layout_x);
         gridLayoutXY = view.findViewById(R.id.grid_layout_xy);
         scrollView = view.findViewById(R.id.scrollView);

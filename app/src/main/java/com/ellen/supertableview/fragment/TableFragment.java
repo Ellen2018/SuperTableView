@@ -35,8 +35,7 @@ public class TableFragment extends Fragment {
 
     private TableView tableView;
     private TableClick agoTableClick;
-    private TableAdapter superTableViewAdapter;
-    private ChooseUpDataCallback chooseUpDataCallback;
+    private TableAdapterY superTableViewAdapter;
 
     private List<String> xTitles = new ArrayList<>();
     private List<String> itemTitles = new ArrayList<>();
@@ -49,65 +48,10 @@ public class TableFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.from(getActivity()).inflate(R.layout.fragment_table, container, false);
         tableView = view.findViewById(R.id.tableView);
-        superTableViewAdapter = new TableAdapter(getActivity(), xTitles, itemTitles);
-        PagingMode pagingMode = new PagingMode(true,50,50,2);
+        superTableViewAdapter = new TableAdapterY(getActivity());
+        PagingMode pagingMode = new PagingMode(false,50,50,2);
         tableView.setPagingMode(pagingMode);
         tableView.setTableViewAdapter(superTableViewAdapter);
-//        tableView.setOnVScrollChangeListener(new View.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                Log.e("执行没？","ok");
-//                if(scrollY+tableView.getHeight() >= (tableView.getRowNumber()-5)*tableView.getItemHeight()){
-//                    for(int i=0;i<10;i++) {
-//                        superTableViewAdapter.addRow();
-//                    }
-//                }
-//            }
-//        });
-        initView();
         return view;
-    }
-
-    private void initView() {
-
-        tableView.setOnItemClickListener(new TableView.OnItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClickItem(View view, TableClick tableClick) {
-                Toast.makeText(getActivity(), "(" + tableClick.getRow() + "," + tableClick.getCloumn() + ")", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onClickYItem(View view, TableClick tableClick) {
-                Toast.makeText(getActivity(), "点击了Y：" + tableClick.getRow(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onClickXItem(View view, TableClick tableClick) {
-                Toast.makeText(getActivity(), "点击了X：" + tableClick.getCloumn(), Toast.LENGTH_SHORT).show();
-                for (TableItemView tableItemView : tableClick.getCloumnViewList()) {
-                    tableItemView.getView().setBackgroundColor(Color.RED);
-                }
-                view.setBackgroundColor(Color.RED);
-            }
-
-            @Override
-            public void onClickXYView(View view) {
-
-            }
-        });
-
-    }
-
-    public void setChooseUpDataCallback(ChooseUpDataCallback chooseUpDataCallback) {
-        this.chooseUpDataCallback = chooseUpDataCallback;
-    }
-
-    public TableView getTableView() {
-        return tableView;
-    }
-
-    public interface ChooseUpDataCallback {
-        void upData(int row, int column);
     }
 }
