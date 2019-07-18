@@ -577,7 +577,7 @@ public class TableView extends RelativeLayout {
         return (((position) - row * cloumn) % cloumn);
     }
 
-    public void addItem(final View view) {
+    private void addItem(final View view) {
         int row = 0;
         int column = 0;
         if (gridLayoutTable.getOrientation() == GridLayout.VERTICAL) {
