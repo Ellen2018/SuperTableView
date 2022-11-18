@@ -14,31 +14,24 @@ import com.ellen.tableview.supertableview.TableView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Table2Activity extends AppCompatActivity implements View.OnClickListener {
+public class Table2Activity extends AppCompatActivity{
 
     private TableView tableView;
     private RailLineTableAdapter railLineTableAdapter;
     private List<String> xList;
     private List<String> yList;
-    private Button btAdd, btDelete, btUpdate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table2);
         tableView = findViewById(R.id.tableView);
-        btAdd = findViewById(R.id.bt1);
-        btDelete = findViewById(R.id.bt2);
-        btUpdate = findViewById(R.id.bt3);
-        btAdd.setOnClickListener(this);
-        btDelete.setOnClickListener(this);
-        btUpdate.setOnClickListener(this);
         xList = new ArrayList<>();
         yList = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 10; i++) {
             xList.add("x" + i);
         }
-        for (int i = 0; i <2; i++) {
+        for (int i = 0; i < 10; i++) {
             yList.add("y" + i);
         }
         railLineTableAdapter = new RailLineTableAdapter(this, xList, yList);
@@ -52,11 +45,15 @@ public class Table2Activity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClickYItem(View view, TableClick tableClick) {
                 toast("Y:"+tableClick.getRow());
+                yList.set(tableClick.getRow(),"点击Y:"+tableClick.getRow());
+                railLineTableAdapter.notifyChanged();
             }
 
             @Override
             public void onClickXItem(View view, TableClick tableClick) {
                 toast("X:"+tableClick.getCloumn());
+                xList.set(tableClick.getCloumn(),"点击X:"+tableClick.getCloumn());
+                railLineTableAdapter.notifyChanged();
             }
 
             @Override
@@ -68,22 +65,5 @@ public class Table2Activity extends AppCompatActivity implements View.OnClickLis
 
     private void toast(String content) {
         Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt1:
-                xList.add("3");
-                xList.add("5");
-                break;
-            case R.id.bt2:
-                //xList.remove(0);
-                break;
-            case R.id.bt3:
-                xList.set(yList.size()-1,"5");
-                break;
-        }
-        railLineTableAdapter.notifyChanged();
     }
 }

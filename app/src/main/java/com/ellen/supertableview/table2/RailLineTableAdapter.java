@@ -44,7 +44,7 @@ public class RailLineTableAdapter extends SuperXYTableViewAdapter<RailLineTableA
 
     @Override
     protected void bindXViewHolder(XViewHolder xViewHolder, int column) {
-        xViewHolder.textView.setText(xList.get(column));
+       xViewHolder.textView.setText(xList.get(column));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class RailLineTableAdapter extends SuperXYTableViewAdapter<RailLineTableA
 
     @Override
     protected void bindYViewHolder(YViewHolder yViewHolder, int row) {
-        Log.e("y行",row+"");
+        yViewHolder.textView.setText(yList.get(row));
     }
 
     @Override
